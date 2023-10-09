@@ -1,0 +1,102 @@
+.card-product {
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: none;
+  border-radius: 5px;
+  overflow: hidden;
+  background: rgb(255, 255, 255);
+
+  .card-content {
+    display: flex;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0px 14px 10px;
+    flex: 1 1 0%;
+    width: 100%;
+
+    p {
+      margin: 0;
+    }
+
+    .card-content-inner {
+      text-align: center;
+      width: 100%;
+      -webkit-box-flex: 2;
+      flex: 1 1 0%;
+    }
+
+    .ant-rate,
+    p {
+      margin-bottom: 10px;
+    }
+    .card-content__decsrciption {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      font-size: 12px;
+      height: 40px;
+    }
+    .card-content__price {
+      font-size: 14;
+      font-weight: 700;
+    }
+  }
+
+  .ant-card-body {
+    padding: 0 !important;
+  }
+  .btn-quick {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+    display: none;
+    border: none;
+
+    span {
+      font-size: 14px;
+    }
+  }
+  .btn-quick:hover {
+    background: #00b4db; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #0083b0,
+      #00b4db
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #0083b0,
+      #00b4db
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    border: none;
+    transition: all ease-in 0.5s;
+  }
+}
+
+.card-product:hover .btn-quick {
+  display: block;
+}
+
+.card-content__decsrciption {
+  font-size: 16px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 40px;
+}
