@@ -46,7 +46,12 @@ export const getItems = async (dispatch) => {
     dispatch(getToursStart());
     try {
         const res = await getAllTour()
-        dispatch(getToursSuccess(res))
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getToursFailed())
+        }
+        else {
+            dispatch(getToursSuccess(res))
+        }
     }
     catch (err) {
         dispatch(getToursFailed())
@@ -57,7 +62,12 @@ export const getCategory = async (dispatch) => {
     dispatch(getCateStart());
     try {
         const res = await getAllCategory()
-        dispatch(getCateSuccess(res))
+        console.log(res);
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getCateFailed())
+        } else {
+            dispatch(getCateSuccess(res))
+        }
     }
     catch (err) {
         dispatch(getCateFailed())

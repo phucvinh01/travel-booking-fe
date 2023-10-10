@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 const Tours = () => {
 
     const tours = useSelector((state) => state.tour.tours.data);
+    console.log(tours);
 
     return (
         <>

@@ -19,6 +19,7 @@ const categorySlice = createSlice({
         getCateFailed: (state) => {
             state.category.isLoading = false;
             state.category.error = true;
+            state.category.data = null;
         },
     }
 })

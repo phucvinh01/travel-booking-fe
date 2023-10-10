@@ -1,5 +1,5 @@
 import React from 'react'
-import { Breadcrumb, Divider, Space } from 'antd';
+import { Breadcrumb, Divider, Radio, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import SearchFrom from '../components/Search';
@@ -28,19 +28,35 @@ const Tours = () => {
                 />
                 <div className='row'>
                     <div className='col-lg-3 col-md-12 d-sm-hidden  mt-3'>
-                        <Space direction='vertical' className='border rounded-3 w-100'>
-                            {
-                                cate && cate.map((item) => {
-                                    return (
-                                        <>
-                                            <div className='p-3' key={ item.id }><Link>{ item.tenLoai }</Link>
-                                            </div>
+                        <Space direction='vertical' size={ 'large' }>
+                            <Space direction='vertical' className='border rounded-3 w-100'>
+                                {
+                                    cate && cate.map((item) => {
+                                        return (
+                                            <>
+                                                <div className='p-3' key={ item.id }><Link>{ item.tenLoai }</Link>
+                                                </div>
 
-                                        </>
-                                    )
-                                })
-                            }
+                                            </>
+                                        )
+                                    })
+                                }
+                            </Space>
+                            <Space>
+                                <p>Lọc theo giá</p>
+
+                                <Radio.Group onChange={ onChange } value={ value }>
+                                    <Space direction='vertical'>
+                                        <Radio value={ 1 }>A</Radio>
+                                        <Radio value={ 2 }>B</Radio>
+                                        <Radio value={ 3 }>C</Radio>
+                                        <Radio value={ 4 }>D</Radio>
+                                    </Space>
+                                </Radio.Group>
+
+                            </Space>
                         </Space>
+
                     </div>
                     <div className='col-9 col-md-9 col-sm-12'>
                         <ListItem

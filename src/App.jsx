@@ -5,6 +5,7 @@ import CustomerLayout from "./layouts/CustomerSreen";
 import { useDispatch } from "react-redux";
 import { getCategory, getItems } from "./redux/api";
 import Loadable from "./util/Loadable";
+import AdminLayout from "./layouts/AdminScreen";
 
 
 function App() {
@@ -29,6 +30,18 @@ function App() {
         </Route>
       </Routes>
 
+      <Routes>
+        <Route path="/admin" element={ <AdminLayout /> }>
+          <Route path="/admin" element={ <Admin /> } />
+          <Route path="/admin/tour" element={ <TourManager /> } />
+          <Route path="/admin/customer" element={ <CustomerManager /> } />
+          <Route path="/admin/order" element={ <OrderManager /> } />
+          <Route path="/admin/emp" element={ <EmpManager /> } />
+          <Route path="/admin/hotel" element={ <HotelManager /> } />
+          <Route path="/admin/tranpost" element={ <TranpostManager /> } />
+        </Route>
+      </Routes>
+
     </>
   )
 }
@@ -45,6 +58,27 @@ const Home = Loadable(
 );
 const Tour = Loadable(
   lazy(() => import("./pages/Tours")),
+);
+
+const Admin = Loadable(
+  lazy(() => import('./pages/AdminPage'))
+);
+
+const TourManager = Loadable(
+  lazy(() => import('./pages/Admin/TourManager'))
+);
+const CustomerManager = Loadable(
+  lazy(() => import('./pages/Admin/CustomerManager'))
+); const EmpManager = Loadable(
+  lazy(() => import('./pages/Admin/EmpManager'))
+); const OrderManager = Loadable(
+  lazy(() => import('./pages/Admin/OderManager'))
+);
+const TranpostManager = Loadable(
+  lazy(() => import('./pages/Admin/TransportManager'))
+);
+const HotelManager = Loadable(
+  lazy(() => import('./pages/Admin/HotelManager'))
 );
 
 export default App
