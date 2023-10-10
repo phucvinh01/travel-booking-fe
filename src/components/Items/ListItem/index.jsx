@@ -15,8 +15,8 @@ const ListItem = (props) => {
             <div className='container py-3' >
                 <h3>{ title }</h3>
                 <h5>{ subtitle }</h5>
-                <div className='row justify-content-start'>
-                    { data && data.map((item, index) => {
+                <div className='row gap-3'>
+                    { data && data?.length > 0 && data.map((item, index) => {
                         return (
                             <Item
                                 key={ index }

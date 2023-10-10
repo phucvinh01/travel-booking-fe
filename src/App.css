@@ -8,6 +8,11 @@
 
 
 }
+
+section {
+  margin-bottom: 30px;
+}
+
 main{
   padding: 5px;
  } /* fallback for old browsers */
@@ -15,12 +20,14 @@ main{
 /* //background: linear-gradient(to right, #E2E2E2, #C9D6FF); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
 
 
-::selection { /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  color: #1D2B64;
-  background: #ECE9E6;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+::selection {
+  font-weight:bolder;
+  color: #ff7e5f;
+  
+}
 
+main {
+  min-height: 100vh;
 }
 
 p {
@@ -59,5 +66,22 @@ a{
       #0083b0,
       #00b4db
     ) !important;
+}
+
+.backgound-tour-page{
+  background-image: url('./assets/backgound-tour.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 350px;
+  background-position: center;
+  background-attachment: fixed;
+}
+.background-home{
+  background-image: url('https://images.unsplash.com/photo-1471958680802-1345a694ba6d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1566&q=80');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 350px;
+  background-position: center;
+  background-attachment: fixed;
 }
 

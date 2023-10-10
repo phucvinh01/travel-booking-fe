@@ -6,7 +6,7 @@ import './Item.scss';
 import formatCurrency from '../../../util/formatCurrency';
 import _, { includes } from 'lodash';
 import { useDispatch } from 'react-redux';
-import { Airplane } from 'phosphor-react'
+import { Airplane, Train } from 'phosphor-react'
 import { useNavigate } from 'react-router-dom';
 // import { deleteProduct } from '../../axios/ProductRequest';
 // import { getProductList } from '../../redux/api';
@@ -105,14 +105,14 @@ const Item = (props) => {
                     <div className='p-2'>
                         <div className='card-content-inner'>
                             <p className='card-content__decsrciption'>{ data?.tenTour }</p>
-                            <Space size={ 'large' } align='center' >
-                                <Space>
+                            <Space size={ 'large' } align='center' className='d-flex justify-content-between' >
+                                <Space >
                                     <ClockCircleOutlined />
                                     <p>{ data.moTa }</p>
                                 </Space>
-                                <Space>
+                                <Space >
                                     {
-                                        data.phuongTienDiChuyen.includes('xe') ? <CarOutlined /> : data.phuongTienDiChuyen.includes('maybay') ? <Airplane size={ 16 } /> : <Train size={ 32 } />
+                                        data.phuongTienDiChuyen.includes('xe') ? <CarOutlined /> : data.phuongTienDiChuyen.includes('maybay') ? <Airplane size={ 16 } /> : <Train size={ 16 } />
                                     }
                                 </Space>
                             </Space>

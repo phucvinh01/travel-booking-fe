@@ -41,7 +41,7 @@ const TourDetail = () => {
         setCurrent(value);
     };
     return (
-        <main>
+        <div style={ { marginTop: 100 } }>
             <div className='container mt-4'>
                 <Breadcrumb
                     items={ [
@@ -134,7 +134,7 @@ const TourDetail = () => {
                     />
                 </section>
             </div>
-        </main>
+        </div>
     )
 }
 

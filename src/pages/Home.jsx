@@ -10,9 +10,9 @@ const Tours = () => {
 
     return (
         <>
-            <main>
+            <div>
                 <section className='mt-4'>
-                    <div className='d-flex justify-content-center mt-4'>
+                    <div className='d-flex justify-content-center align-items-center mt-4 background-home'>
                         <Search />
                     </div>
                     <section className='my-3 container'>
@@ -110,7 +110,7 @@ const Tours = () => {
                 /> */}
                     </section>
                 </section>
-            </main>
+            </div>
 
 
         </>

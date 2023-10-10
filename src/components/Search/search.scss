@@ -1,6 +1,9 @@
 .search {
-  padding: 40px;
- -webkit-box-shadow: 3px 3px 23px 0px rgba(147,104,240,1);
--moz-box-shadow: 3px 3px 23px 0px rgba(147,104,240,1);
-box-shadow: 3px 3px 23px 0px rgba(147,104,240,1)
+  height: 180px;
+  padding: 40px;  
+background: #A1FFCE;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #FAFFD1, #A1FFCE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
 }

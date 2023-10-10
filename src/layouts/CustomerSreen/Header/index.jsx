@@ -32,7 +32,7 @@ const items = [
 const Header = () => {
     return (
         <>
-            <div className='header px-3'>
+            <div className='header px-3 fixed-top'>
                 <div className='d-flex justify-content-between'>
                     <div>
                         <img src={ logo } width={ 60 }></img>
