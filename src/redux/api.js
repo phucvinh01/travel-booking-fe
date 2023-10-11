@@ -4,6 +4,10 @@ import { getToursFailed, getToursStart, getToursSuccess } from './tourSlice'
 import { getAllTour } from '../Axios/Tour'
 import { getCateFailed, getCateStart, getCateSuccess } from './categorySlice'
 import { getAllCategory } from '../Axios/Category'
+import { getHotelFailed, getHotelStart, getHotelSuccess } from './hotelSlice'
+import { getAllHotel } from '../Axios/Hotel'
+import { getflightFailed, getflightStart, getflightSuccess } from './flightSlice'
+import { getAllFlight } from '../Axios/flight'
 
 export const login = async (user, dispatch, navigCate) => {
     dispatch(loginStart());
@@ -62,7 +66,6 @@ export const getCategory = async (dispatch) => {
     dispatch(getCateStart());
     try {
         const res = await getAllCategory()
-        console.log(res);
         if (res.statusCode && res.statusCode === 204) {
             dispatch(getCateFailed())
         } else {
@@ -71,6 +74,36 @@ export const getCategory = async (dispatch) => {
     }
     catch (err) {
         dispatch(getCateFailed())
+    }
+}
+
+export const getHotel = async (dispatch) => {
+    dispatch(getHotelStart());
+    try {
+        const res = await getAllHotel()
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getHotelFailed())
+        } else {
+            dispatch(getHotelSuccess(res))
+        }
+    }
+    catch (err) {
+        dispatch(getHotelFailed())
+    }
+}
+
+export const getflight = async (dispatch) => {
+    dispatch(getflightStart());
+    try {
+        const res = await getAllFlight()
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getflightFailed())
+        } else {
+            dispatch(getflightSuccess(res))
+        }
+    }
+    catch (err) {
+        dispatch(getflightFailed())
     }
 }
 

@@ -3,7 +3,7 @@ import './App.css'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import CustomerLayout from "./layouts/CustomerSreen";
 import { useDispatch } from "react-redux";
-import { getCategory, getItems } from "./redux/api";
+import { getCategory, getHotel, getItems, getflight } from "./redux/api";
 import Loadable from "./util/Loadable";
 import AdminLayout from "./layouts/AdminScreen";
 
@@ -15,6 +15,8 @@ function App() {
   useEffect(() => {
     getItems(dispatch)
     getCategory(dispatch)
+    getHotel(dispatch)
+    getflight(dispatch)
   }, [])
 
   return (
@@ -26,7 +28,7 @@ function App() {
           <Route path="/" element={ <Home /> } />
           <Route path="/about" element={ <About /> } />
           <Route path="/tours" element={ <Tour /> } />
-          <Route path="/tours:id" element={ <TourDetail /> } />
+          <Route path="/tours/:id" element={ <TourDetail /> } />
         </Route>
       </Routes>
 

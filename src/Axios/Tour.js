@@ -38,15 +38,21 @@ const getTourByUserCreate = (idUser) => {
 }
 
 const getTourById = (id) => {
-    return Axios.get(`/Tour/get-one-tour-by-id/${id}`)
+    return Axios.get(`/Tour/get-one-tour-by-id/?id=${id}`)
 
 }
+
+const getScheduleTour = (id) => {
+    return Axios.get(`/ChiTietChuongTrinhTour/get-all-chi-tiet-chuong-trinh-tour?maTour=${id}`)
+}
+
 
 
 
 
 export {
     getAllTour, createTour, getCount, getTourByStatus, getTourLast, getTourByPrice
-    , getTourByCategory, getTourByCategoryAndStatus, getTourByUserCreate, getTourById
+    , getTourByCategory, getTourByCategoryAndStatus, getTourByUserCreate, getTourById,
+    getScheduleTour
 
 }

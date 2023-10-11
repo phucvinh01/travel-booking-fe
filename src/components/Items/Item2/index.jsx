@@ -25,9 +25,10 @@ const ItemVer2 = (props) => {
                     </Space>
                 </div>
                 <div className='col-2'>
-                    <small>{ moment(data.ngayLap).format('MM/DD/YYYY') }</small>
-                    <p> { formatCurrency.format(data?.chiPhi) }</p>
-
+                    <Space direction='vertical'>
+                        <p>Ngày khởi hành: <small>{ moment(data.ngayLap).format('MM/DD/YYYY') }</small></p>
+                        <p> { formatCurrency.format(data?.chiPhi) }</p>
+                    </Space>
                 </div>
             </div>
         </>

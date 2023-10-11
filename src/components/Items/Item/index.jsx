@@ -85,11 +85,11 @@ const Item = (props) => {
 
 
             <div
-                className='col-lg-3 col-md-6 col-sm-12 mb-3'
+                className='col-lg-4 col-md-6 col-sm-12 mb-3'
                 key={ props._id }>
                 <Card
                     bordered={ false }
-                    className='position-relative card-product'
+                    className='card-product'
                     hoverable
                     style={ {
                         width: 280,
@@ -121,7 +121,7 @@ const Item = (props) => {
                             </p>
                         </div>
                     </div>
-                    <button onClick={ () => navigate('/tours:id') }
+                    <button onClick={ () => navigate(`/tours/${data?.id}`) }
                         className='btn-quick'
                     >
                         <span>XEM CHI TIẾT</span>

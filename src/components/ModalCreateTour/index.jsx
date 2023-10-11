@@ -1,6 +1,6 @@
 import { Button, Modal, Select, Space, Spin, message } from 'antd'
 import TextArea from 'antd/es/input/TextArea';
-import { Plus } from 'phosphor-react'
+import { Plus, Star } from 'phosphor-react'
 import React, { useEffect, useId, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import cloudinary from '../../util/Cloudnary'
@@ -11,6 +11,8 @@ import { getItems } from '../../redux/api';
 const ModalCreateTour = () => {
 
     const cate = useSelector((state) => state.cate.category.data);
+    const hotel = useSelector((state) => state.hotel.hotel.data);
+    const flight = useSelector((state) => state.flight.flight.data);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const id = useId();
@@ -19,7 +21,7 @@ const ModalCreateTour = () => {
     const [image, setImage] = useState('');
     const [price, setPrice] = useState('');
     const [createAt, setCreateAt] = useState('')
-    const [userCreate, setUserCreate] = useState('')
+    const [userCreate, setUserCreate] = useState("1")
     const [category, setCategory] = useState('');
     const [idTranport, setIdTranport] = useState(0);
     const [idHotel, setIdHotel] = useState(0)
@@ -40,15 +42,17 @@ const ModalCreateTour = () => {
             setName("")
             setDescription("")
             setCategory("")
+            setPrice(0)
             setCreateAt("")
-            setIdHotel("")
-            setIdTranport("")
+            setIdHotel(0)
+            setIdTranport(0)
             setTranport("")
             setImage("")
             setIsFull(false)
         }
     }, [isModalOpen])
 
+    console.log(idTranport);
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -77,7 +81,7 @@ const ModalCreateTour = () => {
 
     const handleClick = async () => {
         setLoading(true)
-        res = await cloudinary(image)
+        let res = await cloudinary(image)
         if (res.statusText === "OK") {
             let body = {
                 "tenTour": name,
@@ -93,6 +97,7 @@ const ModalCreateTour = () => {
                 "trangThai": true,
             }
             let result = createTour(body)
+            console.log(result);
             if (result) {
                 message.success("Thêm thành công")
                 handleCancel();
@@ -192,16 +197,22 @@ const ModalCreateTour = () => {
                                     width: '100%',
                                 } }
                                 allowClear
-                                options={ [
-                                    {
-                                        value: "Chuyến bay 1",
-                                        key: 1
-                                    },
-                                    {
-                                        value: "Chuyến bay 2",
-                                        key: 2
-                                    }
-                                ] }
+                                placeholder="Search to Select"
+                                showSearch
+                                optionFilterProp="children"
+                                filterOption={ (input, option) => (option?.label ?? '').includes(input) }
+                                filterSort={ (optionA, optionB) =>
+                                    (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                }
+                                options={ flight && flight.length > 0 && flight.map((item) => {
+                                    return (
+                                        {
+                                            value: item.id,
+                                            label: item.hangBay,
+                                            key: item.id
+                                        }
+                                    )
+                                }) }
                             />
                         </div>
                         <div className='mb-3'>
@@ -248,17 +259,23 @@ const ModalCreateTour = () => {
                                 style={ {
                                     width: '100%',
                                 } }
+                                placeholder="Search to Select"
                                 allowClear
-                                options={ [
-                                    {
-                                        value: "Khách sạn 1",
-                                        key: 1
-                                    },
-                                    {
-                                        value: "Khách sạn 2",
-                                        key: 2
-                                    }
-                                ] }
+                                showSearch
+                                optionFilterProp="children"
+                                filterOption={ (input, option) => (option?.label ?? '').includes(input) }
+                                filterSort={ (optionA, optionB) =>
+                                    (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                }
+                                options={ hotel && hotel.length > 0 && hotel.map((item) => {
+                                    return (
+                                        {
+                                            value: item.id,
+                                            label: item.tenKhachSan,
+                                            key: item.id
+                                        }
+                                    )
+                                }) }
                             />
                         </div>
                         <div className='mb-3'>
@@ -275,7 +292,6 @@ const ModalCreateTour = () => {
                                     width: '100%',
                                 } }
                                 allowClear
-                                mode="multiple"
                                 options={ [
                                     {
                                         value: "Xe",
