@@ -60,6 +60,11 @@ const TableEmp = (props) => {
             )
         },
         {
+            title: 'Địa chỉ',
+            dataIndex: 'diaChi',
+            key: 'diaChi',
+        },
+        {
             title: 'Chức vụ',
             dataIndex: 'maLoaiNhanVien',
             key: 'maLoaiNhanVien',

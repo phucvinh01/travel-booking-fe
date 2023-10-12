@@ -2,10 +2,11 @@ import React, { useEffect, useId, useState } from 'react';
 import { Button, Modal, Select, Space, message } from 'antd';
 import { PlusCircleFilled } from '@ant-design/icons';
 import { postCreateOneEmp } from '../../Axios/Employee';
-const ModalCreateEmp = (props) => {
+import { useDispatch } from 'react-redux';
+import { getAllEmployee } from '../../redux/api';
+const ModalCreateEmp = () => {
 
-    const { getDataEmp } = props
-
+    const dispatch = useDispatch()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
@@ -13,6 +14,9 @@ const ModalCreateEmp = (props) => {
     const [cccd, setCCCD] = useState('')
     const [birthday, setBirthday] = useState('')
     const [dayStart, setDatStart] = useState('')
+    const [address, setAddress] = useState('')
+
+
     const [isFull, setIsFull] = useState(false)
     const id = useId()
     const showModal = () => {
@@ -36,13 +40,15 @@ const ModalCreateEmp = (props) => {
             "soDienThoai": phone,
             "ngaySinh": birthday,
             "ngayVaoLam": dayStart,
-            "canCuocConDan": cccd
+            "canCuocConDan": cccd,
+            "diaChi": address
         }
 
         let res = await postCreateOneEmp(body)
         if (res) {
             message.success("Thêm thành công")
-            getDataEmp()
+            getAllEmployee(dispatch)
+            handleCancel()
         }
         else {
             message.error("Thêm thất bại")
@@ -123,10 +129,15 @@ const ModalCreateEmp = (props) => {
                             <input onChange={ (e) => setDatStart(e.target.value) } value={ dayStart } type='date' className='form-control' id={ id + 'dateStart' }></input>
                         </div>
                     </div>
+                    <div className='col-12'>
+                        <label htmlFor={ id + 'address' }>Địa chỉ</label>
+                        <input onChange={ (e) => setAddress(e.target.value) } value={ address } type='text' className='form-control' id={ id + 'address' }></input>
+                    </div>
                     <div className='d-flex justify-content-end'>
                         <Button onClick={ handleSubmit } disabled={ !isFull ? true : false } type='primary'>Thêm</Button>
                     </div>
                 </div>
+
             </Modal>
         </>
     );

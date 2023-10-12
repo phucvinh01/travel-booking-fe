@@ -5,6 +5,7 @@ import ModalCreateTour from '../../components/ModalCreateTour'
 import ModalCreateCategory from '../../components/ModalCreateCategory'
 import { useSelector } from 'react-redux'
 import Item from '../../components/Items/Item'
+import TableTour from '../../components/TableTour'
 
 const TourManager = () => {
     const tours = useSelector((state) => state.tour.tours.data);
@@ -22,15 +23,7 @@ const TourManager = () => {
                     </Space>
                 </section>
                 <section>
-                    <div className='row'>
-                        { data?.length > 0 ? data.map((item, index) => {
-                            return (
-                                <Item
-                                    key={ index }
-                                    data={ item }
-                                />)
-                        }) : <Empty /> }
-                    </div>
+                    <TableTour data={ tours } />
                 </section>
             </main>
         </>

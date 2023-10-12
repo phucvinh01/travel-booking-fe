@@ -8,17 +8,13 @@ import TableEmp from '../../components/TableEmp'
 import { CSVLink, CSVDownload } from "react-csv";
 import moment from 'moment'
 import ModalEditEmp from '../../components/ModalEditEmp'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllEmployee } from '../../redux/api'
 const EmpManager = () => {
     const [data, setData] = useState([])
     const [dataExport, setdataExport] = useState([])
-
-    const getDataEmp = async () => {
-        let res = await getAllEmp()
-        if (res) {
-            setData(res)
-        }
-    }
-
+    const dispatch = useDispatch
+    const emp = useSelector((state) => state.emp.emp.data)
     const getEmpExport = (event, done) => {
         let r = []
         if (data && data.length > 0) {
@@ -39,15 +35,11 @@ const EmpManager = () => {
         }
     }
 
-    useEffect(() => {
-        getDataEmp()
-    }, [])
-
     return (
         <main style={ { marginTop: "90px", minHeight: "100vh" } }>
             <section>
                 <Space>
-                    <ModalCreateEmp getDataEmp={ getAllEmp } />
+                    <ModalCreateEmp />
                     <Button size='large' icon={ <Export size={ 16 } weight="fill" /> } style={ { backgroundColor: "yellowgreen" } }>
                         <CSVLink filename='employee'
                             data={ dataExport }
@@ -61,7 +53,7 @@ const EmpManager = () => {
                 </Space>
             </section>
             <section>
-                <TableEmp data={ data } />
+                <TableEmp data={ emp } />
             </section>
         </main>
     )

@@ -8,6 +8,8 @@ import { getHotelFailed, getHotelStart, getHotelSuccess } from './hotelSlice'
 import { getAllHotel } from '../Axios/Hotel'
 import { getflightFailed, getflightStart, getflightSuccess } from './flightSlice'
 import { getAllFlight } from '../Axios/flight'
+import { getAllEmp } from '../Axios/Employee'
+import { getEmpFailed, getEmpStart, getEmpSuccess } from './empSlice'
 
 export const login = async (user, dispatch, navigCate) => {
     dispatch(loginStart());
@@ -104,6 +106,22 @@ export const getflight = async (dispatch) => {
     }
     catch (err) {
         dispatch(getflightFailed())
+    }
+}
+
+export const getAllEmployee = async (dispatch) => {
+    dispatch(getEmpStart());
+
+    try {
+        const res = await getAllEmp()
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getEmpFailed())
+        } else {
+            dispatch(getEmpSuccess(res))
+        }
+    }
+    catch (err) {
+        dispatch(getEmpFailed())
     }
 }
 

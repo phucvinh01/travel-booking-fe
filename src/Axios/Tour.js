@@ -25,7 +25,7 @@ const getTourByPrice = (min, max) => {
 }
 
 const getTourByCategory = (idCate) => {
-    return Axios.get(`/Tour/get-list-theo-loai/${idCate}`)
+    return Axios.get(`/Tour/get-list-theo-loai?maLoai=${idCate}`)
 }
 
 const getTourByCategoryAndStatus = (idCate, status) => {

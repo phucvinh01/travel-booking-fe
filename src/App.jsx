@@ -3,7 +3,7 @@ import './App.css'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import CustomerLayout from "./layouts/CustomerSreen";
 import { useDispatch } from "react-redux";
-import { getCategory, getHotel, getItems, getflight } from "./redux/api";
+import { getAllEmployee, getCategory, getHotel, getItems, getflight } from "./redux/api";
 import Loadable from "./util/Loadable";
 import AdminLayout from "./layouts/AdminScreen";
 
@@ -17,6 +17,8 @@ function App() {
     getCategory(dispatch)
     getHotel(dispatch)
     getflight(dispatch)
+    getAllEmployee(dispatch)
+
   }, [])
 
   return (
