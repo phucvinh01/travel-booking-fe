@@ -1,14 +1,18 @@
 import React, { useEffect, useId, useState } from 'react';
-import { Button, Modal, Select, Space } from 'antd';
+import { Button, Modal, Select, Space, message } from 'antd';
 import { PlusCircleFilled } from '@ant-design/icons';
-const ModalCreateEmp = () => {
+import { postCreateOneEmp } from '../../Axios/Employee';
+const ModalCreateEmp = (props) => {
+
+    const { getDataEmp } = props
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const [gender, setGender] = useState(1)
+    const [gender, setGender] = useState(true)
     const [cccd, setCCCD] = useState('')
     const [birthday, setBirthday] = useState('')
-    const [address, setAddress] = useState('')
+    const [dayStart, setDatStart] = useState('')
     const [isFull, setIsFull] = useState(false)
     const id = useId()
     const showModal = () => {
@@ -24,6 +28,27 @@ const ModalCreateEmp = () => {
         setGender(value)
     }
 
+    const handleSubmit = async () => {
+        let body = {
+            "maLoaiNhanVien": "1",
+            "tenNhanVien": name,
+            "gioiTinh": gender,
+            "soDienThoai": phone,
+            "ngaySinh": birthday,
+            "ngayVaoLam": dayStart,
+            "canCuocConDan": cccd
+        }
+
+        let res = await postCreateOneEmp(body)
+        if (res) {
+            message.success("Thêm thành công")
+            getDataEmp()
+        }
+        else {
+            message.error("Thêm thất bại")
+        }
+    }
+
 
     useEffect(() => {
         if (name && gender, phone, cccd, birthday) {
@@ -35,7 +60,7 @@ const ModalCreateEmp = () => {
             setIsFull(false)
             setCCCD("")
             setBirthday("")
-            setGender(1)
+            setGender(true)
         }
     }, [gender, name, phone, cccd, birthday, isModalOpen])
 
@@ -72,12 +97,12 @@ const ModalCreateEmp = () => {
                                 options={ [
                                     {
                                         label: "Nam",
-                                        value: 1,
+                                        value: true,
                                         key: 1
                                     },
                                     {
                                         label: "Nữ",
-                                        value: 0,
+                                        value: false,
                                         key: 2
                                     }
                                 ] }
@@ -94,12 +119,12 @@ const ModalCreateEmp = () => {
                             <input onChange={ (e) => setBirthday(e.target.value) } value={ birthday } type='date' className='form-control' id={ id + 'birthday' }></input>
                         </div>
                         <div className='mb-3'>
-                            <label htmlFor={ id + 'birthday' }>Ngày sinh</label>
-                            <input onChange={ (e) => setBirthday(e.target.value) } value={ birthday } type='date' className='form-control' id={ id + 'birthday' }></input>
+                            <label htmlFor={ id + 'dateStart' }>Ngày vào làm</label>
+                            <input onChange={ (e) => setDatStart(e.target.value) } value={ dayStart } type='date' className='form-control' id={ id + 'dateStart' }></input>
                         </div>
                     </div>
                     <div className='d-flex justify-content-end'>
-                        <Button disabled={ !isFull ? true : false } type='primary'>Thêm</Button>
+                        <Button onClick={ handleSubmit } disabled={ !isFull ? true : false } type='primary'>Thêm</Button>
                     </div>
                 </div>
             </Modal>

@@ -46,6 +46,11 @@ const getScheduleTour = (id) => {
     return Axios.get(`/ChiTietChuongTrinhTour/get-all-chi-tiet-chuong-trinh-tour?maTour=${id}`)
 }
 
+const postScheduleTour = (body) => {
+    return Axios.post(`/ChiTietChuongTrinhTour/create-chi-tiet-chuong-trinh-tour`, body)
+
+}
+
 
 
 
@@ -53,6 +58,6 @@ const getScheduleTour = (id) => {
 export {
     getAllTour, createTour, getCount, getTourByStatus, getTourLast, getTourByPrice
     , getTourByCategory, getTourByCategoryAndStatus, getTourByUserCreate, getTourById,
-    getScheduleTour
+    getScheduleTour, postScheduleTour
 
 }

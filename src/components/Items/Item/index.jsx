@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { EditOutlined, DeleteOutlined, ClockCircleOutlined, CarOutlined } from '@ant-design/icons';
-import { Card, Space } from 'antd';
+import { Button, Card, Space } from 'antd';
 const { Meta } = Card;
 import './Item.scss';
 import formatCurrency from '../../../util/formatCurrency';
 import _, { includes } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { Airplane, Train } from 'phosphor-react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ModalEditTour from '../../ModalEditTour';
+import ModalScludeTour from '../../ModalScludeTour/inde';
 // import { deleteProduct } from '../../axios/ProductRequest';
 // import { getProductList } from '../../redux/api';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +19,23 @@ const Item = (props) => {
     const { data } = props
 
     const navigate = useNavigate()
+
+    const location = useLocation()
+
+    const [state, setState] = useState({})
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setState(data)
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     // const [open, setOpen] = useState(false);
     // const [openEdit, setOpenEdit] = useState(false);
@@ -82,11 +101,12 @@ const Item = (props) => {
 
     return (
         <>
+            <ModalEditTour isModalOpen={ isModalOpen } handleOk={ handleOk } handleCancel={ handleCancel } state={ state } />
 
 
             <div
                 className='col-lg-4 col-md-6 col-sm-12 mb-3'
-                key={ props._id }>
+                key={ data.id }>
                 <Card
                     bordered={ false }
                     className='card-product'
@@ -121,11 +141,16 @@ const Item = (props) => {
                             </p>
                         </div>
                     </div>
-                    <button onClick={ () => navigate(`/tours/${data?.id}`) }
-                        className='btn-quick'
-                    >
-                        <span>XEM CHI TIẾT</span>
-                    </button>
+                    {
+                        location.pathname.includes('admin') ? <><Button icon={ <EditOutlined /> } className='btn-quick' type="primary" onClick={ showModal }>
+                            Chỉnh sửa
+                        </Button></>
+                            : <button onClick={ () => navigate(`/tours/${data?.id}`) }
+                                className='btn-quick'
+                            >
+                                <span>XEM CHI TIẾT</span>
+                            </button>
+                    }
                     {/* { props?.user?.role === 1 && (
                         <div className='d-flex p-3 gap-2'>
                             <Button
@@ -141,6 +166,10 @@ const Item = (props) => {
                             </Button>
                         </div>
                     ) } */}
+                    <hr></hr>
+                    {
+                        location.pathname.includes('admin') && <><ModalScludeTour id={ data.id } /></>
+                    }
                 </Card>
             </div>
         </>
