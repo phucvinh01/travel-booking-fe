@@ -17,14 +17,12 @@ const ModalScludeTour = (props) => {
         setIsModalOpen(false);
     };
 
-
-
     return (
         <>
-            <Button icon={ <EyeFilled /> } onClick={ showModal } >
+            <Button icon={<EyeFilled />} onClick={showModal} >
             </Button>
-            <Modal footer={ null } width={ 1000 } title="Tất cả chương trình" open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
-                <TabEditCreateScludeTour id={ props.id } />
+            <Modal footer={null} width={1000} title="Tất cả chương trình" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <TabEditCreateScludeTour id={props.id} />
             </Modal>
         </>
     );

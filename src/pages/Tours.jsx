@@ -75,29 +75,29 @@ const Tours = () => {
                 </div>
                 <section>
                     <Breadcrumb
-                        items={ [
+                        items={[
                             {
-                                title: <Link to={ '/' }>Home</Link>,
+                                title: <Link to={'/'}>Home</Link>,
                             },
                             {
-                                title: <p style={ { cursor: "pointer" } }>Tours</p>,
+                                title: <p style={{ cursor: "pointer" }}>Tours</p>,
                             },
-                        ] }
+                        ]}
                     />
                 </section>
                 <div className='row'>
-                    <div className='col-lg-3 col-md-3 mt-3' style={ { borderRight: "1px solid #333", minHeight: "100vh" } }>
-                        <Space direction='vertical' size={ 'large' }>
+                    <div className='col-lg-3 col-md-3 mt-3' style={{ borderRight: "1px solid #333", minHeight: "100vh" }}>
+                        <Space direction='vertical' size={'large'}>
                             <p>Lọc loại tour</p>
                             <Space direction='vertical' className='border rounded-3 w-100'>
-                                <Radio.Group buttonStyle='outline' size='large' onChange={ (e) => setvalueCate(e.target.value) }>
+                                <Radio.Group buttonStyle='outline' size='large' onChange={(e) => setvalueCate(e.target.value)}>
                                     <Space direction='vertical'>
-                                        <Radio.Button style={ { border: "none" } } type='text' value={ 0 }>Tất cả</Radio.Button>
+                                        <Radio.Button style={{ border: "none" }} type='text' value={0}>Tất cả</Radio.Button>
                                         {
                                             cate && cate?.length > 0 && cate.map((item) => {
                                                 return (
                                                     <>
-                                                        <Radio.Button key={ item.id } style={ { border: "none" } } value={ item.id } type='text'>{ item.tenLoai }</Radio.Button>
+                                                        <Radio.Button key={item.id} style={{ border: "none" }} value={item.idLoaiTour} type='text'>{item.tenLoai}</Radio.Button>
                                                     </>
                                                 )
                                             })
@@ -108,14 +108,14 @@ const Tours = () => {
                             <Space direction='vertical' className='border rounded-3 p-3' >
                                 <p>Lọc theo giá</p>
                                 <Radio.Group >
-                                    <Space direction='vertical' size={ 'middle' } onChange={ handleChange }>
-                                        <Radio value={ 0 }>Mặc định</Radio>
-                                        <Radio value={ 1 }>Từ 1.000.000đ - 1.500.000đ</Radio>
-                                        <Radio value={ 2 }>Từ 1.500.000đ - 3.000.000đ</Radio>
-                                        <Radio value={ 3 }>Từ 3.000.000đ - 7.000.000đ</Radio>
-                                        <Radio value={ 4 }>Từ 7.000.000đ - 15.000.000đ</Radio>
-                                        <Radio value={ 5 }>Từ 15.000.000đ - 30.000.000đ</Radio>
-                                        <Radio value={ 6 }>Trên 30.000.000đ</Radio>
+                                    <Space direction='vertical' size={'middle'} onChange={handleChange}>
+                                        <Radio value={0}>Mặc định</Radio>
+                                        <Radio value={1}>Từ 1.000.000đ - 1.500.000đ</Radio>
+                                        <Radio value={2}>Từ 1.500.000đ - 3.000.000đ</Radio>
+                                        <Radio value={3}>Từ 3.000.000đ - 7.000.000đ</Radio>
+                                        <Radio value={4}>Từ 7.000.000đ - 15.000.000đ</Radio>
+                                        <Radio value={5}>Từ 15.000.000đ - 30.000.000đ</Radio>
+                                        <Radio value={6}>Trên 30.000.000đ</Radio>
                                     </Space>
                                 </Radio.Group>
                             </Space>
@@ -123,13 +123,13 @@ const Tours = () => {
                     </div>
                     <div className='col-lg-9 col-md-5 col-sm-12'>
                         <div className='row'>
-                            { data?.length > 0 ? data.map((item, index) => {
+                            {data?.length > 0 ? data.map((item, index) => {
                                 return (
                                     <Item
-                                        key={ index }
-                                        data={ item }
+                                        key={index}
+                                        data={item}
                                     />)
-                            }) : <Empty /> }
+                            }) : <Empty />}
                         </div>
                     </div>
                 </div>

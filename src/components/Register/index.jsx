@@ -53,6 +53,10 @@ const Regsiter = () => {
             passwordRef.current.focus()
         }
 
+        let body = {
+
+        }
+
     }
 
 
@@ -70,48 +74,48 @@ const Regsiter = () => {
 
     return (
         <>
-            <Space onClick={ showModal }>
+            <Space onClick={showModal}>
                 <Space>
                     <p>Chưa có tài khoản ? <strong>Đăng ký</strong> ngay</p>
                 </Space>
             </Space>
-            <Modal width={ 400 } footer={ null } open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
+            <Modal width={400} footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <div className='d-flex justify-content-center'>
-                    <img src={ logo } width={ 80 }></img>
+                    <img src={logo} width={80}></img>
                 </div>
                 <h4 className="text-center">Đăng Ký</h4>
                 <div className='' >
-                    <Space direction='vertical' size={ 'large' } className='w-100'>
+                    <Space direction='vertical' size={'large'} className='w-100'>
                         <div className='d-flex align-items-center gap-1'>
                             <input
-                                ref={ emailRef }
+                                ref={emailRef}
                                 className='form-control'
                                 required
                                 name='email'
                                 type='email'
-                                value={ email }
+                                value={email}
                                 id='email'
                                 placeholder='Email'
-                                onChange={ (e) => setEmail(e.target.value) }></input>
+                                onChange={(e) => setEmail(e.target.value)}></input>
                             <span className='text-danger'>*</span>
                         </div>
-                        { isValidEmail && <p style={ { color: 'red' } }>{ isValidEmail }</p> }
+                        {isValidEmail && <p style={{ color: 'red' }}>{isValidEmail}</p>}
                         <div className='d-flex align-items-center gap-1'>
                             <input
-                                ref={ phoneRef }
+                                ref={phoneRef}
                                 className='form-control'
                                 required
                                 type='tel'
                                 id="phone"
                                 name="phone"
-                                value={ phone }
-                                maxLength={ 11 }
+                                value={phone}
+                                maxLength={11}
                                 placeholder='Phone Number'
-                                onChange={ (e) => setPhone(e.target.value) }
+                                onChange={(e) => setPhone(e.target.value)}
                             ></input>
                             <span className='text-danger'>*</span>
                         </div>
-                        { isValidPhone && <p style={ { color: 'red' } }>{ isValidPhone }</p> }
+                        {isValidPhone && <p style={{ color: 'red' }}>{isValidPhone}</p>}
 
                         <div className='d-flex align-items-center gap-1'>
                             <input
@@ -120,35 +124,35 @@ const Regsiter = () => {
                                 type='password'
                                 id="password"
                                 name="password"
-                                value={ password }
+                                value={password}
                                 placeholder='***********'
-                                onChange={ (e) => setPassword(e.target.value) }
+                                onChange={(e) => setPassword(e.target.value)}
                             ></input>
                             <span className='text-danger'>*</span>
                         </div>
 
                         <div className="d-flex align-items-center gap-1">
                             <input
-                                ref={ passwordRef }
+                                ref={passwordRef}
                                 className='form-control w-100'
                                 type="password"
                                 id="confirmedPassword"
                                 name="confirmedPassword"
-                                value={ repeatPassword }
+                                value={repeatPassword}
                                 placeholder="Confirmed Password"
-                                onChange={ (e) => setRepeatPassword(e.target.value) }
+                                onChange={(e) => setRepeatPassword(e.target.value)}
                             >
 
                             </input>
                             <span className='text-danger'>*</span>
 
                         </div>
-                        { isValidPassword && <p style={ { color: 'red' } }>{ isValidPassword }</p> }
+                        {isValidPassword && <p style={{ color: 'red' }}>{isValidPassword}</p>}
                         <div className='mb-3'>
                             <Button className='btn-primary-main'
-                                disabled={ !isFull ? true : false }
+                                disabled={!isFull ? true : false}
                                 block
-                                onClick={ () => handleSubmit() }
+                                onClick={() => handleSubmit()}
                             >
                                 Đăng ký
                             </Button>

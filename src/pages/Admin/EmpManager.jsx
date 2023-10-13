@@ -17,11 +17,11 @@ const EmpManager = () => {
     const emp = useSelector((state) => state.emp.emp.data)
     const getEmpExport = (event, done) => {
         let r = []
-        if (data && data.length > 0) {
+        if (emp && emp.length > 0) {
             r.push(["Id", "Họ tên", "Giới tính", "Số điện thoại", "Ngày sinh", "Ngày bắt đầu làm việc", "Chức vụ"])
-            data.map((item, index) => {
+            emp.map((item, index) => {
                 let arr = [];
-                arr[0] = item.id,
+                arr[0] = item.idNhanVien,
                     arr[1] = item.tenNhanVien,
                     arr[2] = item.gioiTinh ? "Nam" : "Nữ",
                     arr[3] = item.soDienThoai,
@@ -36,24 +36,24 @@ const EmpManager = () => {
     }
 
     return (
-        <main style={ { marginTop: "90px", minHeight: "100vh" } }>
+        <main style={{ marginTop: "90px", minHeight: "100vh" }}>
             <section>
                 <Space>
                     <ModalCreateEmp />
-                    <Button size='large' icon={ <Export size={ 16 } weight="fill" /> } style={ { backgroundColor: "yellowgreen" } }>
+                    <Button size='large' icon={<Export size={16} weight="fill" />} style={{ backgroundColor: "yellowgreen" }}>
                         <CSVLink filename='employee'
-                            data={ dataExport }
-                            asyncOnClick={ true }
-                            onClick={ getEmpExport }
+                            data={dataExport}
+                            asyncOnClick={true}
+                            onClick={getEmpExport}
                         >Xuất danh sách nhân viên</CSVLink>
                     </Button>
-                    <Button size='large' icon={ <PlusCircleOutlined /> } style={ { backgroundColor: "palegoldenrod" } }>
+                    <Button size='large' icon={<PlusCircleOutlined />} style={{ backgroundColor: "palegoldenrod" }}>
                         Tại một tài khoản
                     </Button>
                 </Space>
             </section>
             <section>
-                <TableEmp data={ emp } />
+                <TableEmp data={emp} />
             </section>
         </main>
     )

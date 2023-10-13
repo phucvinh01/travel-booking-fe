@@ -101,51 +101,51 @@ const Item = (props) => {
 
     return (
         <>
-            <ModalEditTour isModalOpen={ isModalOpen } handleOk={ handleOk } handleCancel={ handleCancel } state={ state } />
+            <ModalEditTour isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} state={state} />
 
 
             <div
                 className='col-lg-4 col-md-6 col-sm-12 mb-3'
-                key={ data.id }>
+                key={data.idTour}>
                 <Card
-                    bordered={ false }
+                    bordered={false}
                     className='card-product'
                     hoverable
-                    style={ {
+                    style={{
                         width: 280,
-                    } }
+                    }}
                     cover={
                         <img
                             loading='lazy'
                             alt='example'
-                            src={ data.anhBia }
-                            style={ { height: '280px' } }
+                            src={data.anhBia}
+                            style={{ height: '280px' }}
                         />
                     }>
                     <div className='p-2'>
                         <div className='card-content-inner'>
-                            <p className='card-content__decsrciption'>{ data?.tenTour }</p>
-                            <Space size={ 'large' } align='center' className='d-flex justify-content-between' >
+                            <p className='card-content__decsrciption'>{data?.tenTour}</p>
+                            <Space size={'large'} align='center' className='d-flex justify-content-between' >
                                 <Space >
                                     <ClockCircleOutlined />
-                                    <p>{ data.moTa }</p>
+                                    <p>{data.moTa}</p>
                                 </Space>
                                 <Space >
                                     {
-                                        data.phuongTienDiChuyen.includes('xe') ? <CarOutlined /> : data.phuongTienDiChuyen.includes('maybay') ? <Airplane size={ 16 } /> : <Train size={ 16 } />
+                                        data.phuongTienDiChuyen.includes('xe') ? <CarOutlined /> : data.phuongTienDiChuyen.includes('maybay') ? <Airplane size={16} /> : <Train size={16} />
                                     }
                                 </Space>
                             </Space>
-                            <p className='text-end text-danger fw-bolder' style={ { fontSize: 18 } }>
-                                { formatCurrency.format(data?.chiPhi) }
+                            <p className='text-end text-danger fw-bolder' style={{ fontSize: 18 }}>
+                                {formatCurrency.format(data?.chiPhi)}
                             </p>
                         </div>
                     </div>
                     {
-                        location.pathname.includes('admin') ? <><Button icon={ <EditOutlined /> } className='btn-quick' type="primary" onClick={ showModal }>
+                        location.pathname.includes('admin') ? <><Button icon={<EditOutlined />} className='btn-quick' type="primary" onClick={showModal}>
                             Chỉnh sửa
                         </Button></>
-                            : <button onClick={ () => navigate(`/tours/${data?.id}`) }
+                            : <button onClick={() => navigate(`/tours/${data?.idTour}`)}
                                 className='btn-quick'
                             >
                                 <span>XEM CHI TIẾT</span>
@@ -168,7 +168,7 @@ const Item = (props) => {
                     ) } */}
                     <hr></hr>
                     {
-                        location.pathname.includes('admin') && <><ModalScludeTour id={ data.id } /></>
+                        location.pathname.includes('admin') && <><ModalScludeTour id={data.id} /></>
                     }
                 </Card>
             </div>

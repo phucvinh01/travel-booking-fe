@@ -9,21 +9,17 @@ import TableTour from '../../components/TableTour'
 
 const TourManager = () => {
     const tours = useSelector((state) => state.tour.tours.data);
-    const [data, setData] = useState([])
-    useEffect(() => {
-        tours && setData(tours)
-    }, [])
     return (
         <>
-            <main style={ { marginTop: "90px", minHeight: "100vh" } }>
+            <main style={{ marginTop: "90px", minHeight: "100vh" }}>
                 <section>
-                    <Space size={ 'large' }>
+                    <Space size={'large'}>
                         <ModalCreateTour />
                         <ModalCreateCategory />
                     </Space>
                 </section>
                 <section>
-                    <TableTour data={ tours } />
+                    <TableTour data={tours} />
                 </section>
             </main>
         </>

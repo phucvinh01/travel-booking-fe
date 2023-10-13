@@ -11,7 +11,6 @@ import ModalEditTour from '../ModalEditTour';
 const TableTour = (props) => {
     const cate = useSelector((state) => state.cate.category.data);
 
-    console.log(cate);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [state, setState] = useState({})
@@ -30,7 +29,7 @@ const TableTour = (props) => {
             title: 'Tên',
             dataIndex: 'tenTour',
             key: 'tenTour',
-            render: (text) => <a>{ text }</a>,
+            render: (text) => <a>{text}</a>,
         },
         {
             title: 'Mô tả',
@@ -45,7 +44,7 @@ const TableTour = (props) => {
             sorter: (a, b) => a.chiPhi - b.chiPhi,
             render: (_, { chiPhi }) => (
                 <>
-                    { <p className='text-danger text-end'>{ formatCurrency.format(chiPhi) }</p> }
+                    {<p className='text-danger text-end'>{formatCurrency.format(chiPhi)}</p>}
                 </>
             )
         },
@@ -55,7 +54,7 @@ const TableTour = (props) => {
             key: 'trangThai',
             render: (_, { trangThai }) => (
                 <>
-                    { <span>{ trangThai ? "Đang hoạt động" : "Ngừng hoạt động" }</span> }
+                    {<span>{trangThai ? "Đang hoạt động" : "Ngừng hoạt động"}</span>}
                 </>
             )
         },
@@ -67,13 +66,13 @@ const TableTour = (props) => {
                 return (
                     {
                         text: item.tenLoai,
-                        value: item.id
+                        value: item.idLoaiTour
                     }
                 )
             }),
             onFilter: (value, record) => record.maLoaiTour.startsWith(value),
             render: (text, record) => {
-                const comparisonItem = cate.find(item => item.id === record.maLoaiTour);
+                const comparisonItem = cate.find(item => item.idLoaiTour === record.maLoaiTour);
                 return comparisonItem.tenLoai;
             }
         },
@@ -82,8 +81,8 @@ const TableTour = (props) => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <ModalScludeTour id={ record.id } />
-                    <Button onClick={ () => showModal(record) } icon={ <EditFilled /> } />
+                    <ModalScludeTour id={record.idTour} />
+                    <Button onClick={() => showModal(record)} icon={<EditFilled />} />
                 </Space>
             ),
         },
@@ -91,10 +90,10 @@ const TableTour = (props) => {
     const { data } = props
     return (
         <>
-            <Table pagination={ {
+            <Table pagination={{
                 position: ['bottomCenter']
-            } } columns={ columns } dataSource={ data } />
-            <ModalEditTour handleCancel={ handleCancel } handleOk={ handleOk } isModalOpen={ isModalOpen } state={ state } />
+            }} columns={columns} dataSource={data} />
+            <ModalEditTour handleCancel={handleCancel} handleOk={handleOk} isModalOpen={isModalOpen} state={state} />
 
         </>
     )
