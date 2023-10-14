@@ -102,17 +102,14 @@ const Item = (props) => {
     return (
         <>
             <ModalEditTour isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} state={state} />
-
-
             <div
-                className='col-lg-4 col-md-6 col-sm-12 mb-3'
-                key={data.idTour}>
+                key={data.idTour} className='col-lg-3 col-md-6 col-sm-12 mb-3'>
                 <Card
                     bordered={false}
                     className='card-product'
-                    hoverable
+                    hoverable={true}
                     style={{
-                        width: 280,
+                        width: 240,
                     }}
                     cover={
                         <img

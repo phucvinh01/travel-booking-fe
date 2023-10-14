@@ -1,0 +1,247 @@
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Alert, Button, Form, Input, Popconfirm, Table, message } from 'antd';
+import { SendOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
+import { getOneCusTomerByIdAccoutn } from '../../Axios/customer';
+const EditableContext = React.createContext(null);
+const EditableRow = ({ index, ...props }) => {
+    const [form] = Form.useForm();
+    return (
+        <Form form={form} component={false}>
+            <EditableContext.Provider value={form}>
+                <tr {...props} />
+            </EditableContext.Provider>
+        </Form>
+    );
+};
+const EditableCell = ({
+    title,
+    editable,
+    children,
+    dataIndex,
+    record,
+    handleSave,
+    ...restProps
+}) => {
+    const [editing, setEditing] = useState(false);
+    const inputRef = useRef(null);
+    const form = useContext(EditableContext);
+    useEffect(() => {
+        if (editing) {
+            inputRef.current.focus();
+        }
+    }, [editing]);
+    const toggleEdit = () => {
+        setEditing(!editing);
+        form.setFieldsValue({
+            [dataIndex]: record[dataIndex],
+        });
+    };
+    const save = async () => {
+        try {
+            const values = await form.validateFields();
+            toggleEdit();
+            handleSave({
+                ...record,
+                ...values,
+            });
+        } catch (errInfo) {
+            console.log('Save failed:', errInfo);
+        }
+    };
+    let childNode = children;
+    if (editable) {
+        childNode = editing ? (
+            <Form.Item
+                style={{
+                    margin: 0,
+                }}
+                name={dataIndex}
+                rules={[
+                    {
+                        required: true,
+                        message: `${title} is required.`,
+                    },
+                ]}
+            >
+                <Input ref={inputRef} onPressEnter={save} onBlur={save} />
+            </Form.Item>
+        ) : (
+            <div
+                className="editable-cell-value-wrap"
+                style={{
+                    paddingRight: 24,
+                }}
+                onClick={toggleEdit}
+            >
+                {children}
+            </div>
+        );
+    }
+    return <td {...restProps}>{childNode}</td>;
+};
+const TableOrder = (props) => {
+    const emp = useSelector((state) => state.emp.emp.data)
+    const user = useSelector((state) => state.auth.login.currentUser);
+    const [idCustomer, setIdCustomer] = useState("")
+
+    const getIdCustomer = async (id) => {
+        let r = await getOneCusTomerByIdAccoutn(id)
+        if (r.status === 400) {
+            message.info("Không tìm thấy khách hàng này")
+        }
+        else {
+            setIdCustomer(r.idKhachHang)
+        }
+    }
+
+    useEffect(() => {
+        getIdCustomer(user.idTaiKhoan)
+    }, [user])
+
+
+    const { quantity, idTour, dayOrder } = props
+    const [dataSource, setDataSource] = useState(Array.from({ length: quantity }, (_, index) => ({
+        hoTen: index + 1,
+        gioiTinh: `Name ${index + 1}`,
+        ngaySinh: 25 + index,
+        key: index + 1
+    })));
+
+    const [count, setCount] = useState(quantity);
+    const handleDelete = (key) => {
+        const newData = dataSource.filter((item) => item.key !== key);
+        setCount(+count - 1)
+        setDataSource(newData);
+    };
+
+    const defaultColumns = [
+        {
+            title: 'Tên',
+            dataIndex: 'hoTen',
+            width: '30%',
+            editable: true,
+        },
+        {
+            title: 'Giới tính',
+            dataIndex: 'gioiTinh',
+            width: '30%',
+            editable: true,
+        },
+        {
+            title: 'Ngày sinh',
+            dataIndex: 'ngaySinh',
+            width: '30%',
+            editable: true,
+        },
+        {
+            title: 'Operation',
+            dataIndex: 'operation',
+            render: (_, record) =>
+                dataSource.length >= 1 ? (
+                    <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+                        <a>Delete</a>
+                    </Popconfirm>
+                ) : null,
+        },
+    ];
+    const handleAdd = () => {
+        const newData = {
+            key: count,
+            hoTen: `Edward King ${count}`,
+            ngaySinh: '32',
+            gioiTinh: `London, Park Lane no. ${count}`,
+        };
+        setDataSource([...dataSource, newData]);
+        setCount(count + 1);
+    };
+    const handleSave = (row) => {
+        const newData = [...dataSource];
+        const index = newData.findIndex((item) => row.key === item.key);
+        const item = newData[index];
+        newData.splice(index, 1, {
+            ...item,
+            ...row,
+        });
+        setDataSource(newData);
+    };
+    const components = {
+        body: {
+            row: EditableRow,
+            cell: EditableCell,
+        },
+    };
+    const columns = defaultColumns.map((col) => {
+        if (!col.editable) {
+            return col;
+        }
+        return {
+            ...col,
+            onCell: (record) => ({
+                record,
+                editable: col.editable,
+                dataIndex: col.dataIndex,
+                title: col.title,
+                handleSave,
+            }),
+        };
+    });
+
+    const handleSubmit = () => {
+        let body = {
+            "maKhach": idCustomer,
+            "maHuongDanVien": emp[0].idNhanVien,
+            "maTour": idTour,
+            "soLuong": quantity,
+            "ngayDat": dayOrder,
+            "trangThai": true,
+            // "thanhViens": [
+            //     {
+            //         "hoTen": "string",
+            //         "gioiTinh": true,
+            //         "canCuocConDan": "string",
+            //         "ngaySinh": "2023-10-14T05:17:12.411Z",
+            //         "maDatTour": "string"
+            //     }
+            // ]
+            "thanhViens": dataSource.map((item) => {
+                return {
+                    "hoTen": item.hoTen,
+                    "gioiTinh": item.gioiTinh,
+                    "canCuocConDan": null,
+                    "ngaySinh": item.ngaySinh,
+                    "maDatTour": null
+                }
+            })
+        }
+        console.log(body);
+    }
+    return (
+        <div>
+            {
+                count < quantity && <><Button
+                    onClick={handleAdd}
+                    type="primary"
+                    style={{
+                        marginBottom: 16,
+                    }}
+                >
+                    Add a row
+                </Button></>
+            }
+            <Table
+                pagination={false}
+                components={components}
+                rowClassName={() => 'editable-row'}
+                bordered
+                dataSource={dataSource}
+                columns={columns}
+            />
+            <div className='d-flex justify-content-end mt-3'>
+                <Button onClick={handleSubmit} icon={<SendOutlined />}></Button>
+            </div>
+
+        </div>
+    );
+};
+export default TableOrder;

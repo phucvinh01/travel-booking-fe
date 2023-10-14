@@ -18,7 +18,7 @@ const TourManager = () => {
                         <ModalCreateCategory />
                     </Space>
                 </section>
-                <section>
+                <section className='container p-3 mx-auto'>
                     <TableTour data={tours} />
                 </section>
             </main>

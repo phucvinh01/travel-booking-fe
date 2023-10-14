@@ -13,19 +13,22 @@ const ListItem = (props) => {
     return (
         <> {
             <div className='container' >
-                <h3>{ title }</h3>
-                <h5>{ subtitle }</h5>
+                <h3>{title}</h3>
+                <h5>{subtitle}</h5>
                 <div className='row'>
-                    { data && data?.length > 0 && data.map((item, index) => {
+                    {data && data?.length > 0 && data.map((item, index) => {
                         return (
-                            <Item
-                                key={ index }
-                                data={ item }
-                            />)
-                    }) }
+                            <>
+                                <Item
+                                    key={index}
+                                    data={item}
+                                />
+                            </>
+                        )
+                    })}
                 </div>
-                {/* <div className='text-center'><Button to={ "/" } type='default' size='large'>Xem Thêm Tour</Button></div> */ }
-            </div> }
+                {/* <div className='text-center'><Button to={ "/" } type='default' size='large'>Xem Thêm Tour</Button></div> */}
+            </div>}
         </>
     )
 }

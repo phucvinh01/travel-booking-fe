@@ -10,6 +10,10 @@ import { getflightFailed, getflightStart, getflightSuccess } from './flightSlice
 import { getAllFlight } from '../Axios/flight'
 import { getAllEmp } from '../Axios/Employee'
 import { getEmpFailed, getEmpStart, getEmpSuccess } from './empSlice'
+import { getTypeFailed, getTypeStart, getTypeSuccess } from './typeSlice'
+import { getAllType } from '../Axios/typeAccount'
+import { getAirFieldFailed, getAirFieldStart, getAirFieldSuccess } from './airfield'
+import { getAllAir } from '../Axios/Air'
 
 export const login = async (user, dispatch, navigCate) => {
     dispatch(loginStart());
@@ -38,8 +42,7 @@ export const login = async (user, dispatch, navigCate) => {
 export const logout = async (dispatch, id, navigate, token) => {
     dispatch(logoutStart());
     try {
-        const res = await axios.post('/v1/auth/logout')
-        dispatch(logoutSuccess(res))
+        dispatch(logoutSuccess())
         navigate('/')
     }
     catch (err) {
@@ -122,6 +125,36 @@ export const getAllEmployee = async (dispatch) => {
     }
     catch (err) {
         dispatch(getEmpFailed())
+    }
+}
+
+export const getType = async (dispatch) => {
+    dispatch(getTypeStart());
+    try {
+        const res = await getAllType()
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getTypeFailed())
+        } else {
+            dispatch(getTypeSuccess(res))
+        }
+    }
+    catch (err) {
+        dispatch(getTypeFailed())
+    }
+}
+
+export const getAri = async (dispatch) => {
+    dispatch(getAirFieldStart());
+    try {
+        const res = await getAllAir()
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getAirFieldFailed())
+        } else {
+            dispatch(getAirFieldSuccess(res))
+        }
+    }
+    catch (err) {
+        dispatch(getAirFieldFailed())
     }
 }
 

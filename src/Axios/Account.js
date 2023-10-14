@@ -23,7 +23,6 @@ const putUpdateAccount = (body) => {
 
 const deleteAccount = (id) => {
     return Axios.get(`/TaiKhoan/delete-tai-khoan?Id=${id}`)
-
 }
 
 

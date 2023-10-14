@@ -2,8 +2,8 @@ import { Suspense, lazy, useEffect } from "react";
 import './App.css'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import CustomerLayout from "./layouts/CustomerSreen";
-import { useDispatch } from "react-redux";
-import { getAllEmployee, getCategory, getHotel, getItems, getflight } from "./redux/api";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllEmployee, getAri, getCategory, getHotel, getItems, getType, getflight } from "./redux/api";
 import Loadable from "./util/Loadable";
 import AdminLayout from "./layouts/AdminScreen";
 
@@ -11,6 +11,17 @@ import AdminLayout from "./layouts/AdminScreen";
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const user = useSelector((state) => state.auth.login.currentUser);
+
+  console.log(user);
+
+
+  useEffect(() => {
+    if (user?.maLoai === 'LTK20231013195805327') {
+      navigate('/admin')
+    }
+  }, [user])
+
 
   useEffect(() => {
     getItems(dispatch)
@@ -18,31 +29,33 @@ function App() {
     getHotel(dispatch)
     getflight(dispatch)
     getAllEmployee(dispatch)
+    getType(dispatch)
+    getAri(dispatch)
 
   }, [])
 
   return (
     <>
 
-      {/* router customer */ }
+      {/* router customer */}
       <Routes>
-        <Route path="/" element={ <CustomerLayout /> }>
-          <Route path="/" element={ <Home /> } />
-          <Route path="/about" element={ <About /> } />
-          <Route path="/tours" element={ <Tour /> } />
-          <Route path="/tours/:id" element={ <TourDetail /> } />
+        <Route path="/" element={<CustomerLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/tours" element={<Tour />} />
+          <Route path="/tours/:id" element={<TourDetail />} />
         </Route>
       </Routes>
 
       <Routes>
-        <Route path="/admin" element={ <AdminLayout /> }>
-          <Route path="/admin" element={ <Admin /> } />
-          <Route path="/admin/tour" element={ <TourManager /> } />
-          <Route path="/admin/customer" element={ <CustomerManager /> } />
-          <Route path="/admin/order" element={ <OrderManager /> } />
-          <Route path="/admin/emp" element={ <EmpManager /> } />
-          <Route path="/admin/hotel" element={ <HotelManager /> } />
-          <Route path="/admin/tranpost" element={ <TranpostManager /> } />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/tour" element={<TourManager />} />
+          <Route path="/admin/customer" element={<CustomerManager />} />
+          <Route path="/admin/order" element={<OrderManager />} />
+          <Route path="/admin/emp" element={<EmpManager />} />
+          <Route path="/admin/hotel" element={<HotelManager />} />
+          <Route path="/admin/tranpost" element={<TranpostManager />} />
         </Route>
       </Routes>
 

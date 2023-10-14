@@ -4,6 +4,9 @@ import { SearchOutlined } from '@ant-design/icons'
 import './search.scss'
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { getToursFailed, getToursStart, getToursSuccess } from '../../redux/tourSlice';
+import { useDispatch } from 'react-redux';
+import { getListTourByName } from '../../Axios/Tour';
 dayjs.extend(customParseFormat);
 //import { getDataListSelect } from '../service/DataService';
 const SearchFrom = () => {
@@ -24,29 +27,33 @@ const SearchFrom = () => {
         return 'Thứ ' + (dayNumber + 1);
     };
 
-    return (
-        <div className='search rounded-2'>
-            <Space direction='vertical' >
-                <input className='form-control' type="text" placeholder="Bạn muốn đi đâu?" />
-                <Space direction='horizontal' >
+    const [search, setSearch] = useState("")
+    const dispatch = useDispatch()
+    const handleSearch = async (text) => {
+        dispatch(getToursStart());
+        try {
+            const res = await getListTourByName(text)
+            if (res.statusCode && res.statusCode === 204) {
+                dispatch(getToursFailed())
+            }
+            else {
+                dispatch(getToursSuccess(res))
+            }
+        }
+        catch (err) {
+            dispatch(getToursFailed())
+        }
+    }
 
-                    <Space className='bg-white p-1 rounded-2'>
-                        <label className='d-block'>{ getDay() } </label>
-                        <DatePicker onChange={ onChange } defaultValue={ dayjs(date, dateFormat) } />
-                    </Space>
-                    <Space className='bg-white p-1 rounded-2'><label className='text-dark'>Xuất phát từ</label>
-                        <Select style={ { width: 150 } }>
-                            {/* {
-                                dataList && dataList.map((item, index) => {
-                                    return (<option key={ index } value={ item.name }>{ item.name }</option>)
-                                })
-                            } */}
-                        </Select>
-                    </Space>
-                    <Button icon={ <SearchOutlined /> } size='large'>
-                        Tìm
-                    </Button>
-                </Space>
+
+
+    return (
+        <div className='search rounded-2' >
+            <Space direction='horizontal' >
+                <input className='form-control' type="text" placeholder="Bạn muốn đi đâu?" onChange={(e) => setSearch(e.target.value)} />
+                <Button onClick={() => handleSearch(search)} icon={<SearchOutlined />} size='large'>
+                    Tìm
+                </Button>
             </Space>
         </div>
     )

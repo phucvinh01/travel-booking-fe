@@ -71,7 +71,6 @@ const Tours = () => {
         <div>
             <div className='container-fluid mt-4'>
                 <div className='d-flex justify-content-center align-items-center backgound-tour-page'>
-                    <SearchFrom />
                 </div>
                 <section>
                     <Breadcrumb
@@ -85,8 +84,11 @@ const Tours = () => {
                         ]}
                     />
                 </section>
+                <div style={{ height: 200 }} className='d-flex justify-content-end'>
+                    <SearchFrom />
+                </div>
                 <div className='row'>
-                    <div className='col-lg-3 col-md-3 mt-3' style={{ borderRight: "1px solid #333", minHeight: "100vh" }}>
+                    <div className='col-lg-2 col-md-3 mt-3' style={{ borderRight: "1px solid #333", minHeight: "100vh" }}>
                         <Space direction='vertical' size={'large'}>
                             <p>Lọc loại tour</p>
                             <Space direction='vertical' className='border rounded-3 w-100'>
@@ -121,8 +123,8 @@ const Tours = () => {
                             </Space>
                         </Space>
                     </div>
-                    <div className='col-lg-9 col-md-5 col-sm-12'>
-                        <div className='row'>
+                    <div className='col-lg-10 col-md-5 col-sm-12'>
+                        <div className='row p-3'>
                             {data?.length > 0 ? data.map((item, index) => {
                                 return (
                                     <Item

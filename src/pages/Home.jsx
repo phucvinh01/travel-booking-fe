@@ -6,20 +6,18 @@ import { useSelector } from 'react-redux';
 const Tours = () => {
 
     const tours = useSelector((state) => state.tour.tours.data);
-    console.log(tours);
 
     return (
         <>
             <div>
                 <section className='mt-4'>
                     <div className='d-flex justify-content-center align-items-center mt-4 background-home'>
-                        <Search />
                     </div>
                     <section className='my-3 container'>
                         <div className='row mx-auto'>
                             <div className='col-lg-4 col-md-12 col-sm-12'>
                                 <div className='d-flex align-center gap-3 p-3'>
-                                    <img style={ { width: "50px" } } src='https://www.ivivu.com/du-lich/content/img/icon-support.svg'></img>
+                                    <img style={{ width: "50px" }} src='https://www.ivivu.com/du-lich/content/img/icon-support.svg'></img>
                                     <div >
                                         <p className='m-0'><strong>Tư Vấn Chuyên Nghiệp</strong></p>
                                         <p className='m-0'><small>Hỗ trợ nhiệt tình, chăm sóc chu đáo</small></p>
@@ -28,7 +26,7 @@ const Tours = () => {
                             </div>
                             <div className='col-lg-4 col-md-12 col-sm-12'>
                                 <div className='d-flex align-center gap-3 p-3'>
-                                    <img style={ { width: "50px" } } src='https://www.ivivu.com/du-lich/content/img/icon-location.svg'></img>
+                                    <img style={{ width: "50px" }} src='https://www.ivivu.com/du-lich/content/img/icon-location.svg'></img>
                                     <div >
                                         <p className='m-0'><strong>Trải Nghiệm Đa Dạng</strong></p>
                                         <p className='m-0'><small>Chọn tour phù hợp, giá tour hợp lý</small></p>
@@ -37,7 +35,7 @@ const Tours = () => {
                             </div>
                             <div className='col-lg-4 col-md-12 col-sm-12'>
                                 <div className='d-flex align-center gap-3 p-3'>
-                                    <img style={ { width: "50px" } } src='https://www.ivivu.com/du-lich/content/img/icon-payment.svg'></img>
+                                    <img style={{ width: "50px" }} src='https://www.ivivu.com/du-lich/content/img/icon-payment.svg'></img>
                                     <div >
                                         <p className='m-0'><strong>Thanh Toán An Toàn</strong></p>
                                         <p className='m-0'><small>Linh hoạt, rõ ràng, bảo mật</small></p>
@@ -48,9 +46,8 @@ const Tours = () => {
                     </section>
                     <section className='py-3 container justify-content-center'>
                         <ListItem
-                            title={ 'Tour Du Lịch Lễ 2/9' }
-                            subtitle={ 'Chơi Lễ Thả Ga, Không Lo Về Giá' }
-                            data={ tours }
+                            title={'Tour hot'}
+                            data={tours?.slice(5)}
                         //isLoading={ isLoading }
                         />
 

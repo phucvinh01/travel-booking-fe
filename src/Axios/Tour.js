@@ -51,11 +51,17 @@ const postScheduleTour = (body) => {
 
 }
 
+const getListTourByName = (name) => {
+    return Axios.get(`/Tour/get-list-tour-by-theo-ten?tenTour=${name}`)
+
+}
+
 
 
 
 
 export {
+    getListTourByName,
     getAllTour, createTour, getCount, getTourByStatus, getTourLast, getTourByPrice
     , getTourByCategory, getTourByCategoryAndStatus, getTourByUserCreate, getTourById,
     getScheduleTour, postScheduleTour

@@ -90,7 +90,7 @@ const TableTour = (props) => {
     const { data } = props
     return (
         <>
-            <Table pagination={{
+            <Table size='large' style={{ width: 1000 }} pagination={{
                 position: ['bottomCenter']
             }} columns={columns} dataSource={data} />
             <ModalEditTour handleCancel={handleCancel} handleOk={handleOk} isModalOpen={isModalOpen} state={state} />
