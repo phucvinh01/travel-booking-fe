@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Alert, Button, Form, Input, Popconfirm, Table, message } from 'antd';
-import { SendOutlined } from '@ant-design/icons';
+import { ImportOutlined, SendOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { getOneCusTomerByIdAccoutn } from '../../Axios/customer';
+import { postCreateOrder, putUpdateOrder } from '../../Axios/Order';
+import moment from 'moment';
+import _ from 'lodash';
+import Axios from '../../Axios/Axios'
 const EditableContext = React.createContext(null);
 const EditableRow = ({ index, ...props }) => {
     const [form] = Form.useForm();
@@ -83,6 +87,7 @@ const EditableCell = ({
 const TableOrder = (props) => {
     const emp = useSelector((state) => state.emp.emp.data)
     const user = useSelector((state) => state.auth.login.currentUser);
+    const [info, setInfo] = useState({})
     const [idCustomer, setIdCustomer] = useState("")
 
     const getIdCustomer = async (id) => {
@@ -187,7 +192,11 @@ const TableOrder = (props) => {
         };
     });
 
-    const handleSubmit = () => {
+    const post = async (body) => {
+        return await Axios.post(`/ThanhVien/create-thanh-vien`, body)
+    }
+
+    const handleSubmit = async () => {
         let body = {
             "maKhach": idCustomer,
             "maHuongDanVien": emp[0].idNhanVien,
@@ -195,27 +204,25 @@ const TableOrder = (props) => {
             "soLuong": quantity,
             "ngayDat": dayOrder,
             "trangThai": true,
-            // "thanhViens": [
-            //     {
-            //         "hoTen": "string",
-            //         "gioiTinh": true,
-            //         "canCuocConDan": "string",
-            //         "ngaySinh": "2023-10-14T05:17:12.411Z",
-            //         "maDatTour": "string"
-            //     }
-            // ]
-            "thanhViens": dataSource.map((item) => {
-                return {
-                    "hoTen": item.hoTen,
-                    "gioiTinh": item.gioiTinh,
-                    "canCuocConDan": null,
-                    "ngaySinh": item.ngaySinh,
-                    "maDatTour": null
-                }
-            })
+            "thanhViens": []
         }
-        console.log(body);
+        let res = await postCreateOrder(body)
+        if (res) {
+            setInfo(res)
+            dataSource.map((item) => {
+                return post({
+                    "hoTen": item.hoTen.toString(),
+                    "gioiTinh": item.gioiTinh === "Nam" ? true : false,
+                    "canCuocConDan": null,
+                    "ngaySinh": moment(item.ngaySinh).toDate,
+                    "maDatTour": info?.idDatTour,
+                })
+            })
+            message.success("Đặt tour thành công, chúng tôi sẽ liên hệ với bạn sớm nhất")
+            props.handleOk()
+        }
     }
+
     return (
         <div>
             {

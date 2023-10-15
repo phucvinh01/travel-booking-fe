@@ -27,7 +27,7 @@ const DropdownAuth = (props) => {
             label: (
                 <Space>
                     <UserOutlined />
-                    <NavLink>Profile</NavLink>
+                    <NavLink to={'/me/profile'}>Profile</NavLink>
                 </Space>
             ),
         },
@@ -36,7 +36,7 @@ const DropdownAuth = (props) => {
             label: (
                 <Space>
                     <HistoryOutlined />
-                    <NavLink>Lịch sử</NavLink>
+                    <NavLink to={'/me/history'}>Lịch sử</NavLink>
                 </Space>
             ),
         }

@@ -12,8 +12,13 @@ const getOneOrderById = (id) => {
     return Axios.get(`/DatTour/get-one-dat-tour?maDatTour=${id}`)
 }
 
+
+const getOrderByIdCustomer = (id) => {
+    return Axios.get(`/DatTour/get-list-dat-tour-by-khach-id?maKhach=${id}`)
+}
+
 const putUpdateOrder = (body) => {
     return Axios.put(`/DatTour/update-dat-tour`, body)
 }
 
-export { postCreateOrder, getAllOrder, getOneOrderById, putUpdateOrder }
+export { postCreateOrder, getAllOrder, getOneOrderById, putUpdateOrder, getOrderByIdCustomer }

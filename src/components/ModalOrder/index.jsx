@@ -26,7 +26,7 @@ const ModalOrder = (props) => {
                 Yêu cầu đặt tour
             </Button>
             <Modal footer={null} width={600} title="Hãy cung cấp cho chúng tôi thông tin về bạn" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <TableOrder quantity={quantity} idTour={idTour} dayOrder={dayOrder} />
+                <TableOrder quantity={quantity} idTour={idTour} dayOrder={dayOrder} handleOk={handleOk} />
             </Modal>
         </>
     );

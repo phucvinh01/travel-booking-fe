@@ -44,6 +44,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/tours" element={<Tour />} />
           <Route path="/tours/:id" element={<TourDetail />} />
+          <Route path="/me/profile" element={<Profile />} />
+          <Route path="/me/history" element={<History />} />
         </Route>
       </Routes>
 
@@ -97,5 +99,13 @@ const TranpostManager = Loadable(
 const HotelManager = Loadable(
   lazy(() => import('./pages/Admin/HotelManager'))
 );
+
+const Profile = Loadable(
+  lazy(() => import('./pages/Profile'))
+)
+
+const History = Loadable(
+  lazy(() => import('./pages/History'))
+)
 
 export default App
