@@ -19,10 +19,12 @@ const ListItem = (props) => {
                     {data && data?.length > 0 && data.map((item, index) => {
                         return (
                             <>
-                                <Item
-                                    key={index}
-                                    data={item}
-                                />
+                                <div className='col-lg-4 col-md-6 col-sm-12'>
+                                    <Item
+                                        key={index}
+                                        data={item}
+                                    />
+                                </div>
                             </>
                         )
                     })}

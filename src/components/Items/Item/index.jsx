@@ -104,8 +104,8 @@ const Item = (props) => {
             <ModalEditTour isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} state={state} />
             {/* className='col-lg-4 col-md-6 col-sm-12 mb-4' */}
             <div
-                key={data.idTour} className='col-lg-4 col-md-6 col-sm-12 mb-4'>
-                     <Card
+                key={data.idTour} >
+                <Card
                     bordered={false}
                     className='card-product'
                     hoverable={true}
@@ -113,56 +113,51 @@ const Item = (props) => {
                         width: "100%",
                     }}>
                     <div class="card_view">
-                        <div  class="card_image">
-                            <img loading='lazy'alt='example' src={"..//..//..//src/assets/Images/"+data.anhBia} style={{ width: '100%' }}/>
+                        <div class="card_image">
+                            <img loading='lazy' alt='example' src={"..//..//..//src/assets/Images/" + data.anhBia} style={{ width: '100%' }} />
                         </div>
 
                         <div class="card_view_back">
                             <p>{data.moTa}</p>
                         </div>
-                        
+
                         {/* <div class="card_promotion">
                             <p>Giảm ngay    : 100%</p>
                         </div> */}
                         <div class="card_main">
                             <div class="card_body">
-                                <h5>{data?.tenTour.length>60?data?.tenTour.slice(0,60)+"...":data?.tenTour}</h5>
+                                <h5>{data?.tenTour.length > 60 ? data?.tenTour.slice(0, 60) + "..." : data?.tenTour}</h5>
                                 <div className='p-2'>
-                                <Space size={'large'} align='center' className='d-flex justify-content-between' >
-                                    <Space style={{margin:"-5%"}} >
-                                        <ClockCircleOutlined />
-                                        <p>{data.moTa.length>100?data.moTa.slice(0,100)+"...":data.moTa}</p>
+                                    <Space size={'large'} align='center' className='d-flex justify-content-between' >
+                                        <Space style={{ margin: "-5%" }} >
+                                            <ClockCircleOutlined />
+                                            <p>{data.moTa.length > 100 ? data.moTa.slice(0, 100) + "..." : data.moTa}</p>
+                                        </Space>
                                     </Space>
-                                    <Space style={{marginRight:"10px"}}>
-                                        {
-                                            data.phuongTienDiChuyen.includes('xe') ? <CarOutlined /> : data.phuongTienDiChuyen.includes('maybay') ? <Airplane size={16} /> : <Train size={16} />
-                                        }
-                                    </Space>
-                                </Space>
-                                <br/>
-                                <p className='text-end text-danger fw-bolder' style={{ fontSize: 18,marginRight:"5%"}}  >
-                                    {formatCurrency.format(data?.chiPhi)}
-                                </p>
+                                    <br />
+                                    <p className='text-end text-danger fw-bolder' style={{ fontSize: 18, marginRight: "5%" }}  >
+                                        {formatCurrency.format(data?.chiPhi)}
+                                    </p>
                                 </div>
-                                
+
                             </div>
                             <div className='card_link'>
                                 {
-                                location.pathname.includes('admin') ? <><Button icon={<EditOutlined />} className='btn-quick' type="primary" onClick={showModal}>
-                                    Chỉnh sửa
-                                </Button></>
-                                    : <button onClick={() => navigate(`/tours/${data?.idTour}`)}
-                                        className='see'
-                                    >
-                                        <span>XEM CHI TIẾT</span>
-                                    </button>
+                                    location.pathname.includes('admin') ? <><Button icon={<EditOutlined />} className='btn-quick' type="primary" onClick={showModal}>
+                                        Chỉnh sửa
+                                    </Button></>
+                                        : <Button size='large' onClick={() => navigate(`/tours/${data?.idTour}`)}
+                                            className='see'
+                                        >
+                                            <span className='fw-bolder'>XEM CHI TIẾT</span>
+                                        </Button>
                                 }
 
-                                </div>
+                            </div>
                         </div>
-                        
+
                     </div>
-                    </Card>
+                </Card>
 
 
 

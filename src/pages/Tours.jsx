@@ -7,14 +7,22 @@ import ListItem from '../components/Items/ListItem';
 import ListItem2 from '../components/Items/ListItem2';
 import Item from '../components/Items/Item';
 import { getTourByCategory } from '../Axios/Tour';
-
+import { Pagination } from 'antd';
 const Tours = () => {
     const cate = useSelector((state) => state.cate.category.data);
     const tours = useSelector((state) => state.tour.tours.data);
     const [value, setValue] = useState(0);
     const [valueCate, setvalueCate] = useState(0);
     const [data, setData] = useState([])
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
+    const pageSize = 9; // Số sản phẩm trên mỗi trang
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const currentProducts = tours?.slice(startIndex, endIndex);
     useEffect(() => {
         tours && setData(tours)
     }, [])
@@ -125,13 +133,24 @@ const Tours = () => {
                     </div>
                     <div className='col-lg-10 col-md-5 col-sm-12'>
                         <div className='row p-3'>
-                            {data?.length > 0 ? data.map((item, index) => {
+                            {currentProducts?.length > 0 ? currentProducts.map((item, index) => {
                                 return (
-                                    <Item
-                                        key={index}
-                                        data={item}
-                                    />)
+                                    <div className='col-lg-4 col-md-6 col-sm-12'>
+                                        <Item
+                                            key={index}
+                                            data={item}
+
+                                        />
+                                    </div>)
                             }) : <Empty />}
+                            <div className='d-flex justify-content-center mt-3'>
+                                <Pagination
+                                    showSizeChanger={false}
+                                    responsive={true} current={currentPage}
+                                    total={tours.length}
+                                    pageSize={pageSize}
+                                    onChange={handlePageChange}></Pagination>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -9,8 +9,8 @@ const SildeTour = (props) => {
 
     const settings = {
         infinite: false,
-        slidesToShow: 4,
-        slidesToScroll: 4,
+        slidesToShow: 3,
+        slidesToScroll: 3,
         speed: 1000,
         cssEase: "linear"
     };
@@ -20,10 +20,12 @@ const SildeTour = (props) => {
                 {tours && tours?.length > 0 ? tours.map((item, index) => {
                     return (
                         <>
-                            <Item
-                                key={index}
-                                data={item}
-                            />
+                            <div className='p-1'>
+                                <Item
+                                    key={index}
+                                    data={item}
+                                />
+                            </div>
                         </>
                     )
                 }) : <Empty />}
