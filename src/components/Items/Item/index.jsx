@@ -102,73 +102,75 @@ const Item = (props) => {
     return (
         <>
             <ModalEditTour isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} state={state} />
+            {/* className='col-lg-4 col-md-6 col-sm-12 mb-4' */}
             <div
-                key={data.idTour} className='col-lg-3 col-md-6 col-sm-12 mb-3'>
-                <Card
+                key={data.idTour} className='col-lg-4 col-md-6 col-sm-12 mb-4'>
+                     <Card
                     bordered={false}
                     className='card-product'
                     hoverable={true}
                     style={{
-                        width: 240,
-                    }}
-                    cover={
-                        <img
-                            loading='lazy'
-                            alt='example'
-                            src={data.anhBia}
-                            style={{ height: '280px' }}
-                        />
-                    }>
-                    <div className='p-2'>
-                        <div className='card-content-inner'>
-                            <p className='card-content__decsrciption'>{data?.tenTour}</p>
-                            <Space size={'large'} align='center' className='d-flex justify-content-between' >
-                                <Space >
-                                    <ClockCircleOutlined />
-                                    <p>{data.moTa}</p>
-                                </Space>
-                                <Space >
-                                    {
-                                        data.phuongTienDiChuyen.includes('xe') ? <CarOutlined /> : data.phuongTienDiChuyen.includes('maybay') ? <Airplane size={16} /> : <Train size={16} />
-                                    }
-                                </Space>
-                            </Space>
-                            <p className='text-end text-danger fw-bolder' style={{ fontSize: 18 }}>
-                                {formatCurrency.format(data?.chiPhi)}
-                            </p>
+                        width: "100%",
+                    }}>
+                    <div class="card_view">
+                        <div  class="card_image">
+                            <img loading='lazy'alt='example' src={"..//..//..//src/assets/Images/"+data.anhBia} style={{ width: '100%' }}/>
                         </div>
+
+                        <div class="card_view_back">
+                            <p>{data.moTa}</p>
+                        </div>
+                        
+                        {/* <div class="card_promotion">
+                            <p>Giảm ngay    : 100%</p>
+                        </div> */}
+                        <div class="card_main">
+                            <div class="card_body">
+                                <h5>{data?.tenTour.length>60?data?.tenTour.slice(0,60)+"...":data?.tenTour}</h5>
+                                <div className='p-2'>
+                                <Space size={'large'} align='center' className='d-flex justify-content-between' >
+                                    <Space style={{margin:"-5%"}} >
+                                        <ClockCircleOutlined />
+                                        <p>{data.moTa.length>100?data.moTa.slice(0,100)+"...":data.moTa}</p>
+                                    </Space>
+                                    <Space style={{marginRight:"10px"}}>
+                                        {
+                                            data.phuongTienDiChuyen.includes('xe') ? <CarOutlined /> : data.phuongTienDiChuyen.includes('maybay') ? <Airplane size={16} /> : <Train size={16} />
+                                        }
+                                    </Space>
+                                </Space>
+                                <br/>
+                                <p className='text-end text-danger fw-bolder' style={{ fontSize: 18,marginRight:"5%"}}  >
+                                    {formatCurrency.format(data?.chiPhi)}
+                                </p>
+                                </div>
+                                
+                            </div>
+                            <div className='card_link'>
+                                {
+                                location.pathname.includes('admin') ? <><Button icon={<EditOutlined />} className='btn-quick' type="primary" onClick={showModal}>
+                                    Chỉnh sửa
+                                </Button></>
+                                    : <button onClick={() => navigate(`/tours/${data?.idTour}`)}
+                                        className='see'
+                                    >
+                                        <span>XEM CHI TIẾT</span>
+                                    </button>
+                                }
+
+                                </div>
+                        </div>
+                        
                     </div>
-                    {
-                        location.pathname.includes('admin') ? <><Button icon={<EditOutlined />} className='btn-quick' type="primary" onClick={showModal}>
-                            Chỉnh sửa
-                        </Button></>
-                            : <button onClick={() => navigate(`/tours/${data?.idTour}`)}
-                                className='btn-quick'
-                            >
-                                <span>XEM CHI TIẾT</span>
-                            </button>
-                    }
-                    {/* { props?.user?.role === 1 && (
-                        <div className='d-flex p-3 gap-2'>
-                            <Button
-                                block
-                                danger
-                                onClick={ () => showModal('DEL') }>
-                                <DeleteOutlined />
-                            </Button>
-                            <Button
-                                block
-                                onClick={ () => handleEdit(props) }>
-                                <EditOutlined />
-                            </Button>
-                        </div>
-                    ) } */}
-                    <hr></hr>
-                    {
-                        location.pathname.includes('admin') && <><ModalScludeTour id={data.id} /></>
-                    }
-                </Card>
+                    </Card>
+
+
+
             </div>
+
+
+
+
         </>
     );
 };

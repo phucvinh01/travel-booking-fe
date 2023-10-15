@@ -91,7 +91,7 @@ const TourDetail = () => {
                     <div className='row'>
                         <div className='col-lg-8 col-md-8 col-sm-12'>
                             <Space direction='vertical' className='border rounded-3 p-3'>
-                                <img className='w-100' height={400} src={data.anhBia} alt='https://i.pinimg.com/564x/c9/10/2b/c9102bdfe432d0830a5f0dd0cfafd891.jpg'></img>
+                                <img className='w-100' height={400} src={"/src/assets/Images/"+data.anhBia} alt='https://i.pinimg.com/564x/c9/10/2b/c9102bdfe432d0830a5f0dd0cfafd891.jpg'></img>
                                 <Space>
                                     <small>Mã tour: <span style={{ color: "blue" }}>{data?.idTour}</span></small>
                                 </Space>
@@ -128,7 +128,9 @@ const TourDetail = () => {
                                                         <h5>{item.tieuDe}</h5>
                                                         <p>Từ {item.diemKhoiHanh} đến {item.diemDen}</p>
                                                         <p>Từ {moment(item.thoiGianBatDau).format('HH:mm')} đến {moment(item.thoiGianKetThuc).format('HH:mm')}</p>
-                                                        <img width={200} src={item.hinhAnh}></img>
+                                                        {item.hinhAnh=="null"?"":<img width={200} src={"/src/assets/Images/"+item.hinhAnh}></img>}
+                                                        
+                                                        
                                                         <p>
                                                             {item.moTa}
                                                         </p>
@@ -222,7 +224,7 @@ const TourDetail = () => {
                 </section>
                 <section>
                     <h3>Các tour liên quan</h3>
-                    <SildeTour tours={tours} />
+                    <SildeTour tours={tours}/>
                 </section>
             </div>
         </div>
