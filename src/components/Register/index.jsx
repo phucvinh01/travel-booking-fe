@@ -25,7 +25,7 @@ const Regsiter = () => {
     const passwordRef = useRef()
     const today = new Date();
 
-    const type = types?.find((item) => item.tenLoai === 'khachHang')
+    const type = types?.find((item) => item.tenLoai === 'UNDEFINED')
 
     useEffect(() => {
         if (email && phone, password, repeatPassword) {

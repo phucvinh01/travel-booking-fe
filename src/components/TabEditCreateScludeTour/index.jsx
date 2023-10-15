@@ -20,12 +20,11 @@ const TabEditCreateScludeTour = (prop) => {
                     <h5>{item.tieuDe}</h5>
                     <p>Từ {item.diemKhoiHanh} đến {item.diemDen}</p>
                     <p>Từ {moment(item.thoiGianBatDau).format('HH:mm')} đến {moment(item.thoiGianKetThuc).format('HH:mm')}</p>
-                    <img width={200} src={item.hinhAnh}></img>
+                    <img width={200} src={`..//..//..//src/assets/Images/${item.hinhAnh}`} alt='img'></img>
                     <p>
                         {item.moTa}
                     </p>
                 </Space>
-
             </>,
             key: index
         };

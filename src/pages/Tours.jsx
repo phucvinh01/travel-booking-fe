@@ -15,6 +15,7 @@ const Tours = () => {
     const [valueCate, setvalueCate] = useState(0);
     const [data, setData] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
+    const [currentProducts, setCurrentProducts] = useState([])
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -22,24 +23,31 @@ const Tours = () => {
     const pageSize = 9; // Số sản phẩm trên mỗi trang
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const currentProducts = tours?.slice(startIndex, endIndex);
+
+
+
+
     useEffect(() => {
-        tours && setData(tours)
+        tours && setCurrentProducts(tours?.slice(0, 0 + 9))
     }, [])
+
+    useEffect(() => {
+        setCurrentProducts(tours?.slice(startIndex, endIndex))
+    }, [currentPage])
 
     const getTourById = async (id) => {
         let res = await getTourByCategory(id)
         if (res) {
-            setData(res)
+            setCurrentProducts(res?.slice(0, 0 + 9))
         }
         else {
-            setData(null)
+            setCurrentProducts(null)
         }
     }
 
     useEffect(() => {
         if (valueCate == "0")
-            setData(tours)
+            setCurrentProducts(tours?.slice(0, 0 + 9))
         else {
             getTourById(valueCate)
         }
@@ -48,25 +56,25 @@ const Tours = () => {
     useEffect(() => {
         switch (value) {
             case "0":
-                setData(tours)
+                setCurrentProducts(tours?.slice(0, 0 + 9))
                 break;
             case "1":
-                setData(tours.filter((item) => item.chiPhi >= 1000000 && item.chiPhi <= 1500000))
+                setCurrentProducts(tours.filter((item) => item.chiPhi >= 1000000 && item.chiPhi <= 1500000))
                 break;
             case "2":
-                setData(tours.filter((item) => item.chiPhi >= 1500000 && item.chiPhi <= 3000000))
+                setCurrentProducts(tours.filter((item) => item.chiPhi >= 1500000 && item.chiPhi <= 3000000))
                 break;
             case "3":
-                setData(tours.filter((item) => item.chiPhi >= 3000000 && item.chiPhi <= 7000000))
+                setCurrentProducts(tours.filter((item) => item.chiPhi >= 3000000 && item.chiPhi <= 7000000))
                 break;
             case "4":
-                setData(tours.filter((item) => item.chiPhi >= 7500000 && item.chiPhi <= 15000000))
+                setCurrentProducts(tours.filter((item) => item.chiPhi >= 7500000 && item.chiPhi <= 15000000))
                 break;
             case "5":
-                setData(tours.filter((item) => item.chiPhi >= 15000000 && item.chiPhi <= 30000000))
+                setCurrentProducts(tours.filter((item) => item.chiPhi >= 15000000 && item.chiPhi <= 30000000))
                 break;
             case "6":
-                setData(tours.filter((item) => item.chiPhi > 30000000))
+                setCurrentProducts(tours.filter((item) => item.chiPhi > 30000000))
                 break;
             default:
                 break;
@@ -147,7 +155,7 @@ const Tours = () => {
                                 <Pagination
                                     showSizeChanger={false}
                                     responsive={true} current={currentPage}
-                                    total={tours.length}
+                                    total={valueCate !== 0 ? currentProducts.length : value > 0 ? currentProducts.length : tours.length}
                                     pageSize={pageSize}
                                     onChange={handlePageChange}></Pagination>
                             </div>

@@ -59,7 +59,7 @@ const Login = () => {
                 else {
                     dispatch(loginSuccess(res))
                     message.success("Đăng nhập thành công")
-                    if (res.maLoai === 'LTK20231013195805327') {
+                    if (res.maLoai === 'LTK20231012215540') {
                         navigate('/admin')
                         return
                     }
