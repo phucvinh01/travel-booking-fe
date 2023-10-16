@@ -11,9 +11,11 @@ import { useSelector } from 'react-redux'
 import { constant } from 'lodash'
 import SildeTour from '../components/SildeTour'
 import SlideImgTour from '../components/SlideImgTour'
-import Axios from '../Axios/Axios'
+import Axios from '../../Axios/Axios'
 import './SildeTour.scss'
-import Slider from 'react-slick'
+import Slider from "react-slick";
+
+
 
 const TourDetail = () => {
 
@@ -29,8 +31,6 @@ const TourDetail = () => {
     const flight = useSelector((state) => state.flight.flight.data);
     const user = useSelector((state) => state.auth.login.currentUser);
 
-
-    const [imgg, setImgg] = useState("")
 
 
     const id = useParams()
@@ -121,7 +121,7 @@ const TourDetail = () => {
                     <div className='row'>
                         <div className='col-lg-8 col-md-8 col-sm-12'>
                             <Space direction='vertical' className='border rounded-3 p-3'>
-                                <img className='w-100' height={400} src={imgg ? `/src/assets/Images/${imgg} ` : "/src/assets/Images/" + data.anhBia} alt='https://i.pinimg.com/564x/c9/10/2b/c9102bdfe432d0830a5f0dd0cfafd891.jpg'></img>
+                                <img className='w-100' height={400} src={"/src/assets/Images/" + data.anhBia} alt='https://i.pinimg.com/564x/c9/10/2b/c9102bdfe432d0830a5f0dd0cfafd891.jpg'></img>
                                 <div className='d-flex justify-content-center'>
                                     <div style={{ height: 80, width: "650px" }}>
                                         <div className='slide-newproduct'>
@@ -130,7 +130,7 @@ const TourDetail = () => {
                                                     img && img?.length > 0 && img.map((item, index) => {
                                                         return (
                                                             <>
-                                                                <div style={{ width: 30 }} key={index} onClick={() => setImgg(item.fileName)}>
+                                                                <div style={{ width: 30 }} key={index}>
                                                                     <img width={100} src={`..//..//..//src/assets/Images/${item.fileName}`}></img>
                                                                 </div>
                                                             </>
