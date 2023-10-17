@@ -62,44 +62,45 @@ const ModalDetaiOrder = (props) => {
     };
     return (
         <>
-            <Button style={{ backgroundColor: "black", color: "white" }} icon={<EyeFilled />} onClick={showModal}>
+            <Button style={ { backgroundColor: "black", color: "white" } } icon={ <EyeFilled /> } onClick={ showModal }>
             </Button>
-            <Modal style={{ overflow: 'auto' }}
-                bodyStyle={{ maxHeight: 'calc(100vh - 200px)', overflow: 'auto' }} title="Chi tiết order" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal style={ { overflow: 'auto' } }
+                bodyStyle={ { maxHeight: 'calc(100vh - 200px)', overflow: 'auto' } } title="Chi tiết order" open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
                 <div className='mb-3'>
                     <p><strong>Tour</strong></p>
-                    <p>Mã đặt tour: <strong>{state.idDatTour}</strong></p>
-                    <p>Tên tour: <strong>{getNameTour()?.tenTour}</strong>  </p>
-                    <p>Ngày khởi hành: <strong>{moment(state.ngayDat).format("DD/MM/YYYY")}</strong></p>
+                    <p>Mã đặt tour: <strong>{ state.idDatTour }</strong></p>
+                    <p>Tên tour: <strong>{ getNameTour()?.tenTour }</strong>  </p>
+                    <p>Ngày khởi hành: <strong>{ moment(state.ngayDat).format("DD/MM/YYYY") }</strong></p>
                 </div>
                 <div className='mb-3'>
                     <p><strong>Chi tiết tour</strong></p>
-                    <p>Phương tiện di chuyển: <strong>{getNameTour()?.phuongTienDiChuyen}</strong></p>
+                    <p>Phương tiện di chuyển: <strong>{ getNameTour()?.phuongTienDiChuyen }</strong></p>
                     {
-                        getNameTour()?.phuongTienDiChuyen !== "Xe" && <p>Hãng bay: <strong>{getFlight()?.hangBay}</strong></p>
+                        getNameTour()?.phuongTienDiChuyen !== "Xe" && <p>Hãng bay: <strong>{ getFlight()?.hangBay }</strong></p>
 
                     }
-                    <p>Ngày khởi hành: <strong>{moment(state.ngayDat).format("DD/MM/YYYY")}</strong></p>
-                    <p>Giá: <strong>{formatCurrency.format(getNameTour()?.chiPhi)}</strong></p>
+                    <p>Ngày khởi hành: <strong>{ moment(state.ngayDat).format("DD/MM/YYYY") }</strong></p>
+                    <p>Giá: <strong>{ formatCurrency.format(getNameTour()?.chiPhi) }</strong></p>
                 </div>
 
                 <div className='mb-3'>
                     <p><strong>Khách sạn</strong></p>
-                    <p>Tên khách sạn: <strong>{getHotel()?.tenKhachSan}</strong> </p>
-                    <p>Hạng sao: <strong>{getHotel()?.hangSao}</strong>  </p>
-                    <p>Địa chỉ: <strong>{getHotel()?.diaChi} </strong> </p>
+                    <p>Tên khách sạn: <strong>{ getHotel()?.tenKhachSan }</strong> </p>
+                    <p>Hạng sao: <strong>{ getHotel()?.hangSao }</strong>  </p>
+                    <p>Địa chỉ: <strong>{ getHotel()?.diaChi } </strong> </p>
                 </div>
 
                 <div className='mb-3'>
                     <p><strong>Người đặt</strong></p>
-                    <p>Tên khách sạn: <strong>{customer?.hoTen}</strong> </p>
-                    <p>Số điện thoại: <strong>{customer?.soDienThoai}</strong></p>
+                    <p>Tên khách sạn: <strong>{ customer?.hoTen }</strong> </p>
+                    <p>Số điện thoại: <strong>{ customer?.soDienThoai }</strong></p>
+                    <p>Email: <strong>{ customer?.email }</strong></p>
                 </div>
 
                 <div className='mb-3'>
                     <p><strong>Hóa đơn</strong></p>
-                    <p>Số lượng người: <strong>{state.soLuong}</strong> </p>
-                    <p>Tổng: <strong>{formatCurrency.format(+getNameTour()?.chiPhi * +state.soLuong)}</strong></p>
+                    <p>Số lượng người: <strong>{ state.soLuong }</strong> </p>
+                    <p>Tổng: <strong>{ formatCurrency.format(+getNameTour()?.chiPhi * +state.soLuong) }</strong></p>
                 </div>
 
             </Modal>

@@ -59,49 +59,49 @@ const FormCreateSclude = (props) => {
     return (
         <>
             <div className='d-flex justify-content-end'>
-                <Button disabled={!full ? true : false} onClick={() => handleSubmit()} icon={<SaveFilled />}>{isLoading ? <Spin /> : "Lưu"}</Button>
+                <Button disabled={ !full ? true : false } onClick={ () => handleSubmit() } icon={ <SaveFilled /> }>{ isLoading ? <Spin /> : "Lưu" }</Button>
             </div>
-            <Space direction='vertical' style={{ minHeight: 200 }}>
-                <Space size={'middle'}>
+            <Space direction='vertical' style={ { minHeight: 200 } }>
+                <Space size={ 'middle' }>
                     <label>Tiêu đề </label>
-                    <input onChange={(e) => setTitle(e.target.value)} value={title} type='text' className='form-control' />
+                    <input onChange={ (e) => setTitle(e.target.value) } value={ title } type='text' className='form-control' />
                 </Space>
-                <Space size={'middle'}>
-                    <Space size={'middle'}>
+                <Space size={ 'middle' }>
+                    <Space size={ 'middle' }>
                         <label>Giờ bắt đầu</label>
-                        <input onChange={(e) => setTimeBegin(e.target.value)} value={timeBegin} type='datetime-local' className='form-control'></input>
+                        <input onChange={ (e) => setTimeBegin(e.target.value) } value={ timeBegin } type='datetime-local' className='form-control'></input>
                     </Space>
-                    <Space size={'middle'}>
+                    <Space size={ 'middle' }>
                         <label>Giờ kết thúc</label>
-                        <input onChange={(e) => setTimeEnd(e.target.value)} value={timeEnd} type='datetime-local' className='form-control'></input>
+                        <input onChange={ (e) => setTimeEnd(e.target.value) } value={ timeEnd } type='datetime-local' className='form-control'></input>
                     </Space>
                 </Space>
-                <Space size={'middle'}>
-                    <Space size={'middle'}>
+                <Space size={ 'middle' }>
+                    <Space size={ 'middle' }>
                         <label>Nơi khởi hành</label>
-                        <input onChange={(e) => setBegin(e.target.value)} value={begin} type='text' className='form-control' />
+                        <input onChange={ (e) => setBegin(e.target.value) } value={ begin } type='text' className='form-control' />
                     </Space>
-                    <Space size={'middle'}>
+                    <Space size={ 'middle' }>
                         <label>Nơi đến</label>
-                        <input onChange={(e) => setEnd(e.target.value)} value={end} type='text' className='form-control' />
+                        <input onChange={ (e) => setEnd(e.target.value) } value={ end } type='text' className='form-control' />
                     </Space>
 
 
                 </Space>
-                <Space size={'middle'}>
+                <Space size={ 'middle' }>
                     <label
                         className='form-label'>
                         Phương tiện di chuyển
                     </label>
                     <Select
                         size='large'
-                        onChange={onChangeTranpost}
+                        onChange={ onChangeTranpost }
                         id='tranpost'
-                        style={{
+                        style={ {
                             width: 200,
-                        }}
+                        } }
                         allowClear
-                        options={[
+                        options={ [
                             {
                                 value: "Xe",
                                 key: 1
@@ -114,14 +114,14 @@ const FormCreateSclude = (props) => {
                                 value: "Tàu",
                                 key: 3
                             }
-                        ]}
+                        ] }
                     />
                 </Space>
-                <Space size={'middle'}>
+                <Space size={ 'middle' }>
                     <label>Mô tả</label>
-                    <input onChange={(e) => setDescription(e.target.value)} value={description} type='text' className='form-control' />
+                    <textarea contentEditable={ true } onChange={ (e) => setDescription(e.target.value) } value={ description } type='text' className='form-control' />
                 </Space>
-                <Upload setImage={setImage} />
+                <Upload setImage={ setImage } />
             </Space>
 
         </>

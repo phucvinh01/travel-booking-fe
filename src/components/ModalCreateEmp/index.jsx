@@ -4,6 +4,7 @@ import { PlusCircleFilled } from '@ant-design/icons';
 import { postCreateOneEmp } from '../../Axios/Employee';
 import { useDispatch } from 'react-redux';
 import { getAllEmployee } from '../../redux/api';
+import { getAllTypeEmp } from '../../Axios/TypeEmp';
 const ModalCreateEmp = () => {
 
     const dispatch = useDispatch()
@@ -15,7 +16,33 @@ const ModalCreateEmp = () => {
     const [birthday, setBirthday] = useState('')
     const [dayStart, setDatStart] = useState('')
     const [address, setAddress] = useState('')
+    const [type, setType] = useState('')
+    const [listTypeEmp, setListTypeEmp] = useState([])
 
+    const getType = async () => {
+        let r = await getAllTypeEmp()
+        if (r.status === 400) {
+            message.error("Lấy list loại nhân viên thất bại")
+        }
+        else {
+            setListTypeEmp(r)
+        }
+    }
+
+    useEffect(() => {
+        getType()
+    }, [])
+
+
+    useEffect(() => {
+        if (cccd.length > 12) {
+            setCCCD(cccd.slice(0, 12))
+        }
+        if (dayStart && birthday && birthday > dayStart) {
+            setDatStart(birthday);
+        }
+
+    }, [cccd, birthday, dayStart])
 
     const [isFull, setIsFull] = useState(false)
     const id = useId()
@@ -86,7 +113,7 @@ const ModalCreateEmp = () => {
                         </div>
                         <div className='mb-3'>
                             <label htmlFor={ id + 'phone' }>Số điện thoại</label>
-                            <input onChange={ (e) => setPhone(e.target.value) } value={ phone } id={ id + 'phone' } type='number' className='form-control'></input>
+                            <input onChange={ (e) => setPhone(e.target.value) } value={ phone } id={ id + 'phone' } type='tel' maxLength={ 11 } className='form-control'></input>
                         </div>
                         <div className='mb-3'>
                             <label htmlFor={ id + 'gender' }>Giới tính</label>
@@ -98,7 +125,7 @@ const ModalCreateEmp = () => {
                                 style={ {
                                     width: '100%',
                                 } }
-                                defaultValue={ 1 }
+                                defaultValue={ true }
                                 allowClear
                                 options={ [
                                     {
@@ -112,13 +139,14 @@ const ModalCreateEmp = () => {
                                         key: 2
                                     }
                                 ] }
-                            />                        </div>
+                            />
+                        </div>
 
                     </div>
                     <div className='col-lg-6 col-md-6 col-sm-12'>
                         <div className='mb-3'>
                             <label htmlFor={ id + 'cccd' }>Căn cước công dân</label>
-                            <input onChange={ (e) => setCCCD(e.target.value) } value={ cccd } id={ id + 'cccd' } type='number' className='form-control'></input>
+                            <input maxLength={ 12 } onChange={ (e) => setCCCD(e.target.value) } value={ cccd } id={ id + 'cccd' } type='number' className='form-control'></input>
                         </div>
                         <div className='mb-3'>
                             <label htmlFor={ id + 'birthday' }>Ngày sinh</label>
@@ -133,13 +161,27 @@ const ModalCreateEmp = () => {
                         <label htmlFor={ id + 'address' }>Địa chỉ</label>
                         <input onChange={ (e) => setAddress(e.target.value) } value={ address } type='text' className='form-control' id={ id + 'address' }></input>
                     </div>
-                    <div className='d-flex justify-content-end'>
+                    <div className='col-12'>
+                        <label htmlFor={ id + 'type' }>Loại nhân viên</label>
+                        <select onChange={ (e) => setType(e.target.value) } value={ type } className='form-control' id={ id + 'type' }>
+                            {
+                                listTypeEmp?.map((item, index) => {
+                                    return (
+                                        <>
+                                            <option value={ item.idLoaiNhanVien }>{ item.tenLoai }</option>
+                                        </>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div>
+                    <div className='d-flex justify-content-end mt-3'>
                         <Button onClick={ handleSubmit } disabled={ !isFull ? true : false } type='primary'>Thêm</Button>
                     </div>
                 </div>
-
             </Modal>
         </>
     );
-};
+}
+
 export default ModalCreateEmp;

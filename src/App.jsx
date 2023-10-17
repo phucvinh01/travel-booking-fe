@@ -13,7 +13,6 @@ function App() {
   const navigate = useNavigate()
   const user = useSelector((state) => state.auth.login.currentUser);
 
-  console.log(user);
 
 
   useEffect(() => {
@@ -37,27 +36,27 @@ function App() {
   return (
     <>
 
-      {/* router customer */}
+      {/* router customer */ }
       <Routes>
-        <Route path="/" element={<CustomerLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/tours" element={<Tour />} />
-          <Route path="/tours/:id" element={<TourDetail />} />
-          <Route path="/me/profile" element={<Profile />} />
-          <Route path="/me/history" element={<History />} />
+        <Route path="/" element={ <CustomerLayout /> }>
+          <Route path="/" element={ <Home /> } />
+          <Route path="/about" element={ <About /> } />
+          <Route path="/tours" element={ <Tour /> } />
+          <Route path="/tours/:id" element={ <TourDetail /> } />
+          <Route path="/me/profile" element={ <Profile /> } />
+          <Route path="/me/history" element={ <History /> } />
         </Route>
       </Routes>
 
       <Routes>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/tour" element={<TourManager />} />
-          <Route path="/admin/customer" element={<CustomerManager />} />
-          <Route path="/admin/order" element={<OrderManager />} />
-          <Route path="/admin/emp" element={<EmpManager />} />
-          <Route path="/admin/hotel" element={<HotelManager />} />
-          <Route path="/admin/tranpost" element={<TranpostManager />} />
+        <Route path="/admin" element={ <AdminLayout /> }>
+          <Route path="/admin" element={ <Admin /> } />
+          <Route path="/admin/tour" element={ <TourManager /> } />
+          <Route path="/admin/customer" element={ <CustomerManager /> } />
+          <Route path="/admin/order" element={ <OrderManager /> } />
+          <Route path="/admin/emp" element={ <EmpManager /> } />
+          <Route path="/admin/hotel" element={ <HotelManager /> } />
+          <Route path="/admin/tranpost" element={ <TranpostManager /> } />
         </Route>
       </Routes>
 

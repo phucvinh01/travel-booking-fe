@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { Button, Space, Table, Tag } from 'antd';
-import { EditFilled, EyeFilled } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { Button, Space, Table, Tag, message } from 'antd';
+import { DeleteOutlined, EditFilled, EyeFilled } from '@ant-design/icons';
 import moment from 'moment';
 import ModalEditEmp from '../ModalEditEmp';
+import { getAllTypeEmp } from '../../Axios/TypeEmp';
 
 const TableEmp = (props) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [state, setState] = useState({})
+    const [listTypeEmp, setListTypeEmp] = useState([])
+
     const showModal = (record) => {
         setState(record)
         setIsModalOpen(true);
@@ -18,6 +21,21 @@ const TableEmp = (props) => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    const getType = async () => {
+        let r = await getAllTypeEmp()
+        if (r.status === 400) {
+            message.error("Lấy list loại nhân viên thất bại")
+        }
+        else {
+            setListTypeEmp(r)
+        }
+    }
+
+    useEffect(() => {
+        getType()
+    }, [])
+
     const columns = [
         {
             title: 'Tên',
@@ -68,30 +86,23 @@ const TableEmp = (props) => {
             title: 'Chức vụ',
             dataIndex: 'maLoaiNhanVien',
             key: 'maLoaiNhanVien',
-            filters: [
-                {
-                    text: 'Nhân viên tư vấn',
-                    value: 2,
-                },
-                {
-                    text: 'Hướng dẫn viên',
-                    value: 3,
-                },
-            ],
+            filters: listTypeEmp?.map((item, index) => {
+                return {
+                    "text": item.tenLoai,
+                    "value": item.idLoaiNhanVien
+                }
+            }),
             onFilter: (value, record) => record.maLoaiNhanVien.startsWith(value),
-            render: (_, { maLoaiNhanVien }) => (
-                <>
-                    { <span>{ maLoaiNhanVien === "1" ? "Admin" : maLoaiNhanVien === "2" ?
-                        "Nhân viên tư vấn" : "Hướng dẫn viên" }</span> }
-                </>
-            )
+            render: (text, record) => {
+                const comparisonItem = listTypeEmp?.find(item => item.idLoaiNhanVien === record.maLoaiNhanVien);
+                return comparisonItem?.tenLoai;
+            }
         },
         {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button icon={ <EyeFilled /> } />
                     <Button onClick={ () => showModal(record) } icon={ <EditFilled /> } />
                 </Space>
             ),

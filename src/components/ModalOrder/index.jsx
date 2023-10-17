@@ -22,11 +22,11 @@ const ModalOrder = (props) => {
     };
     return (
         <>
-            <Button type="primary" block onClick={showModal} >
+            <Button type="primary" block onClick={ showModal } style={ { width: 150 } } >
                 Yêu cầu đặt tour
             </Button>
-            <Modal footer={null} width={600} title="Hãy cung cấp cho chúng tôi thông tin về bạn" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <TableOrder quantity={quantity} idTour={idTour} dayOrder={dayOrder} handleOk={handleOk} />
+            <Modal footer={ null } width={ 600 } title="Hãy cung cấp cho chúng tôi thông tin về bạn" open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
+                <TableOrder quantity={ quantity } idTour={ idTour } dayOrder={ dayOrder } handleOk={ handleOk } />
             </Modal>
         </>
     );

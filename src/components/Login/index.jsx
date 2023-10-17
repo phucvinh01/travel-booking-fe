@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 import { postLogin } from '../../Axios/Account';
-import { loginStart, loginSuccess } from '../../redux/authSlice';
+import { loginFailed, loginStart, loginSuccess } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 const Login = () => {
@@ -52,8 +52,10 @@ const Login = () => {
             dispatch(loginStart());
             try {
                 const res = await postLogin(body)
-                if (res.status == 400) {
+                console.log(res);
+                if (res.status === 400) {
                     dispatch(loginFailed())
+                    setErrors("Tên đăng nhập hoặc mật khẩu không đúng")
                     message.success("Đăng nhập thất bại")
                 }
                 else {
@@ -88,31 +90,31 @@ const Login = () => {
     };
     return (
         <>
-            <Space onClick={showModal}>
+            <Space onClick={ showModal }>
                 <LoginOutlined />
                 <p>Đăng nhập</p>
             </Space>
-            <Modal width={400} footer={null} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal width={ 400 } footer={ null } open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
                 <div className='d-flex justify-content-center'>
-                    <img src={logo} width={80}></img>
+                    <img src={ logo } width={ 80 }></img>
                 </div>
                 <h4 className="text-center">Đăng nhập</h4>
                 <div className='' >
-                    <Space direction='vertical' size={'large'} className='w-100'>
+                    <Space direction='vertical' size={ 'large' } className='w-100'>
                         <div className='d-flex align-items-center gap-1'>
                             <input
-                                ref={emailRef}
+                                ref={ emailRef }
                                 className='form-control'
                                 required
                                 name='email'
                                 type='email'
-                                value={email}
+                                value={ email }
                                 id='email'
                                 placeholder='Email'
-                                onChange={(e) => setEmail(e.target.value)}></input>
+                                onChange={ (e) => setEmail(e.target.value) }></input>
                             <span className='text-danger'>*</span>
                         </div>
-                        {isValidEmail && <p style={{ color: 'red' }}>{isValidEmail}</p>}
+                        { isValidEmail && <p style={ { color: 'red' } }>{ isValidEmail }</p> }
 
                         <div className='d-flex align-items-center gap-1'>
                             <input
@@ -121,21 +123,23 @@ const Login = () => {
                                 type='password'
                                 id="password"
                                 name="password"
-                                value={password}
+                                value={ password }
                                 placeholder='***********'
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={ (e) => setPassword(e.target.value) }
                             ></input>
                             <span className='text-danger'>*</span>
                         </div>
-                        {isValidPassword && <p style={{ color: 'red' }}>{isValidPassword}</p>}
+                        { isValidPassword && <p style={ { color: 'red' } }>{ isValidPassword }</p> }
 
                         <p className='text-end'>
-                            <a style={{ color: "blue" }}>Forgot your password?</a>
+                            <a style={ { color: "blue" } }>Forgot your password?</a>
                         </p>
+                        { errors && <span style={ { color: 'red' } }>{ errors }</span> }
+
                         <div className='mb-3'>
                             <Button className='btn-primary-main'
-                                disabled={!isFull ? true : false}
-                                onClick={() => handleSubmit()}
+                                disabled={ !isFull ? true : false }
+                                onClick={ () => handleSubmit() }
                                 block
                             >
                                 Đăng nhập

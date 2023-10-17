@@ -22,17 +22,15 @@ const CustomerManager = () => {
         getAllCustomers()
     }, [])
 
-    console.log(data);
-
     return (
-        <main style={{ marginTop: "90px", minHeight: "100vh" }}>
+        <main style={ { marginTop: "90px", minHeight: "100vh" } }>
             <Space>
-                <Button size='large' icon={<Export size={16} weight="fill" />} style={{ backgroundColor: "palegoldenrod" }}>
+                <Button size='large' icon={ <Export size={ 16 } weight="fill" /> } style={ { backgroundColor: "palegoldenrod" } }>
                     Xuất danh sách khách hàng
                 </Button>
             </Space>
-            <section>
-                <TableCus data={data} />
+            <section className='mt-3'>
+                <TableCus data={ data } />
             </section>
         </main>
     )

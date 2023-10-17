@@ -10,6 +10,7 @@ import ModalEditTour from '../ModalEditTour';
 import { max } from 'lodash';
 import Axios from '../../Axios/Axios';
 import ModalDetaiOrder from '../ModalDetailOrder';
+import { getAllCustomer } from '../../Axios/customer';
 
 const TableManagerOrder = (props) => {
     const cate = useSelector((state) => state.cate.category.data);
@@ -17,6 +18,18 @@ const TableManagerOrder = (props) => {
 
     const { data } = props
 
+    const [customerList, setCustomerList] = useState([])
+
+    const getAllCustomers = async () => {
+        let r = await getAllCustomer()
+        if (r) {
+            setCustomerList(r)
+        }
+    }
+
+    useEffect(() => {
+        getAllCustomers()
+    }, [])
 
     useEffect(() => {
         setTableData(data)
@@ -66,7 +79,7 @@ const TableManagerOrder = (props) => {
             title: 'ID',
             dataIndex: 'idDatTour',
             key: 'idDatTour',
-            render: (text) => <a>{text}</a>,
+            render: (text) => <a>{ text }</a>,
             width: '15%',
         },
         {
@@ -84,8 +97,8 @@ const TableManagerOrder = (props) => {
             dataIndex: 'maKhachHang',
             key: 'maKhachHang',
             render: (text, record) => {
-                const comparisonItem = tour.find(item => item.idTour === record.maTour);
-                return comparisonItem.tenTour;
+                const comparisonItem = customerList?.find(item => item.idKhachHang === record.maKhach);
+                return comparisonItem?.hoTen;
             },
             width: '15%',
         },
@@ -108,7 +121,7 @@ const TableManagerOrder = (props) => {
             onFilter: (value, record) => record.trangThai.startsWith(value),
             render: (_, { trangThai }) => (
                 <>
-                    {<span>{trangThai ? "Chờ khởi hành" : "Đã hoàn thành"}</span>}
+                    { <span>{ trangThai ? "Chờ khởi hành" : "Đã hoàn thành" }</span> }
                 </>
             ),
             width: '20%',
@@ -119,18 +132,18 @@ const TableManagerOrder = (props) => {
             key: 'ngayKhoiHanh',
             render: (text, record) => moment(text).format('YYYY-MM-DD'),
             filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-                <div style={{ padding: 8 }}>
+                <div style={ { padding: 8 } }>
                     <DatePicker
-                        value={selectedKeys[0] ? moment(selectedKeys[0], 'YYYY-MM-DD') : null}
-                        onChange={(date, dateString) => setSelectedKeys(dateString ? [dateString] : [])}
+                        value={ selectedKeys[0] ? moment(selectedKeys[0], 'YYYY-MM-DD') : null }
+                        onChange={ (date, dateString) => setSelectedKeys(dateString ? [dateString] : []) }
                         format="YYYY-MM-DD"
-                        style={{ marginRight: 8 }}
+                        style={ { marginRight: 8 } }
                     />
                     <Space>
-                        <Button onClick={() => handleDateReset('date')} style={{ marginRight: 8 }}>
+                        <Button onClick={ () => handleDateReset('date') } style={ { marginRight: 8 } }>
                             Reset
                         </Button>
-                        <Button onClick={() => handleDateSearch(setSelectedKeys)} type="primary">
+                        <Button onClick={ () => handleDateSearch(setSelectedKeys) } type="primary">
                             Search
                         </Button>
                     </Space>
@@ -148,7 +161,7 @@ const TableManagerOrder = (props) => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <ModalDetaiOrder data={record} />
+                    <ModalDetaiOrder data={ record } />
                 </Space>
             ),
             width: '10%',
@@ -185,43 +198,43 @@ const TableManagerOrder = (props) => {
                 <Space>
                     <Space>
                         <label>Từ ngày</label>
-                        <input type='date' className='form-control' value={minDay} onChange={(e) => setMinDay(e.target.value)} />
+                        <input type='date' className='form-control' value={ minDay } onChange={ (e) => setMinDay(e.target.value) } />
                     </Space>
                     <Space>
                         <label>Đến ngày</label>
-                        <input type='date' className='form-control' value={maxDay} onChange={(e) => setMaxDay(e.target.value)} />
+                        <input type='date' className='form-control' value={ maxDay } onChange={ (e) => setMaxDay(e.target.value) } />
                     </Space>
-                    <Button disabled={!minDay && !maxDay ? true : false} onClick={handleSearch} size='large' icon={<SearchOutlined />}>Tìm</Button>
+                    <Button disabled={ !minDay && !maxDay ? true : false } onClick={ handleSearch } size='large' icon={ <SearchOutlined /> }>Tìm</Button>
                 </Space>
                 <Space>
                     <label>Tên Tour</label>
-                    <select type='text' value={name} className='form-control' onChange={(e) => setName(e.target.value)}>
+                    <select type='text' value={ name } className='form-control' onChange={ (e) => setName(e.target.value) }>
                         {
                             tour.map((item, index) => {
                                 return (
                                     <>
-                                        <option key={index} value={item.idTour}>{item.tenTour}</option>
+                                        <option key={ index } value={ item.idTour }>{ item.tenTour }</option>
                                     </>
                                 )
                             })
                         }
                     </select>
-                    <Button disabled={!name ? true : false} onClick={() => handleSearchByName(name)} size='large' icon={<SearchOutlined />}>Tìm</Button>
-                    <Button style={{
+                    <Button disabled={ !name ? true : false } onClick={ () => handleSearchByName(name) } size='large' icon={ <SearchOutlined /> }>Tìm</Button>
+                    <Button style={ {
                         backgroundColor: "greenyellow"
-                    }} onClick={() => setTableData(data)} size='large' icon={<ClearOutlined />}>Clear</Button>
+                    } } onClick={ () => setTableData(data) } size='large' icon={ <ClearOutlined /> }>Clear</Button>
 
                 </Space>
-                <Space direction='vertical' size={'large'} style={{ width: '100%' }}>
+                <Space direction='vertical' size={ 'large' } style={ { width: '100%' } }>
                     <div className='d-flex justify-content-end'>
-                        <Button type='primary' icon={<ExportOutlined />}>Xuất danh sách</Button>
+                        <Button type='primary' icon={ <ExportOutlined /> }>Xuất danh sách</Button>
                     </div>
                     <div>
-                        <Table size='large' style={{
+                        <Table size='large' style={ {
                             width: 1000
-                        }} pagination={{
+                        } } pagination={ {
                             position: ['bottomCenter']
-                        }} columns={columns} dataSource={tableData} />
+                        } } columns={ columns } dataSource={ tableData } />
                     </div>
                 </Space>
             </Space>
