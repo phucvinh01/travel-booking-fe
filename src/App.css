@@ -69,7 +69,7 @@ a{
 }
 
 .backgound-tour-page{
-  background-image: url('./assets/backgound-tour.png');
+  background-image: url('./Images/person/background1.jpg'); /*assets/backgound-tour.png'*/
   background-repeat: no-repeat;
   background-size: cover;
   height: 350px;
