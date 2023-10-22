@@ -31,6 +31,8 @@ import SlideImgTour from '../components/SlideImgTour';
 import Axios from '../Axios/Axios';
 import './SildeTour.scss';
 import Slider from 'react-slick';
+import ReviewBox from '../components/ReviewBox';
+import QuestionBox from '../components/QuestionBox';
 
 const TourDetail = () => {
     const settings = {
@@ -78,7 +80,6 @@ const TourDetail = () => {
         let res = await getTourByCategory(id);
         if (res) {
             setTours(res);
-            console.log(res);
         }
     };
 
@@ -86,7 +87,6 @@ const TourDetail = () => {
     const flightName = flight?.find(
         (item) => item.idChuyenBay === data?.maChuyenBay
     );
-    console.log(flightName);
 
     useEffect(() => {
         getData(id.id);
@@ -280,6 +280,12 @@ const TourDetail = () => {
                                     ngày trước khi khởi hành để sắp xếp giờ đón và cung cấp các
                                     thông tin cần thiết cho chuyển đi.{ ' ' }
                                 </p>
+                            </section>
+                            <section>
+                                <ReviewBox idTour={ data?.idTour } getData={ getData } />
+                            </section>
+                            <section>
+                                <QuestionBox idTour={ data?.idTour } />
                             </section>
                         </div>
                         <div className='col-lg-4 col-md-4 col-sm-12'>

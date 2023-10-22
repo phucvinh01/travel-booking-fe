@@ -7,6 +7,7 @@ import { EditFilled, SaveFilled } from '@ant-design/icons';
 import { putUpdateEmp } from '../../Axios/Employee';
 import { getAllEmployee } from '../../redux/api';
 import { useDispatch } from 'react-redux';
+import { getAllTypeEmp } from '../../Axios/TypeEmp';
 const ModalEditEmp = (props) => {
     const { isModalOpen, handleOk, handleCancel, state } = props
 
@@ -24,6 +25,17 @@ const ModalEditEmp = (props) => {
     const [cccd, setCccd] = useState("")
     const dispatch = useDispatch()
 
+    const [listTypeEmp, setListTypeEmp] = useState([])
+
+    const getType = async () => {
+        let r = await getAllTypeEmp()
+        if (r.status === 400) {
+            message.error("Lấy list loại nhân viên thất bại")
+        }
+        else {
+            setListTypeEmp(r)
+        }
+    }
     const getAccount = async (id) => {
         let res = await getOneById(id)
         if (res) {
@@ -34,6 +46,7 @@ const ModalEditEmp = (props) => {
 
     useEffect(() => {
         getAccount(state.idNhanVien)
+        getType()
     }, [state])
 
     useEffect(() => {
@@ -123,9 +136,15 @@ const ModalEditEmp = (props) => {
                         <div className='mb-3'>
                             <label>Chức vụ</label>
                             <select disabled={ isEdit ? false : true } className='form-control' value={ role } onChange={ (e) => setRole(e.target.value) }>
-                                <option value={ '1' }>Admin</option>
-                                <option value={ '2' }>Nhân viên tư vấn</option>
-                                <option value={ '3' }>Hướng dẫn viên</option>
+                                {
+                                    listTypeEmp?.map((item, index) => {
+                                        return (
+                                            <>
+                                                <option key={ index } value={ item.idLoaiNhanVien }>{ item.tenLoai }</option>
+                                            </>
+                                        )
+                                    })
+                                }
                             </select>
                         </div>
                         <div className='mb-3'>

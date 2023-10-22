@@ -10,11 +10,13 @@ import moment from 'moment'
 import ModalEditEmp from '../../components/ModalEditEmp'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllEmployee } from '../../redux/api'
+import { getAllTypeEmp } from '../../Axios/TypeEmp'
 const EmpManager = () => {
     const [data, setData] = useState([])
     const [dataExport, setdataExport] = useState([])
     const dispatch = useDispatch
     const emp = useSelector((state) => state.emp.emp.data)
+    const [listTypeEmp, setListTypeEmp] = useState([])
     const getEmpExport = (event, done) => {
         let r = []
         if (emp && emp.length > 0) {
@@ -25,35 +27,41 @@ const EmpManager = () => {
                     arr[1] = item.tenNhanVien,
                     arr[2] = item.gioiTinh ? "Nam" : "Nữ",
                     arr[3] = item.soDienThoai,
-                    arr[4] = moment(item.ngaySinh).format("DD/MM/YYY"),
-                    arr[5] = moment(item.ngayVaoLam).format("DD/MM/YYY"),
-                    arr[6] = item.maLoaiNhanVien === '1' ? "Admin" : item.maLoaiNhanVien === '2' ? "Nhân viên tư vấn" : "Hướng dẫn viên"
+                    arr[4] = moment(item.ngaySinh).format("DD/MM/YYYY"),
+                    arr[5] = moment(item.ngayVaoLam).format("DD/MM/YYYY"),
+                    arr[6] = item.maLoaiNhanVien === 'LNV20231012215429' ? "Admin" : item.maLoaiNhanVien === 'LNV20231013164818840"' ? "Nhân viên tư vấn" : "Hướng dẫn viên"
                 r.push(arr)
             })
             setdataExport(r)
             done()
         }
     }
+    const getType = async () => {
+        let r = await getAllTypeEmp()
+        if (r.status === 400) {
+            message.error("Lấy list loại nhân viên thất bại")
+        }
+        else {
+            setListTypeEmp(r)
+        }
+    }
 
     return (
-        <main style={{ marginTop: "90px", minHeight: "100vh" }}>
+        <main style={ { marginTop: "90px", minHeight: "100vh" } }>
             <section>
                 <Space>
                     <ModalCreateEmp />
-                    <Button size='large' icon={<Export size={16} weight="fill" />} style={{ backgroundColor: "yellowgreen" }}>
+                    <Button size='large' icon={ <Export size={ 16 } weight="fill" /> } style={ { backgroundColor: "yellowgreen" } }>
                         <CSVLink filename='employee'
-                            data={dataExport}
-                            asyncOnClick={true}
-                            onClick={getEmpExport}
+                            data={ dataExport }
+                            asyncOnClick={ true }
+                            onClick={ getEmpExport }
                         >Xuất danh sách nhân viên</CSVLink>
-                    </Button>
-                    <Button size='large' icon={<PlusCircleOutlined />} style={{ backgroundColor: "palegoldenrod" }}>
-                        Tại một tài khoản
                     </Button>
                 </Space>
             </section>
             <section>
-                <TableEmp data={emp} />
+                <TableEmp data={ emp } />
             </section>
         </main>
     )

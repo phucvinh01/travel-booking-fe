@@ -110,10 +110,6 @@ const FormCreateSclude = (props) => {
                                 value: "Máy bay",
                                 key: 2
                             },
-                            {
-                                value: "Tàu",
-                                key: 3
-                            }
                         ] }
                     />
                 </Space>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Empty, Modal } from 'antd';
 import { EyeSlash } from 'phosphor-react';
 import { EyeFilled } from '@ant-design/icons';
 import { useEffect } from 'react';
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { getOneCusTomerById } from '../../Axios/customer';
 import moment from 'moment';
 import formatCurrency from '../../util/formatCurrency';
+import Axios from '../../Axios/Axios';
 const ModalDetaiOrder = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [state, setState] = useState({})
@@ -16,12 +17,7 @@ const ModalDetaiOrder = (props) => {
     const flight = useSelector((state) => state.flight.flight.data);
     const [customer, setCustomer] = useState({})
 
-    useEffect(() => {
-        if (isModalOpen) {
-            setState(data)
-            console.log(state);
-        }
-    }, [isModalOpen])
+
 
 
     const getNameTour = () => {
@@ -47,8 +43,13 @@ const ModalDetaiOrder = (props) => {
     }
 
     useEffect(() => {
-        getCustomer(state.maKhach)
+        if (isModalOpen) {
+            setState(data)
+            getCustomer(state.maKhach)
+            console.log(state.thanhViens);
+        }
     }, [state, isModalOpen])
+
 
 
     const showModal = () => {
@@ -95,6 +96,21 @@ const ModalDetaiOrder = (props) => {
                     <p>Tên khách sạn: <strong>{ customer?.hoTen }</strong> </p>
                     <p>Số điện thoại: <strong>{ customer?.soDienThoai }</strong></p>
                     <p>Email: <strong>{ customer?.email }</strong></p>
+                </div>
+
+                <div className='mb-3'>
+                    <p><strong>Thành viên</strong></p>
+                    {
+                        state.thanhViens && state.thanhViens.map((item, index) => {
+                            return (<>
+                                <div key={ index }>
+                                    <p>Tên thành viên: <strong>{ item.hoTen }</strong></p>
+                                    <p>Giới tính: <strong>{ item.gioiTinh ? "Nam" : "Nữ" }</strong></p>
+                                    <p>Ngày Sinh: <strong>{ moment(item.ngaySinh).format('DD/MM/YYYY') }</strong></p>
+                                </div>
+                            </>)
+                        })
+                    }
                 </div>
 
                 <div className='mb-3'>

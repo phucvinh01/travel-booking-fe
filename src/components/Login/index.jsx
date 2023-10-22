@@ -53,7 +53,7 @@ const Login = () => {
             try {
                 const res = await postLogin(body)
                 console.log(res);
-                if (res.status === 400) {
+                if (res.status === 404 || res.status === 400) {
                     dispatch(loginFailed())
                     setErrors("Tên đăng nhập hoặc mật khẩu không đúng")
                     message.success("Đăng nhập thất bại")

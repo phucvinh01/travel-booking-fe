@@ -7,6 +7,7 @@ import moment from 'moment'
 import formatCurrency from '../util/formatCurrency'
 import { getOrderByIdCustomer } from '../Axios/Order'
 import { getOneCusTomerByIdAccoutn } from '../Axios/customer'
+import ModalDetaiOrder from '../components/ModalDetailOrder'
 const Order = () => {
 
     const [orders, setOrders] = useState([])
@@ -45,6 +46,7 @@ const Order = () => {
         }
     }
 
+
     useEffect(() => {
         getInfo()
     }, [user])
@@ -54,7 +56,6 @@ const Order = () => {
             getOrder(info?.idKhachHang)
         }
     }, [info])
-
     const columns = [
         {
             title: 'Mã đơn hàng',
@@ -67,7 +68,7 @@ const Order = () => {
             sorter: (a, b) => Date.parse(a.ngayDat) - Date.parse(b.ngayDat),
             render: (_, { ngayDat }) => (
                 <>
-                    {<span>{moment(ngayDat).format('MM/DD/YYYY')}</span>}
+                    { <span>{ moment(ngayDat).format('MM/DD/YYYY') }</span> }
                 </>
             )
         },
@@ -88,9 +89,9 @@ const Order = () => {
                 { text: 'Đã hoàn thành', value: false },
             ],
             onFilter: (value, record) => record.trangThai.startsWith(value),
-            render: (_, { trangThai }) => (
+            render: (_, { ngayDat }) => (
                 <>
-                    {<span>{trangThai ? "Chờ khởi hành" : "Đã hoàn thành"}</span>}
+                    { <span>{ moment(ngayDat).isAfter(moment().format('MM/DD/YYYY')) ? "Chờ khởi hành" : "Đã hoàn thành" }</span> }
                 </>
             ),
             width: '20%',
@@ -99,35 +100,34 @@ const Order = () => {
             title: 'Xem chi tiết',
             key: 'action',
             render: (_, record) => (
-                <Button key={record._id} onClick={() => { setState(record), showModal() }} type='text' block icon={<EyeOutlined />} />
-
-                //<ModalDetailOrder state={ record } />
+                // <Button key={ record._id } onClick={ () => { setState(record), showModal() } } type='text' block icon={ <EyeOutlined /> } />
+                <ModalDetaiOrder data={ record } />
             ),
         },
     ];
     return (
         <>
-            <div className='container' style={{ marginTop: "150px" }}>
+            <div className='container' style={ { marginTop: "150px" } }>
                 <div className='row'>
                     <div className='col-4'>
 
-                        <img className='w-100 rounded-3' height={400} src='https://i.pinimg.com/564x/4f/34/d2/4f34d2dad8546b06aeb42f8e067ef733.jpg'>
+                        <img className='w-100 rounded-3' height={ 400 } src='https://source.unsplash.com/random'>
 
                         </img>
                     </div>
                     <div className='col-8'>
                         <Breadcrumb className='mb-3'
-                            items={[
+                            items={ [
                                 {
-                                    title: <Link to={'/'}>Trang chủ</Link>,
+                                    title: <Link to={ '/' }>Trang chủ</Link>,
                                 },
                                 {
                                     title: <span>Lịch sử đặt hàng</span>,
                                 },
-                            ]}
+                            ] }
                         />
                         <h2>Đơn hàng</h2>
-                        <Table pagination={false} dataSource={orders} columns={columns}></Table>
+                        <Table pagination={ true } dataSource={ orders } columns={ columns }></Table>
 
                     </div>
                 </div>

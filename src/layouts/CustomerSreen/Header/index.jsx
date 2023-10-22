@@ -39,31 +39,29 @@ const Header = () => {
     return (
         <>
             <div className='header px-3 fixed-top'>
-                <div className='d-flex justify-content-between'>
-                    <div>
-                        <img src={logo} width={60}></img>
+                <div className='row'>
+                    <div className='col-2'>
+                        <img src={ logo } width={ 60 }></img>
                     </div>
-                    <Space size={'large'}>
-                        <NavLink to={'/'} className={'nav-item'}>Home</NavLink>
-                        <NavLink to={'/tours'} className={'nav-item'}>Tours</NavLink>
-                        <NavLink to={'/about'} className={'nav-item'}>About</NavLink>
-                    </Space>
-                    <Space>
+                    <div className='col-8 d-flex justify-content-center'><Space size={ 'large' }>
+                        <NavLink to={ '/' } className={ 'nav-item' }>HOME</NavLink>
+                        <NavLink to={ '/tours' } className={ 'nav-item' }>TOURS</NavLink>
+                        <NavLink to={ '/about' } className={ 'nav-item' }>ABOUT</NavLink>
+                    </Space></div>
+                    <div className='col-2 d-flex justify-content-center'><Space>
                         {
-                            !user ? <Dropdown key={1} menu={{
+                            !user ? <Dropdown key={ 1 } menu={ {
                                 items,
-                            }}
-                                trigger={['click']}
+                            } }
+                                trigger={ ['click'] }
                             >
-                                <Space style={{ cursor: 'pointer' }}>
+                                <Space style={ { cursor: 'pointer' } }>
                                     <UserOutlined />
                                     <p>Tài khoản</p>
                                 </Space>
-                            </Dropdown> : <DropdownAuth user={user} />
-
+                            </Dropdown> : <DropdownAuth user={ user } />
                         }
-
-                    </Space>
+                    </Space></div>
 
                 </div>
             </div>

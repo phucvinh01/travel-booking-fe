@@ -7,13 +7,14 @@ import { postCreateOrder, putUpdateOrder } from '../../Axios/Order';
 import moment from 'moment';
 import _ from 'lodash';
 import Axios from '../../Axios/Axios'
+import { useNavigate } from 'react-router-dom';
 const EditableContext = React.createContext(null);
 const EditableRow = ({ index, ...props }) => {
     const [form] = Form.useForm();
     return (
-        <Form form={form} component={false}>
-            <EditableContext.Provider value={form}>
-                <tr {...props} />
+        <Form form={ form } component={ false }>
+            <EditableContext.Provider value={ form }>
+                <tr { ...props } />
             </EditableContext.Provider>
         </Form>
     );
@@ -57,38 +58,39 @@ const EditableCell = ({
     if (editable) {
         childNode = editing ? (
             <Form.Item
-                style={{
+                style={ {
                     margin: 0,
-                }}
-                name={dataIndex}
-                rules={[
+                } }
+                name={ dataIndex }
+                rules={ [
                     {
                         required: true,
                         message: `${title} is required.`,
                     },
-                ]}
+                ] }
             >
-                <Input ref={inputRef} onPressEnter={save} onBlur={save} />
+                <Input ref={ inputRef } onPressEnter={ save } onBlur={ save } />
             </Form.Item>
         ) : (
             <div
                 className="editable-cell-value-wrap"
-                style={{
+                style={ {
                     paddingRight: 24,
-                }}
-                onClick={toggleEdit}
+                } }
+                onClick={ toggleEdit }
             >
-                {children}
+                { children }
             </div>
         );
     }
-    return <td {...restProps}>{childNode}</td>;
+    return <td { ...restProps }>{ childNode }</td>;
 };
 const TableOrder = (props) => {
     const emp = useSelector((state) => state.emp.emp.data)
     const user = useSelector((state) => state.auth.login.currentUser);
     const [info, setInfo] = useState({})
     const [idCustomer, setIdCustomer] = useState("")
+    const navigator = useNavigate()
 
     const getIdCustomer = async (id) => {
         let r = await getOneCusTomerByIdAccoutn(id)
@@ -107,9 +109,9 @@ const TableOrder = (props) => {
 
     const { quantity, idTour, dayOrder } = props
     const [dataSource, setDataSource] = useState(Array.from({ length: quantity }, (_, index) => ({
-        hoTen: index + 1,
-        gioiTinh: `Name ${index + 1}`,
-        ngaySinh: 25 + index,
+        hoTen: 'Họ và tên',
+        gioiTinh: `Nam`,
+        ngaySinh: 'dd/mm/yyyy',
         key: index + 1
     })));
 
@@ -144,7 +146,7 @@ const TableOrder = (props) => {
             dataIndex: 'operation',
             render: (_, record) =>
                 dataSource.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+                    <Popconfirm title="Sure to delete?" onConfirm={ () => handleDelete(record.key) }>
                         <a>Delete</a>
                     </Popconfirm>
                 ) : null,
@@ -153,9 +155,9 @@ const TableOrder = (props) => {
     const handleAdd = () => {
         const newData = {
             key: count,
-            hoTen: `Edward King ${count}`,
-            ngaySinh: '32',
-            gioiTinh: `London, Park Lane no. ${count}`,
+            hoTen: `Họ và tên`,
+            ngaySinh: 'dd/mm/yyy',
+            gioiTinh: `Nam`,
         };
         setDataSource([...dataSource, newData]);
         setCount(count + 1);
@@ -209,6 +211,7 @@ const TableOrder = (props) => {
         let res = await postCreateOrder(body)
         if (res) {
             setInfo(res)
+            console.log(info);
             dataSource.map((item) => {
                 return post({
                     "hoTen": item.hoTen.toString(),
@@ -220,6 +223,7 @@ const TableOrder = (props) => {
             })
             message.success("Đặt tour thành công, chúng tôi sẽ liên hệ với bạn sớm nhất")
             props.handleOk()
+            navigator('/me/history')
         }
     }
 
@@ -227,25 +231,25 @@ const TableOrder = (props) => {
         <div>
             {
                 count < quantity && <><Button
-                    onClick={handleAdd}
+                    onClick={ handleAdd }
                     type="primary"
-                    style={{
+                    style={ {
                         marginBottom: 16,
-                    }}
+                    } }
                 >
                     Add a row
                 </Button></>
             }
             <Table
-                pagination={false}
-                components={components}
-                rowClassName={() => 'editable-row'}
+                pagination={ false }
+                components={ components }
+                rowClassName={ () => 'editable-row' }
                 bordered
-                dataSource={dataSource}
-                columns={columns}
+                dataSource={ dataSource }
+                columns={ columns }
             />
             <div className='d-flex justify-content-end mt-3'>
-                <Button onClick={handleSubmit} icon={<SendOutlined />}></Button>
+                <Button onClick={ handleSubmit } icon={ <SendOutlined /> }></Button>
             </div>
 
         </div>

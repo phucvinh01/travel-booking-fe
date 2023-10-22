@@ -61,7 +61,7 @@ const ModalCreateEmp = () => {
 
     const handleSubmit = async () => {
         let body = {
-            "maLoaiNhanVien": "1",
+            "maLoaiNhanVien": type,
             "tenNhanVien": name,
             "gioiTinh": gender,
             "soDienThoai": phone,
@@ -168,7 +168,7 @@ const ModalCreateEmp = () => {
                                 listTypeEmp?.map((item, index) => {
                                     return (
                                         <>
-                                            <option value={ item.idLoaiNhanVien }>{ item.tenLoai }</option>
+                                            <option key={ index } value={ item.idLoaiNhanVien }>{ item.tenLoai }</option>
                                         </>
                                     )
                                 })
