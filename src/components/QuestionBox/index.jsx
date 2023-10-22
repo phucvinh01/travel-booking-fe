@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { getAllReviewInTourById } from '../../Axios/Reviews'
 import { getOneCusTomerByIdAccoutn } from '../../Axios/customer'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ListAnswer from './ListItem'
 import { Button } from 'antd'
 import { getAllQuestionInTourById, postQuestion } from '../../Axios/Question'
+import { getAnswer } from '../../redux/api'
 
 const QuestionBox = (props) => {
 
@@ -12,16 +13,10 @@ const QuestionBox = (props) => {
 
 
     const [comment, setComment] = useState("")
-    const [listQuestion, setListQuestion] = useState([])
     const [idCustomer, setIdCuscomter] = useState({})
     const user = useSelector((state) => state.auth.login.currentUser);
+    const dispatch = useDispatch()
 
-    const getQuestion = async (idTour) => {
-        let r = await getAllQuestionInTourById(idTour)
-        if (r) {
-            setListQuestion(r)
-        }
-    }
     const getCustomer = async (idAccount) => {
         let r = await getOneCusTomerByIdAccoutn(idAccount)
         if (r) {
@@ -29,9 +24,7 @@ const QuestionBox = (props) => {
         }
     }
 
-    useEffect(() => {
-        getQuestion(idTour)
-    }, [idTour])
+
 
     useEffect(() => {
         if (user) {
@@ -75,7 +68,7 @@ const QuestionBox = (props) => {
                         className='btn-tour-booking'>Submit</Button>
                 </div>
             </div>
-            <ListAnswer data={ listQuestion }></ListAnswer>
+            <ListAnswer idTour={ idTour } />
         </div>
     )
 }

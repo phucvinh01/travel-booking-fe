@@ -12,4 +12,8 @@ const getListReply = (idQuestion) => {
     return Axios.get(`/TraLoiHoiDap/get-all-tra-loi-hoi-dap?Id=${idQuestion}`)
 }
 
-export { getAllQuestionInTourById, postQuestion, getListReply }
+const postReply = (body) => {
+    return Axios.post('/TraLoiHoiDap/create-tra-loi-hoi-dap', body)
+}
+
+export { getAllQuestionInTourById, postQuestion, getListReply, postReply }

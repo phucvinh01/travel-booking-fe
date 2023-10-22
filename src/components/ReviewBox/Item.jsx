@@ -1,10 +1,23 @@
 import { StarFilled } from '@ant-design/icons'
 import { Space } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import avatarDefautl from '../../assets/user-defautl.jpg'
+import { getOneCusTomerById } from '../../Axios/customer'
 
 const Item = (props) => {
     const { username, reviewText, rating } = props
+    const [customer, setCustomer] = useState({})
+
+    const getNameCustomer = async (username) => {
+        let r = await getOneCusTomerById(username)
+        if (r) {
+            setCustomer(r)
+        }
+    }
+
+    useEffect(() => {
+        getNameCustomer(username)
+    }, [username])
     return (
         <>
             <div className='container my-3 border'>
@@ -15,7 +28,7 @@ const Item = (props) => {
                         alt='img-user'></img>
                     <Space>
                         <Space direction='vertical' size={ 'small' }>
-                            <small >{ username }</small>
+                            <small >{ customer?.hoTen }</small>
                             <Space wrap>
                                 <small >{ reviewText }</small>
                                 <small>{ rating } <StarFilled /></small>

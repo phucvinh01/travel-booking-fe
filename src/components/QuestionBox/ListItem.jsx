@@ -1,13 +1,17 @@
 import React from 'react'
 import Item from './Item'
 import { Empty } from 'antd'
+import { useSelector } from 'react-redux';
 
 
-const ListAnswer = ({ data }) => {
+const ListAnswer = (props) => {
+    const answerList = useSelector((state) => state.anwser.Anwser.data);
     return (
-        data.length > 0 ? data.map((item, index) => {
+        answerList?.length > 0 ? answerList?.map((item, index) => {
             return (
                 <Item
+                    idTour={ props.idTour }
+                    repley={ item?.danhSachCauTraLoi }
                     key={ index }
                     idQuestion={ item.idHoiDap }
                     username={ item.idNguoiDung }

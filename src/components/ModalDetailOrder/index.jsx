@@ -8,6 +8,7 @@ import { getOneCusTomerById } from '../../Axios/customer';
 import moment from 'moment';
 import formatCurrency from '../../util/formatCurrency';
 import Axios from '../../Axios/Axios';
+import { set } from 'lodash';
 const ModalDetaiOrder = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [state, setState] = useState({})
@@ -15,10 +16,16 @@ const ModalDetaiOrder = (props) => {
     const tour = useSelector((state) => state.tour.tours.data);
     const hotel = useSelector((state) => state.hotel.hotel.data);
     const flight = useSelector((state) => state.flight.flight.data);
+    const [member, setMember] = useState([])
     const [customer, setCustomer] = useState({})
 
 
-
+    const getMember = async (id) => {
+        let r = await Axios.get(`/ThanhVien/get-all-thanh-vien?maDatTour=${id}`)
+        if (r) {
+            setMember(r)
+        }
+    }
 
     const getNameTour = () => {
         const comparisonItem = tour.find(item => item.idTour === state?.maTour);
@@ -46,7 +53,7 @@ const ModalDetaiOrder = (props) => {
         if (isModalOpen) {
             setState(data)
             getCustomer(state.maKhach)
-            console.log(state.thanhViens);
+            getMember(state.idDatTour)
         }
     }, [state, isModalOpen])
 
@@ -101,12 +108,10 @@ const ModalDetaiOrder = (props) => {
                 <div className='mb-3'>
                     <p><strong>Thành viên</strong></p>
                     {
-                        state.thanhViens && state.thanhViens.map((item, index) => {
+                        member && member.map((item, index) => {
                             return (<>
-                                <div key={ index }>
-                                    <p>Tên thành viên: <strong>{ item.hoTen }</strong></p>
-                                    <p>Giới tính: <strong>{ item.gioiTinh ? "Nam" : "Nữ" }</strong></p>
-                                    <p>Ngày Sinh: <strong>{ moment(item.ngaySinh).format('DD/MM/YYYY') }</strong></p>
+                                <div key={ index } className='mb-1'>
+                                    <p><strong>{ item.hoTen } , <strong>{ item.gioiTinh ? "Nam" : "Nữ" }</strong> ,<strong>{ moment(item.ngaySinh).format('DD/MM/YYYY') }</strong> </strong></p>
                                 </div>
                             </>)
                         })

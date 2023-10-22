@@ -14,6 +14,8 @@ import { getTypeFailed, getTypeStart, getTypeSuccess } from './typeSlice'
 import { getAllType } from '../Axios/typeAccount'
 import { getAirFieldFailed, getAirFieldStart, getAirFieldSuccess } from './airfield'
 import { getAllAir } from '../Axios/Air'
+import { getAnwserFailed, getAnwserStart, getAnwserSuccess } from './anwser'
+import { getAllQuestionInTourById } from '../Axios/Question'
 
 export const login = async (user, dispatch, navigCate) => {
     dispatch(loginStart());
@@ -155,6 +157,21 @@ export const getAri = async (dispatch) => {
     }
     catch (err) {
         dispatch(getAirFieldFailed())
+    }
+}
+
+export const getAnswer = async (dispatch, idTour) => {
+    dispatch(getAnwserStart());
+    try {
+        const res = await getAllQuestionInTourById(idTour)
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getAnwserFailed())
+        } else {
+            dispatch(getAnwserSuccess(res))
+        }
+    }
+    catch (err) {
+        dispatch(getAnwserFailed())
     }
 }
 

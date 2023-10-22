@@ -7,6 +7,7 @@ import flightSlice from "./flightSlice"
 import empSlice from "./empSlice"
 import typeSlice from './typeSlice'
 import airfield from "./airfield"
+import anwserSlice from "./anwser"
 const rootReducer = combineReducers({
     auth: authReducer,
     tour: tourSlice,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     flight: flightSlice,
     emp: empSlice,
     type: typeSlice,
-    airfield: airfield
+    airfield: airfield,
+    anwser: anwserSlice
 
 })
 

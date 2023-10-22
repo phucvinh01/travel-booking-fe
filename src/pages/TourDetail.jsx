@@ -24,7 +24,7 @@ import { getScheduleTour, getTourByCategory, getTourById } from '../Axios/Tour';
 import formatCurrency from '../util/formatCurrency';
 import ModalOrder from '../components/ModalOrder';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { constant } from 'lodash';
 import SildeTour from '../components/SildeTour';
 import SlideImgTour from '../components/SlideImgTour';
@@ -33,6 +33,7 @@ import './SildeTour.scss';
 import Slider from 'react-slick';
 import ReviewBox from '../components/ReviewBox';
 import QuestionBox from '../components/QuestionBox';
+import { getAnswer } from '../redux/api';
 
 const TourDetail = () => {
     const settings = {
@@ -46,6 +47,7 @@ const TourDetail = () => {
     const hotel = useSelector((state) => state.hotel.hotel.data);
     const flight = useSelector((state) => state.flight.flight.data);
     const user = useSelector((state) => state.auth.login.currentUser);
+    const dispatch = useDispatch()
 
     const [imgg, setImgg] = useState('');
 
@@ -88,9 +90,11 @@ const TourDetail = () => {
         (item) => item.idChuyenBay === data?.maChuyenBay
     );
 
+
     useEffect(() => {
         getData(id.id);
         getSchedule(id.id);
+        getAnswer(dispatch, id.id)
     }, [id]);
 
     useEffect(() => {

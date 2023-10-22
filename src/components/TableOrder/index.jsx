@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Alert, Button, Form, Input, Popconfirm, Table, message } from 'antd';
+import { Alert, Button, Form, Input, Popconfirm, Spin, Table, message } from 'antd';
 import { ImportOutlined, SendOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { getOneCusTomerByIdAccoutn } from '../../Axios/customer';
@@ -90,6 +90,7 @@ const TableOrder = (props) => {
     const user = useSelector((state) => state.auth.login.currentUser);
     const [info, setInfo] = useState({})
     const [idCustomer, setIdCustomer] = useState("")
+    const [loading, setLoading] = useState(false)
     const navigator = useNavigate()
 
     const getIdCustomer = async (id) => {
@@ -199,28 +200,30 @@ const TableOrder = (props) => {
     }
 
     const handleSubmit = async () => {
+        setLoading(true)
         let body = {
             "maKhach": idCustomer,
             "maHuongDanVien": emp[0].idNhanVien,
             "maTour": idTour,
             "soLuong": quantity,
             "ngayDat": dayOrder,
-            "trangThai": true,
+            "trangThai": false,
             "thanhViens": []
         }
         let res = await postCreateOrder(body)
         if (res) {
-            setInfo(res)
-            console.log(info);
-            dataSource.map((item) => {
-                return post({
-                    "hoTen": item.hoTen.toString(),
-                    "gioiTinh": item.gioiTinh === "Nam" ? true : false,
-                    "canCuocConDan": null,
-                    "ngaySinh": moment(item.ngaySinh).toDate,
-                    "maDatTour": info?.idDatTour,
+            setTimeout(() => {
+                dataSource.map((item) => {
+                    return post({
+                        "maDatTour": res.idDatTour,
+                        "hoTen": item.hoTen.toString(),
+                        "gioiTinh": item.gioiTinh === "Nam" ? true : false,
+                        "canCuocConDan": null,
+                        "ngaySinh": moment(item.ngaySinh).toDate()
+                    })
                 })
-            })
+                setLoading(false)
+            }, 2500)
             message.success("Đặt tour thành công, chúng tôi sẽ liên hệ với bạn sớm nhất")
             props.handleOk()
             navigator('/me/history')
@@ -249,7 +252,7 @@ const TableOrder = (props) => {
                 columns={ columns }
             />
             <div className='d-flex justify-content-end mt-3'>
-                <Button onClick={ handleSubmit } icon={ <SendOutlined /> }></Button>
+                <Button onClick={ handleSubmit } icon={ loading ? <Spin /> : <SendOutlined /> }></Button>
             </div>
 
         </div>

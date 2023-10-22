@@ -60,6 +60,7 @@ const Order = () => {
         {
             title: 'Mã đơn hàng',
             dataIndex: 'idDatTour',
+            width: '20%'
         },
         {
             title: 'Ngày khởi hành',
@@ -70,7 +71,8 @@ const Order = () => {
                 <>
                     { <span>{ moment(ngayDat).format('MM/DD/YYYY') }</span> }
                 </>
-            )
+            ),
+            width: '20%'
         },
         {
             title: 'Tên tour',
@@ -79,6 +81,8 @@ const Order = () => {
                 const comparisonItem = tours.find(item => item.idTour === record.maTour);
                 return comparisonItem?.tenTour;
             }
+            ,
+            width: '40%'
         },
         {
             title: 'Trạng thái',
@@ -94,7 +98,23 @@ const Order = () => {
                     { <span>{ moment(ngayDat).isAfter(moment().format('MM/DD/YYYY')) ? "Chờ khởi hành" : "Đã hoàn thành" }</span> }
                 </>
             ),
-            width: '20%',
+            width: '10%',
+        },
+        {
+            title: 'Thanh toán',
+            dataIndex: 'trangThai',
+            key: 'trangThai',
+            filters: [
+                { text: 'Chưa thanh toán', value: false },
+                { text: 'Đã thanh toán', value: true },
+            ],
+            onFilter: (value, record) => record.trangThai.startsWith(value),
+            render: (_, { trangThai }) => (
+                <>
+                    { <span>{ trangThai ? "Chưa thanh toán" : "Đã thanh toán" }</span> }
+                </>
+            ),
+            width: '10%',
         },
         {
             title: 'Xem chi tiết',
@@ -103,19 +123,14 @@ const Order = () => {
                 // <Button key={ record._id } onClick={ () => { setState(record), showModal() } } type='text' block icon={ <EyeOutlined /> } />
                 <ModalDetaiOrder data={ record } />
             ),
+            width: '10%',
         },
     ];
     return (
         <>
             <div className='container' style={ { marginTop: "150px" } }>
                 <div className='row'>
-                    <div className='col-4'>
-
-                        <img className='w-100 rounded-3' height={ 400 } src='https://source.unsplash.com/random'>
-
-                        </img>
-                    </div>
-                    <div className='col-8'>
+                    <div className='col-12'>
                         <Breadcrumb className='mb-3'
                             items={ [
                                 {
@@ -127,7 +142,7 @@ const Order = () => {
                             ] }
                         />
                         <h2>Đơn hàng</h2>
-                        <Table pagination={ true } dataSource={ orders } columns={ columns }></Table>
+                        <Table size='large' pagination={ true } dataSource={ orders } columns={ columns }></Table>
 
                     </div>
                 </div>
