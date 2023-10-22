@@ -86,13 +86,6 @@ const Order = () => {
         },
         {
             title: 'Trạng thái',
-            dataIndex: 'trangThai',
-            key: 'trangThai',
-            filters: [
-                { text: 'Chờ khởi hành', value: true },
-                { text: 'Đã hoàn thành', value: false },
-            ],
-            onFilter: (value, record) => record.trangThai.startsWith(value),
             render: (_, { ngayDat }) => (
                 <>
                     { <span>{ moment(ngayDat).isAfter(moment().format('MM/DD/YYYY')) ? "Chờ khởi hành" : "Đã hoàn thành" }</span> }
@@ -111,7 +104,7 @@ const Order = () => {
             onFilter: (value, record) => record.trangThai.startsWith(value),
             render: (_, { trangThai }) => (
                 <>
-                    { <span>{ trangThai ? "Chưa thanh toán" : "Đã thanh toán" }</span> }
+                    { <span>{ trangThai ? "Đã thanh toán" : "Chưa thanh toán" }</span> }
                 </>
             ),
             width: '10%',

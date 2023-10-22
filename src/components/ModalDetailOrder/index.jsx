@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Empty, Modal } from 'antd';
+import { Button, Empty, Modal, message } from 'antd';
 import { EyeSlash } from 'phosphor-react';
 import { EyeFilled } from '@ant-design/icons';
 import { useEffect } from 'react';
@@ -13,12 +13,48 @@ const ModalDetaiOrder = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [state, setState] = useState({})
     const { data } = props
+
     const tour = useSelector((state) => state.tour.tours.data);
     const hotel = useSelector((state) => state.hotel.hotel.data);
     const flight = useSelector((state) => state.flight.flight.data);
     const [member, setMember] = useState([])
     const [customer, setCustomer] = useState({})
 
+
+    const postCheckout = async () => {
+        try {
+            let body = {
+                "idDatTour": state.idDatTour,
+                "maKhach": state.maKhach,
+                "maHuongDanVien": state.maHuongDanVien,
+                "maTour": state.maTour,
+                "soLuong": state.soLuong,
+                "ngayDat": state.ngayDat,
+                "trangThai": true,
+                "thanhViens": member.map((item) => {
+                    return ({
+                        "idThanhVien": item.idThanhVien,
+                        "hoTen": item.hoTen,
+                        "gioiTinh": item.gioiTinh,
+                        "canCuocConDan": item.canCuocConDan,
+                        "ngaySinh": item.ngaySinh,
+                        "maDatTour": item.maDatTour
+                    })
+                })
+            }
+
+            let r = await Axios.put(`/DatTour/thanh-toan-dat-tour`, body)
+            if (r) {
+                message.success("Thanh toán thành công")
+                setIsModalOpen(false);
+            }
+
+        }
+        catch (err) {
+            message.success(err)
+
+        }
+    }
 
     const getMember = async (id) => {
         let r = await Axios.get(`/ThanhVien/get-all-thanh-vien?maDatTour=${id}`)
@@ -54,6 +90,8 @@ const ModalDetaiOrder = (props) => {
             setState(data)
             getCustomer(state.maKhach)
             getMember(state.idDatTour)
+            console.log(data);
+
         }
     }, [state, isModalOpen])
 
@@ -63,7 +101,8 @@ const ModalDetaiOrder = (props) => {
         setIsModalOpen(true);
     };
     const handleOk = () => {
-        setIsModalOpen(false);
+        postCheckout()
+
     };
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -72,7 +111,14 @@ const ModalDetaiOrder = (props) => {
         <>
             <Button style={ { backgroundColor: "black", color: "white" } } icon={ <EyeFilled /> } onClick={ showModal }>
             </Button>
-            <Modal style={ { overflow: 'auto' } }
+            <Modal footer={ [
+                <Button key="back" onClick={ handleCancel }>
+                    Cancel
+                </Button>,
+                <Button key="submit" type="primary" onClick={ handleOk }>
+                    { state.trangThai ? "Thanh toán" : "" }
+                </Button>,
+            ] } style={ { overflow: 'auto' } }
                 bodyStyle={ { maxHeight: 'calc(100vh - 200px)', overflow: 'auto' } } title="Chi tiết order" open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
                 <div className='mb-3'>
                     <p><strong>Tour</strong></p>
@@ -123,7 +169,6 @@ const ModalDetaiOrder = (props) => {
                     <p>Số lượng người: <strong>{ state.soLuong }</strong> </p>
                     <p>Tổng: <strong>{ formatCurrency.format(+getNameTour()?.chiPhi * +state.soLuong) }</strong></p>
                 </div>
-
             </Modal>
         </>
     );
