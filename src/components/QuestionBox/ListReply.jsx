@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Item from './Item'
-import 'animate.css';
+//import 'animate.css';
 import { Empty } from 'antd';
 const ListReply = (props) => {
 

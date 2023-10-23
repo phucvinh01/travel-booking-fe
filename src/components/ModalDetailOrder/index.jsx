@@ -9,6 +9,7 @@ import moment from 'moment';
 import formatCurrency from '../../util/formatCurrency';
 import Axios from '../../Axios/Axios';
 import { set } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 const ModalDetaiOrder = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [state, setState] = useState({})
@@ -100,8 +101,11 @@ const ModalDetaiOrder = (props) => {
     const showModal = () => {
         setIsModalOpen(true);
     };
+
+    const navigate = useNavigate()
     const handleOk = () => {
         postCheckout()
+        navigate(0)
 
     };
     const handleCancel = () => {
@@ -115,8 +119,8 @@ const ModalDetaiOrder = (props) => {
                 <Button key="back" onClick={ handleCancel }>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={ handleOk }>
-                    { state.trangThai ? "Thanh toán" : "" }
+                <Button hidden={state.trangThai ? true : false} key="submit" type="primary" onClick={ handleOk }>
+                    { state.trangThai ? "Thanh toán" : "Chưa thanh toán" }
                 </Button>,
             ] } style={ { overflow: 'auto' } }
                 bodyStyle={ { maxHeight: 'calc(100vh - 200px)', overflow: 'auto' } } title="Chi tiết order" open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>

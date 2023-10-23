@@ -103,8 +103,11 @@ const Item = (props) => {
         <>
             <ModalEditTour isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} state={state} />
             {/* className='col-lg-4 col-md-6 col-sm-12 mb-4' */}
+            {
+            
+            data.trangThai &&
             <div
-                key={data.idTour} >
+                key={data.idTour}>
                 <Card
                     bordered={false}
                     className='card-product'
@@ -114,7 +117,7 @@ const Item = (props) => {
                     }}>
                     <div class="card_view">
                         <div class="card_image">
-                            <img loading='lazy' alt='example' src={"..//..//..//src/assets/Images/" + data.anhBia} style={{ width: '100%' }} />
+                            <img loading='lazy' alt='example' src={"..//..//..//src/assets/Images/" + data.anhBia } style={{ width: '100%' }} />
                         </div>
 
                         <div class="card_view_back">
@@ -158,14 +161,8 @@ const Item = (props) => {
 
                     </div>
                 </Card>
-
-
-
             </div>
-
-
-
-
+}
         </>
     );
 };

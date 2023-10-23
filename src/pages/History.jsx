@@ -114,7 +114,7 @@ const Order = () => {
             key: 'action',
             render: (_, record) => (
                 // <Button key={ record._id } onClick={ () => { setState(record), showModal() } } type='text' block icon={ <EyeOutlined /> } />
-                <ModalDetaiOrder data={ record } />
+                <ModalDetaiOrder data={ record }  />
             ),
             width: '10%',
         },
@@ -138,6 +138,21 @@ const Order = () => {
                         <Table size='large' pagination={ true } dataSource={ orders } columns={ columns }></Table>
 
                     </div>
+                    {/* <div className='col-6'>
+                        <Breadcrumb className='mb-3'
+                            items={ [
+                                {
+                                    title: <Link to={ '/' }>Trang chủ</Link>,
+                                },
+                                {
+                                    title: <span>Lịch sử đặt hàng</span>,
+                                },
+                            ] }
+                        />
+                        <h2>Đơn hàng</h2>
+                        <Table size='large' pagination={ true } dataSource={ orders } columns={ columns }></Table>
+
+                    </div> */}
                 </div>
             </div>
 

@@ -3,7 +3,9 @@ import Axios from '../Axios/Axios'
 const getAllTour = () => {
     return Axios.get('/Tour/get-all-tour')
 }
-
+const getAllActive = () => {
+    return Axios.get(`/Tour/get-all-tour-active?trangThai=true`)
+}
 const createTour = (body) => {
     return Axios.post('/Tour/create-tour', body)
 }
@@ -64,6 +66,6 @@ export {
     getListTourByName,
     getAllTour, createTour, getCount, getTourByStatus, getTourLast, getTourByPrice
     , getTourByCategory, getTourByCategoryAndStatus, getTourByUserCreate, getTourById,
-    getScheduleTour, postScheduleTour
+    getScheduleTour, postScheduleTour,getAllActive
 
 }

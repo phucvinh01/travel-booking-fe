@@ -21,10 +21,10 @@ const ModalCreateTour = () => {
     const [image, setImage] = useState('');
     const [price, setPrice] = useState('');
     const [createAt, setCreateAt] = useState('')
-    const [userCreate, setUserCreate] = useState("1")
-    const [category, setCategory] = useState('');
-    const [idTranport, setIdTranport] = useState(0);
-    const [idHotel, setIdHotel] = useState(0)
+    const [userCreate, setUserCreate] = useState("NV001")
+    const [category, setCategory] = useState("");
+    const [idTranport, setIdTranport] = useState('null');
+    const [idHotel, setIdHotel] = useState('null')
     const [tranpost, setTranport] = useState('');
     const [isFull, setIsFull] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -213,6 +213,11 @@ const ModalCreateTour = () => {
                                 Chuyến bay
                             </label>
                             <Select
+                            defaultValue={{
+                                value: null,
+                                label: "default",
+                                key: 1
+                            }}
                                 style={{
                                     width: 200
                                 }}
@@ -236,6 +241,7 @@ const ModalCreateTour = () => {
                                     )
                                 })}
                             />
+
 
                         </div>
                         <div className='mb-3'>
@@ -275,7 +281,12 @@ const ModalCreateTour = () => {
                                 className='form-label fw-bolder'>
                                 Khách sạn
                             </label>
-                            <Select
+                            <Select 
+                            defaultValue={{
+                                value: null,
+                                label: "default",
+                                key: 1
+                            }}
                                 size='large'
                                 onChange={onChangeHotel}
                                 id='hotel'

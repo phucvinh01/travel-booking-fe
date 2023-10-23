@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Breadcrumb, Button, Divider, Empty, Radio, Space, message } from 'antd';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SearchFrom from '../components/Search';
 import ListItem from '../components/Items/ListItem';
 import ListItem2 from '../components/Items/ListItem2';
 import Item from '../components/Items/Item';
-import { getTourByCategory } from '../Axios/Tour';
+import { getAllTour, getTourByCategory } from '../Axios/Tour';
 import { Pagination } from 'antd';
+import { getItems } from '../redux/api';
 const Tours = () => {
     const cate = useSelector((state) => state.cate.category.data);
     const tours = useSelector((state) => state.tour.tours.data);
@@ -31,6 +32,7 @@ const Tours = () => {
         tours && setCurrentProducts(tours?.slice(0, 0 + 9))
     }, [])
 
+
     useEffect(() => {
         setCurrentProducts(tours?.slice(startIndex, endIndex))
     }, [currentPage])
@@ -46,8 +48,12 @@ const Tours = () => {
     }
 
     useEffect(() => {
-        if (valueCate == "0")
-            setCurrentProducts(tours?.slice(0, 0 + 9))
+        if (valueCate === 0)
+        {
+        //getItems()
+        setCurrentProducts(tours?.slice(0, 0 + 9))
+
+        }
         else {
             getTourById(valueCate)
         }

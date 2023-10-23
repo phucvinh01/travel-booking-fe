@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Button, Space, Table, Tag } from 'antd';
-import { EditFilled, EyeFilled } from '@ant-design/icons';
+import { Button, Space, Table, Tag, message } from 'antd';
+import { BlockOutlined, DeleteFilled, EditFilled, EyeFilled } from '@ant-design/icons';
 import moment from 'moment';
 import ModalEditEmp from '../ModalEditEmp';
 import formatCurrency from '../../util/formatCurrency';
 import { useSelector } from 'react-redux';
 import ModalScludeTour from '../ModalScludeTour/inde';
 import ModalEditTour from '../ModalEditTour';
+import Axios from '../../Axios/Axios'
+import { useNavigate } from 'react-router-dom';
 
 const TableTour = (props) => {
     const cate = useSelector((state) => state.cate.category.data);
 
-
+    const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [state, setState] = useState({})
     const showModal = (record) => {
@@ -24,6 +26,15 @@ const TableTour = (props) => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    const handleDelete = async (id) => {
+        let r = await Axios.delete(`/Tour/delete-one-tour?Id=${id}`)
+        if(r) {
+            message.success("Del thanh cong")
+            navigate(0)
+        }
+    }
+
     const columns = [
         {
             title: 'Tên',
@@ -83,6 +94,7 @@ const TableTour = (props) => {
                 <Space size="middle">
                     <ModalScludeTour id={record.idTour} />
                     <Button onClick={() => showModal(record)} icon={<EditFilled />} />
+                    <Button onClick={() => handleDelete(record.idTour)} icon={<BlockOutlined />} />
                 </Space>
             ),
         },

@@ -1,7 +1,7 @@
 import axios from '../Axios/Axios'
 import { loginFailed, loginStart, loginSuccess, logoutFailed, logoutStart, logoutSuccess } from './authSlice'
 import { getToursFailed, getToursStart, getToursSuccess } from './tourSlice'
-import { getAllTour } from '../Axios/Tour'
+import { getAllActive, getAllTour } from '../Axios/Tour'
 import { getCateFailed, getCateStart, getCateSuccess } from './categorySlice'
 import { getAllCategory } from '../Axios/Category'
 import { getHotelFailed, getHotelStart, getHotelSuccess } from './hotelSlice'
@@ -56,7 +56,7 @@ export const logout = async (dispatch, id, navigate, token) => {
 export const getItems = async (dispatch) => {
     dispatch(getToursStart());
     try {
-        const res = await getAllTour()
+        const res = await getAllActive()
         if (res.statusCode && res.statusCode === 204) {
             dispatch(getToursFailed())
         }

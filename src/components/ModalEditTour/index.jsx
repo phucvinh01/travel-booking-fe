@@ -286,7 +286,7 @@ const ModalEditTour = (props) => {
                     </div>
                 </div>
                 <div className='d-flex justify-content-end'>
-                    <Button type='primary' disabled={!isFull ? true : false} onClick={() => handleClick()}>{loading ? <Spin></Spin> : <>Create</>} </Button>
+                    <Button type='primary'  onClick={() => handleClick()}>{loading ? <Spin></Spin> : <>Update</>} </Button>
                 </div>
             </Modal>
         </>
