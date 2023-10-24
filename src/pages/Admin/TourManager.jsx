@@ -3,12 +3,19 @@ import { Export, Plus } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
 import ModalCreateTour from '../../components/ModalCreateTour'
 import ModalCreateCategory from '../../components/ModalCreateCategory'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Item from '../../components/Items/Item'
 import TableTour from '../../components/TableTour'
 import { CSVLink } from 'react-csv'
+import { getItemsAdmin } from '../../redux/api'
 
 const TourManager = () => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        getItemsAdmin(dispatch)
+    }, [])
+
     const tours = useSelector((state) => state.tour.tours.data);
     const [dataExport, setdataExport] = useState([])
     const cate = useSelector((state) => state.cate.category.data);
@@ -38,22 +45,22 @@ const TourManager = () => {
     }
     return (
         <>
-            <main style={{ marginTop: "90px", minHeight: "100vh" }}>
+            <main style={ { marginTop: "90px", minHeight: "100vh" } }>
                 <section>
-                    <Space size={'large'}>
+                    <Space size={ 'large' }>
                         <ModalCreateTour />
                         <ModalCreateCategory />
-                        <Button size='large' icon={<Export size={16} weight="fill" />} style={{ backgroundColor: "yellowgreen" }}>
+                        <Button size='large' icon={ <Export size={ 16 } weight="fill" /> } style={ { backgroundColor: "yellowgreen" } }>
                             <CSVLink filename='tour'
-                                data={dataExport}
-                                asyncOnClick={true}
-                                onClick={getEmpExport}
+                                data={ dataExport }
+                                asyncOnClick={ true }
+                                onClick={ getEmpExport }
                             >Xuất danh sách tour</CSVLink>
                         </Button>
                     </Space>
                 </section>
                 <section className='container p-3 mx-auto'>
-                    <TableTour data={tours} />
+                    <TableTour data={ tours } />
                 </section>
             </main>
         </>

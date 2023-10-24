@@ -1,11 +1,13 @@
 import React, { useEffect, useId, useState } from 'react';
-import { Button, DatePicker, Modal, Select } from 'antd';
+import { Button, DatePicker, Modal, Select, message } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getTourById } from '../../Axios/Tour';
 import Upload from '../Uploads';
 import moment from 'moment';
+import Axios from '../../Axios/Axios';
+import { getItemsAdmin } from '../../redux/api';
 const ModalEditTour = (props) => {
 
     const { state, isModalOpen, handleCancel, handleOk } = props
@@ -15,16 +17,17 @@ const ModalEditTour = (props) => {
     const cate = useSelector((state) => state.cate.category.data);
     const hotel = useSelector((state) => state.hotel.hotel.data);
     const flight = useSelector((state) => state.flight.flight.data);
+    const emp = useSelector((state) => state.emp.emp.data)
 
 
     const [tour, setTour] = useState({})
-    const [idd, setIdd] = useState(0)
+    const [idd, setIdd] = useState("")
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [price, setPrice] = useState('');
     const [createAt, setCreateAt] = useState('')
-    const [userCreate, setUserCreate] = useState("1")
+    const [userCreate, setUserCreate] = useState("NV001")
     const [category, setCategory] = useState('');
     const [idTranport, setIdTranport] = useState(0);
     const [idHotel, setIdHotel] = useState(0)
@@ -68,13 +71,13 @@ const ModalEditTour = (props) => {
         setIdHotel(value)
     }
     const onChangeTranpost = (value) => {
-        setTranport(value)
+        setTranport(value.join(","))
     }
 
     useEffect(() => {
         if (isModalOpen) {
-            setIdd(state.id);
-            setCreateAt(moment(state.ngayLap).format('MM/DD/YYYY'))
+            setIdd(state.idTour);
+            setCreateAt(state.ngayLap)
             setName(state.tenTour);
             setPrice(state.chiPhi);
             setCategory(state.maLoaiTour);
@@ -84,8 +87,36 @@ const ModalEditTour = (props) => {
             setIdTranport(state.maChuyenBay)
             setIdHotel(state.maKhachSan)
             setTranport(state.phuongTienDiChuyen)
+            console.log(idd);
         }
     }, [state])
+
+    const dispatch = useDispatch()
+
+    const handleClick = async () => {
+        let body = {
+            "IdTour": idd,
+            "tenTour": name,
+            "moTa": description,
+            "anhBia": image,
+            "chiPhi": price,
+            "ngayLap": createAt,
+            "nguoiLap": emp[0].maNhanVien,
+            "maLoaiTour": category,
+            "maChuyenBay": idTranport,
+            "maKhachSan": idHotel,
+            "phuongTienDiChuyen": tranpost,
+            "trangThai": true,
+        }
+
+        let r = await Axios.put('/Tour/update-one-tour', body)
+        if (r) {
+            message.success("Update thanh cong")
+            getItemsAdmin(dispatch)
+            handleCancel()
+        }
+    }
+
 
     return (
         <>
@@ -212,7 +243,7 @@ const ModalEditTour = (props) => {
                                 defaultValue={ createAt }
                                 value={ createAt }
                                 onChange={ (e) => setCreateAt(e.target.value) }
-                                type='date'
+                                type='datetime-local'
                                 className='form-control'
                                 id={ id + '-createAt' }></input>
                         </div>
@@ -257,7 +288,8 @@ const ModalEditTour = (props) => {
                                 Phương tiện di chuyển
                             </label>
                             <Select
-                                value={ tranpost }
+                                mode='multiple'
+                                value={ tranpost?.split(",") }
                                 size='large'
                                 onChange={ onChangeTranpost }
                                 id='tranpost'
@@ -286,7 +318,7 @@ const ModalEditTour = (props) => {
                     </div>
                 </div>
                 <div className='d-flex justify-content-end'>
-                    <Button type='primary' disabled={ !isFull ? true : false } onClick={ () => handleClick() }>{ loading ? <Spin></Spin> : <>Create</> } </Button>
+                    <Button type='primary' onClick={ () => handleClick() }>{ loading ? <Spin></Spin> : <>Edit</> } </Button>
                 </div>
             </Modal>
         </>

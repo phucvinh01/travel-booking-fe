@@ -21,7 +21,7 @@ const TableFlight = (props) => {
             sorter: (a, b) => Date.parse(a.gioKhoiHanh) - Date.parse(b.gioKhoiHanh),
             render: (_, { gioKhoiHanh }) => (
                 <>
-                    {<span>{moment(gioKhoiHanh).format('MM/DD/YYYY')}</span>}
+                    { <span>{ moment(gioKhoiHanh).format('MM/DD/YYYY') }</span> }
                 </>
             )
         },
@@ -32,12 +32,12 @@ const TableFlight = (props) => {
             sorter: (a, b) => Date.parse(a.gioDen) - Date.parse(b.gioDen),
             render: (_, { gioDen }) => (
                 <>
-                    {<span>{moment(gioDen).format('MM/DD/YYYY')}</span>}
+                    { <span>{ moment(gioDen).format('MM/DD/YYYY') }</span> }
                 </>
             )
         },
         {
-            title: 'Sân bay',
+            title: 'Sân bay đi',
             dataIndex: 'noiKhoiHanh',
             key: 'noiKhoiHanh',
             filters: ari?.map((item) => {
@@ -55,12 +55,30 @@ const TableFlight = (props) => {
             }
         },
         {
+            title: 'Sân bay Đến',
+            dataIndex: 'noiDen',
+            key: 'noiDen',
+            filters: ari?.map((item) => {
+                return (
+                    {
+                        text: item?.tenSanBay,
+                        value: item?.idSanBay
+                    }
+                )
+            }),
+            onFilter: (value, record) => record.idSanBay === value,
+            render: (text, record) => {
+                const comparisonItem = ari.find(item => item.idSanBay === record.noiDen);
+                return comparisonItem?.tenSanBay;
+            }
+        },
+        {
             title: 'Khứ hồi',
             dataIndex: 'khuHoi',
             key: 'khuHoi',
             render: (_, { khuHoi }) => (
                 <>
-                    {<span>{khuHoi ? "Có" : "Không"}</span>}
+                    { <span>{ khuHoi ? "Có" : "Không" }</span> }
                 </>
             ),
             filters: [
@@ -81,7 +99,7 @@ const TableFlight = (props) => {
             key: 'trangThai',
             render: (_, { trangThai }) => (
                 <>
-                    {<span>{trangThai ? "Chưa bay" : "Đã bay"}</span>}
+                    { <span>{ trangThai ? "Chưa bay" : "Đã bay" }</span> }
                 </>
             ),
             filters: [
@@ -101,7 +119,7 @@ const TableFlight = (props) => {
         <>
             <Table style={
                 { width: 1000 }
-            } columns={columns} dataSource={props.data} />;
+            } columns={ columns } dataSource={ props.data } />;
         </>
     )
 }

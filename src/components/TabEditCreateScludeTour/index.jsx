@@ -6,6 +6,7 @@ import { EditOutlined } from '@ant-design/icons';
 import FormCreateSclude from '../FormCreateSclude';
 
 const TabEditCreateScludeTour = (prop) => {
+    const [img, setImg] = useState("")
     useEffect(() => {
         getSclude(prop.id)
     }, [prop.id])
@@ -15,15 +16,15 @@ const TabEditCreateScludeTour = (prop) => {
         return {
             label: `Ngày ${index + 1}`,
             children: <>
-                <div className='d-flex justify-content-end'><Button icon={<EditOutlined />}></Button></div>
-                <Space direction='vertical' style={{ minHeight: 300 }}>
-                    <h5>{item.tieuDe}</h5>
-                    <p>Từ {item.diemKhoiHanh} đến {item.diemDen}</p>
-                    <p>Từ {moment(item.thoiGianBatDau).format('HH:mm')} đến {moment(item.thoiGianKetThuc).format('HH:mm')}</p>
-                    {item.hinhAnh==="null" ?"" : <img width={200} src={"..//..//src/assets/Images/"+item.hinhAnh && item.hinhAnh}/>}
-                    
+                <div className='d-flex justify-content-end'><Button icon={ <EditOutlined /> }></Button></div>
+                <Space direction='vertical' style={ { minHeight: 300 } }>
+                    <h5>{ item.tieuDe }</h5>
+                    <p>Từ { item.diemKhoiHanh } đến { item.diemDen }</p>
+                    <p>Từ { moment(item.thoiGianBatDau).format('HH:mm') } đến { moment(item.thoiGianKetThuc).format('HH:mm') }</p>
+                    { item.hinhAnh === "null" ? "" : <img width={ 200 } src={ "..//..//src/assets/Images/" + item.hinhAnh && item.hinhAnh } /> }
+
                     <p>
-                        {item.moTa}
+                        { item.moTa }
                     </p>
                 </Space>
 
@@ -49,9 +50,9 @@ const TabEditCreateScludeTour = (prop) => {
         setItems([
             ...items,
             {
-                label: <>{"Ngày " + (defaultPanes.length++)}</>,
+                label: <>{ "Ngày " + (defaultPanes.length++) }</>,
                 children: <>
-                    <FormCreateSclude id={prop.id} getSclude={getSclude} />
+                    <FormCreateSclude id={ prop.id } getSclude={ getSclude } />
                 </>,
                 key: newActiveKey,
             },
@@ -89,20 +90,20 @@ const TabEditCreateScludeTour = (prop) => {
     return (
         <div>
             <div
-                style={{
+                style={ {
                     marginBottom: 16,
-                }}
+                } }
             >
-                <Button onClick={add}>ADD</Button>
+                <Button onClick={ add }>ADD</Button>
             </div>
             <Tabs
-                tabPosition={'left'}
+                tabPosition={ 'left' }
                 hideAdd
-                onChange={onChange}
-                activeKey={activeKey}
+                onChange={ onChange }
+                activeKey={ activeKey }
                 type="editable-card"
-                onEdit={onEdit}
-                items={items}
+                onEdit={ onEdit }
+                items={ items }
             />
         </div>
     );

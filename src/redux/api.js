@@ -69,6 +69,22 @@ export const getItems = async (dispatch) => {
     }
 }
 
+export const getItemsAdmin = async (dispatch) => {
+    dispatch(getToursStart());
+    try {
+        const res = await getAllTour()
+        if (res.statusCode && res.statusCode === 204) {
+            dispatch(getToursFailed())
+        }
+        else {
+            dispatch(getToursSuccess(res))
+        }
+    }
+    catch (err) {
+        dispatch(getToursFailed())
+    }
+}
+
 export const getCategory = async (dispatch) => {
     dispatch(getCateStart());
     try {

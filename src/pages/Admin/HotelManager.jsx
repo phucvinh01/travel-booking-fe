@@ -27,21 +27,21 @@ const HotelManager = () => {
         }
     }
     return (
-        <main style={{ marginTop: "90px", minHeight: "100vh" }}>
+        <main style={ { marginTop: "90px", minHeight: "100vh" } }>
 
             <Space direction='vertical'>
                 <h2>Danh sách các khách sạn hợp tác</h2>
                 <Space>
                     <ModalCreateHotel />
-                    <Button size='large' icon={<Export size={16} weight="fill" />} style={{ backgroundColor: "yellowgreen" }}>
+                    <Button size='middle' icon={ <Export size={ 16 } weight="fill" /> } style={ { backgroundColor: "yellowgreen" } }>
                         <CSVLink filename='danhsachkhachsan'
-                            data={dataExport}
-                            asyncOnClick={true}
-                            onClick={getEmpExport}
+                            data={ dataExport }
+                            asyncOnClick={ true }
+                            onClick={ getEmpExport }
                         >Xuất danh sách khách sạn</CSVLink>
                     </Button>
                 </Space>
-                <TableHotel data={hotel} />
+                <TableHotel data={ hotel } />
             </Space>
 
         </main>

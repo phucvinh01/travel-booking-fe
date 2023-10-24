@@ -4,6 +4,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import ModalCreateAir from '../../components/ModalCreateAir';
 import TableFlight from '../../components/TableFlight';
+import ModalCreateFlight from '../../components/ModalCreateFlight';
 
 const TransportManager = () => {
     const ari = useSelector((state) => state.airfield.airfield.data);
@@ -13,15 +14,15 @@ const TransportManager = () => {
     console.log(ari);
 
     return (
-        <main style={{ marginTop: "90px", minHeight: "100vh" }}>
+        <main style={ { marginTop: "90px", minHeight: "100vh" } }>
             <h2>Danh sách các sân bay</h2>
-            <Space direction='vertical' size={'large'}>
+            <Space direction='vertical' size={ 'large' }>
                 <select className='form-control'>
                     {
                         ari?.map((item, index) => {
                             return (
                                 <>
-                                    <option key={index} value={item.idSanBay}>{item.tenSanBay}</option>
+                                    <option key={ index } value={ item.idSanBay }>{ item.tenSanBay }</option>
                                 </>
                             )
                         })
@@ -32,9 +33,9 @@ const TransportManager = () => {
                     <Space direction='vertical'>
                         <h2>Dach sách các chuyến bay</h2>
                         <Space>
-                            <Button icon={<PlusCircleFilled />}>Thêm một chuyến bay</Button>
+                            <ModalCreateFlight />
                         </Space>
-                        <TableFlight data={flight} />
+                        <TableFlight data={ flight } />
                     </Space>
 
                 </div>

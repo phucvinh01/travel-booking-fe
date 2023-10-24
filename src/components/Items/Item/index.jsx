@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EditOutlined, DeleteOutlined, ClockCircleOutlined, CarOutlined } from '@ant-design/icons';
 import { Button, Card, Space } from 'antd';
 const { Meta } = Card;
@@ -22,7 +22,13 @@ const Item = (props) => {
 
     const location = useLocation()
 
+    const [imgSrc, setImgSrc] = useState('')
+
     const [state, setState] = useState({})
+
+    useEffect(() => {
+        setImgSrc(data.anhBia)
+    }, [data])
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -101,68 +107,68 @@ const Item = (props) => {
 
     return (
         <>
-            <ModalEditTour isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} state={state} />
-            {/* className='col-lg-4 col-md-6 col-sm-12 mb-4' */}
+            <ModalEditTour isModalOpen={ isModalOpen } handleOk={ handleOk } handleCancel={ handleCancel } state={ state } />
+            {/* className='col-lg-4 col-md-6 col-sm-12 mb-4' */ }
             {
-            
-            data.trangThai &&
-            <div
-                key={data.idTour}>
-                <Card
-                    bordered={false}
-                    className='card-product'
-                    hoverable={true}
-                    style={{
-                        width: "100%",
-                    }}>
-                    <div class="card_view">
-                        <div class="card_image">
-                            <img loading='lazy' alt='example' src={"..//..//..//src/assets/Images/" + data.anhBia } style={{ width: '100%' }} />
-                        </div>
 
-                        <div class="card_view_back">
-                            <p>{data.moTa}</p>
-                        </div>
+                data.trangThai &&
+                <div
+                    key={ data.idTour }>
+                    <Card
+                        bordered={ false }
+                        className='card-product'
+                        hoverable={ true }
+                        style={ {
+                            width: "100%",
+                        } }>
+                        <div class="card_view">
+                            <div class="card_image">
+                                <img loading='lazy' alt='example' src={ "..//..//..//src/assets/Images/" + imgSrc } onError={ () => setImgSrc(data.anhBia) } style={ { width: '100%' } } />
+                            </div>
 
-                        {/* <div class="card_promotion">
+                            <div class="card_view_back">
+                                <p>{ data.moTa }</p>
+                            </div>
+
+                            {/* <div class="card_promotion">
                             <p>Giảm ngay    : 100%</p>
                         </div> */}
-                        <div class="card_main">
-                            <div class="card_body">
-                                <h5>{data?.tenTour.length > 60 ? data?.tenTour.slice(0, 60) + "..." : data?.tenTour}</h5>
-                                <div className='p-2'>
-                                    <Space size={'large'} align='center' className='d-flex justify-content-between' >
-                                        <Space style={{ margin: "-5%" }} >
-                                            <ClockCircleOutlined />
-                                            <p>{data.moTa.length > 100 ? data.moTa.slice(0, 100) + "..." : data.moTa}</p>
+                            <div class="card_main">
+                                <div class="card_body">
+                                    <h5>{ data?.tenTour.length > 60 ? data?.tenTour.slice(0, 60) + "..." : data?.tenTour }</h5>
+                                    <div className='p-2'>
+                                        <Space size={ 'large' } align='center' className='d-flex justify-content-between' >
+                                            <Space style={ { margin: "-5%" } } >
+                                                <ClockCircleOutlined />
+                                                <p>{ data.moTa.length > 100 ? data.moTa.slice(0, 100) + "..." : data.moTa }</p>
+                                            </Space>
                                         </Space>
-                                    </Space>
-                                    <br />
-                                    <p className='text-end text-danger fw-bolder' style={{ fontSize: 18, marginRight: "5%" }}  >
-                                        {formatCurrency.format(data?.chiPhi)}
-                                    </p>
+                                        <br />
+                                        <p className='text-end text-danger fw-bolder' style={ { fontSize: 18, marginRight: "5%" } }  >
+                                            { formatCurrency.format(data?.chiPhi) }
+                                        </p>
+                                    </div>
+
                                 </div>
+                                <div className='card_link'>
+                                    {
+                                        location.pathname.includes('admin') ? <><Button icon={ <EditOutlined /> } className='btn-quick' type="primary" onClick={ showModal }>
+                                            Chỉnh sửa
+                                        </Button></>
+                                            : <Button size='large' onClick={ () => navigate(`/tours/${data?.idTour}`) }
+                                                className='see'
+                                            >
+                                                <span className='fw-bolder'>XEM CHI TIẾT</span>
+                                            </Button>
+                                    }
 
+                                </div>
                             </div>
-                            <div className='card_link'>
-                                {
-                                    location.pathname.includes('admin') ? <><Button icon={<EditOutlined />} className='btn-quick' type="primary" onClick={showModal}>
-                                        Chỉnh sửa
-                                    </Button></>
-                                        : <Button size='large' onClick={() => navigate(`/tours/${data?.idTour}`)}
-                                            className='see'
-                                        >
-                                            <span className='fw-bolder'>XEM CHI TIẾT</span>
-                                        </Button>
-                                }
 
-                            </div>
                         </div>
-
-                    </div>
-                </Card>
-            </div>
-}
+                    </Card>
+                </div>
+            }
         </>
     );
 };

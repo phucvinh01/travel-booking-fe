@@ -9,6 +9,7 @@ import ModalScludeTour from '../ModalScludeTour/inde';
 import ModalEditTour from '../ModalEditTour';
 import Axios from '../../Axios/Axios'
 import { useNavigate } from 'react-router-dom';
+import ModalBLockTour from '../ModalBlockTour';
 
 const TableTour = (props) => {
     const cate = useSelector((state) => state.cate.category.data);
@@ -27,20 +28,14 @@ const TableTour = (props) => {
         setIsModalOpen(false);
     };
 
-    const handleDelete = async (id) => {
-        let r = await Axios.delete(`/Tour/delete-one-tour?Id=${id}`)
-        if(r) {
-            message.success("Del thanh cong")
-            navigate(0)
-        }
-    }
+
 
     const columns = [
         {
             title: 'Tên',
             dataIndex: 'tenTour',
             key: 'tenTour',
-            render: (text) => <a>{text}</a>,
+            render: (text) => <a>{ text }</a>,
         },
         {
             title: 'Mô tả',
@@ -55,7 +50,7 @@ const TableTour = (props) => {
             sorter: (a, b) => a.chiPhi - b.chiPhi,
             render: (_, { chiPhi }) => (
                 <>
-                    {<p className='text-danger text-end'>{formatCurrency.format(chiPhi)}</p>}
+                    { <p className='text-danger text-end'>{ formatCurrency.format(chiPhi) }</p> }
                 </>
             )
         },
@@ -65,7 +60,7 @@ const TableTour = (props) => {
             key: 'trangThai',
             render: (_, { trangThai }) => (
                 <>
-                    {<span>{trangThai ? "Đang hoạt động" : "Ngừng hoạt động"}</span>}
+                    { <span>{ trangThai ? "Đang hoạt động" : "Ngừng hoạt động" }</span> }
                 </>
             )
         },
@@ -92,9 +87,9 @@ const TableTour = (props) => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <ModalScludeTour id={record.idTour} />
-                    <Button onClick={() => showModal(record)} icon={<EditFilled />} />
-                    <Button onClick={() => handleDelete(record.idTour)} icon={<BlockOutlined />} />
+                    <ModalScludeTour id={ record.idTour } />
+                    <Button onClick={ () => showModal(record) } icon={ <EditFilled /> } />
+                    <ModalBLockTour record={ record } />
                 </Space>
             ),
         },
@@ -102,11 +97,10 @@ const TableTour = (props) => {
     const { data } = props
     return (
         <>
-            <Table size='large' style={{ width: 1000 }} pagination={{
+            <Table size='large' style={ { width: 1000 } } pagination={ {
                 position: ['bottomCenter']
-            }} columns={columns} dataSource={data} />
-            <ModalEditTour handleCancel={handleCancel} handleOk={handleOk} isModalOpen={isModalOpen} state={state} />
-
+            } } columns={ columns } dataSource={ data } />
+            <ModalEditTour handleCancel={ handleCancel } handleOk={ handleOk } isModalOpen={ isModalOpen } state={ state } />
         </>
     )
 }

@@ -17,7 +17,7 @@ const postCreateOneHotel = (body) => {
 }
 
 const putUpdateOneHotel = (body) => {
-    return Axios.post(`/KhachSan/update-khach-san`, body)
+    return Axios.put(`/KhachSan/update-khach-san`, body)
 }
 
 export { getAllHotel, getListHotelByRate, getOneByTourId, postCreateOneHotel, putUpdateOneHotel }
