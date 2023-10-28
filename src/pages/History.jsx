@@ -89,7 +89,7 @@ const Order = () => {
             title: 'Trạng thái',
             render: (_, { ngayDat }) => (
                 <>
-                    { <span>{ moment(ngayDat).isAfter(moment().format('MM/DD/YYYY')) ? "Chờ khởi hành" : "Đã hoàn thành" }</span> }
+                    { <span>{ moment(ngayDat).isBefore(moment().format('MM/DD/YYYY')) ? "Đã hoàn thành" : "Chờ khởi hành" }</span> }
                 </>
             ),
             width: '10%',
@@ -115,7 +115,7 @@ const Order = () => {
             key: 'action',
             render: (_, record) => (
                 // <Button key={ record._id } onClick={ () => { setState(record), showModal() } } type='text' block icon={ <EyeOutlined /> } />
-                <ModalDetaiOrder data={ record }  />
+                <ModalDetaiOrder data={ record } />
             ),
             width: '10%',
         },

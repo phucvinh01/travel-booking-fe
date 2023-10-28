@@ -29,7 +29,6 @@ const ReviewBox = (props) => {
         }
     }
 
-    console.log(idCustomer);
     useEffect(() => {
         getComment(idTour)
     }, [idTour])

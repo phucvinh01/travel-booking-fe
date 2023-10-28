@@ -11,6 +11,7 @@ import ModalEditEmp from '../../components/ModalEditEmp'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllEmployee } from '../../redux/api'
 import { getAllTypeEmp } from '../../Axios/TypeEmp'
+import ModalCreateAccountEmp from '../../components/ModalCreateAccountEmp'
 const EmpManager = () => {
     const [data, setData] = useState([])
     const [dataExport, setdataExport] = useState([])
@@ -29,7 +30,7 @@ const EmpManager = () => {
                     arr[3] = item.soDienThoai,
                     arr[4] = moment(item.ngaySinh).format("DD/MM/YYYY"),
                     arr[5] = moment(item.ngayVaoLam).format("DD/MM/YYYY"),
-                    arr[6] = item.maLoaiNhanVien === 'LNV20231012215429' ? "Admin" : item.maLoaiNhanVien === 'LNV20231013164818840"' ? "Nhân viên tư vấn" : "Hướng dẫn viên"
+                    arr[6] = item.maLoaiNhanVien === listTypeEmp.idLoaiNhanVien ? listTypeEmp.tenLoai : ""
                 r.push(arr)
             })
             setdataExport(r)
@@ -58,6 +59,7 @@ const EmpManager = () => {
                             onClick={ getEmpExport }
                         >Xuất danh sách nhân viên</CSVLink>
                     </Button>
+                    <ModalCreateAccountEmp />
                 </Space>
             </section>
             <section>

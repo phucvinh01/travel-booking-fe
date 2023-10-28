@@ -16,5 +16,9 @@ const getOneCusTomerByIdAccoutn = (id) => {
     return Axios.get(`/KhachHang/get-one-khach-hang-by-ma-tai-khoan-id?maTaiKhoan=${id}`)
 }
 
+const updateCustomer = (body) => {
+    return Axios.put(`/KhachHang/update-khach-hang`, body)
+}
 
-export { getAllCustomer, getOneCusTomerById, postCreateCustomer, getOneCusTomerByIdAccoutn }
+
+export { getAllCustomer, getOneCusTomerById, postCreateCustomer, getOneCusTomerByIdAccoutn, updateCustomer }

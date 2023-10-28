@@ -7,6 +7,7 @@ import {
     Space,
     Steps,
     Tabs,
+    message,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -34,6 +35,8 @@ import Slider from 'react-slick';
 import ReviewBox from '../components/ReviewBox';
 import QuestionBox from '../components/QuestionBox';
 import { getAnswer } from '../redux/api';
+import { getOrderByIdCustomer } from '../Axios/Order';
+import { getOneCusTomerByIdAccoutn } from '../Axios/customer';
 
 const TourDetail = () => {
     const settings = {
@@ -43,10 +46,48 @@ const TourDetail = () => {
         slidesToShow: 6,
         slidesToScroll: 6,
     };
+    const [orders, setOrders] = useState([])
+    const [info, setInfo] = useState({})
 
     const hotel = useSelector((state) => state.hotel.hotel.data);
     const flight = useSelector((state) => state.flight.flight.data);
     const user = useSelector((state) => state.auth.login.currentUser);
+    const [filteredData, setFilterdData] = useState([])
+
+    const getOrder = async (userId) => {
+        let r = await getOrderByIdCustomer(userId);
+        if (r) {
+            setOrders(r)
+            const data = r?.filter(function (item) {
+                return item.trangThai === false;
+            })
+            setFilterdData(data)
+            console.log(filteredData);
+        }
+    }
+
+    const getInfo = async () => {
+
+        let r = await getOneCusTomerByIdAccoutn(user.idTaiKhoan)
+        if (r) {
+            setInfo(r)
+
+        }
+
+    }
+
+    useEffect(() => {
+        getInfo()
+    }, [])
+
+    useEffect(() => {
+        if (info) {
+            getOrder(info?.idKhachHang)
+        }
+    }, [info])
+
+
+
     const dispatch = useDispatch()
 
     const [imgg, setImgg] = useState('');
@@ -58,10 +99,9 @@ const TourDetail = () => {
     const [count, setCount] = useState(1);
     const [tours, setTours] = useState([]);
     const [dayOrder, setDayOrder] = useState('');
-    const onChange = (value) => {
-        console.log('onChange:', value);
-        setCurrent(value);
-    };
+    const [imgSrc, setImgSrc] = useState("")
+
+
 
     const getData = async (id) => {
         let res = await getTourById(id);
@@ -72,7 +112,6 @@ const TourDetail = () => {
 
     const getSchedule = async (id) => {
         let res = await getScheduleTour(id);
-        console.log(res);
         if (res) {
             setSchedule(res);
         }
@@ -105,9 +144,12 @@ const TourDetail = () => {
         getAnswer(dispatch, id.id)
     }, [id]);
 
+
+
     useEffect(() => {
         getTourSame(data.maLoaiTour);
     }, [data]);
+
 
     const [img, setImg] = useState([]);
 
@@ -122,6 +164,7 @@ const TourDetail = () => {
 
     useEffect(() => {
         getImg(data.idTour);
+        setImgSrc(`/src/assets/Images/${data.anhBia} `)
     }, [data]);
 
     return (
@@ -148,11 +191,10 @@ const TourDetail = () => {
                                     className='w-100'
                                     height={ 400 }
                                     src={
-                                        imgg
-                                            ? `/src/assets/Images/${imgg} `
-                                            : '/src/assets/Images/' + data.anhBia
+                                        imgSrc
                                     }
-                                    alt='https://i.pinimg.com/564x/c9/10/2b/c9102bdfe432d0830a5f0dd0cfafd891.jpg'></img>
+                                    onError={ () => setImgSrc(data.anhBia) }
+                                    alt={ imgSrc }></img>
                                 <div className='d-flex justify-content-center'>
                                     <div style={ { height: 80, width: '650px' } }>
                                         <div className='slide-newproduct'>
@@ -165,7 +207,7 @@ const TourDetail = () => {
                                                                 <div
                                                                     style={ { width: 30 } }
                                                                     key={ index }
-                                                                    onClick={ () => setImgg(item.fileName) }>
+                                                                    onClick={ () => setImgSrc(`..//..//..//src/assets/Images/${item.fileName}`) }>
                                                                     <img
                                                                         width={ 100 }
                                                                         src={ `..//..//..//src/assets/Images/${item.fileName}` }></img>
@@ -353,11 +395,13 @@ const TourDetail = () => {
                                                 >
                                                     Liên hệ tư vấn
                                                 </Button>{ ' ' }
-                                                <ModalOrder
-                                                    quantity={ count }
-                                                    idTour={ data?.idTour }
-                                                    dayOrder={ dayOrder }
-                                                />
+                                                {
+                                                    filteredData.length > 0 ? <Button style={ { width: 150, overflow: 'hidden', backgroundColor: "red" } }><Link to={ "/me/history" }>Cần thanh toán</Link></Button> : <ModalOrder
+                                                        quantity={ count }
+                                                        idTour={ data?.idTour }
+                                                        dayOrder={ dayOrder }
+                                                    />
+                                                }
                                             </Space>
                                         ) }
                                     </Space>

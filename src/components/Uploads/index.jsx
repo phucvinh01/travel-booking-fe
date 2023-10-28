@@ -18,7 +18,7 @@ function Upload(props) {
 
     useEffect(() => {
         if (value) {
-            setPreview(value)
+            setPreview(`..//..//..//src/assets/Images/${value}`)
             setImage(value)
         }
     }, [value])
@@ -41,7 +41,7 @@ function Upload(props) {
 
             <div style={ { height: "232px" } }>
                 { error && <><p>{ error }</p></> }
-                { preview && <img id='imgUpload' className='rounded-2 z-3 position-absolute' style={ { height: "232px", width: "210px" } } src={ preview } /> }
+                { preview && <img id='imgUpload' className='rounded-2 z-3 position-absolute' style={ { height: "232px", width: "210px" } } src={ preview } onError={ () => setPreview(value) } /> }
             </div>
             <input id='inputFile' type="file" className='w-100'
                 onChange={ (event) => {

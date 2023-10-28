@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, Select, Space, message } from 'antd';
 import moment from 'moment';
 import { date } from 'yup';
-import { getOneById } from '../../Axios/Account';
+import { getOneById, putUpdateAccount } from '../../Axios/Account';
 import { EditFilled, SaveFilled } from '@ant-design/icons';
 import { putUpdateEmp } from '../../Axios/Employee';
 import { getAllEmployee } from '../../redux/api';
 import { useDispatch } from 'react-redux';
 import { getAllTypeEmp } from '../../Axios/TypeEmp';
+import { set } from 'lodash';
+import { getAllType } from '../../Axios/typeAccount';
 const ModalEditEmp = (props) => {
     const { isModalOpen, handleOk, handleCancel, state } = props
 
@@ -18,14 +20,18 @@ const ModalEditEmp = (props) => {
     const [birthday, setBirthday] = useState("")
     const [gender, setGender] = useState(true)
     const [address, setAddress] = useState("")
-    const [status, setStatus] = useState("")
+    const [status, setStatus] = useState(true)
     const [email, setEmail] = useState("")
     const [id, setId] = useState("")
     const [dayStart, setDayStart] = useState("")
     const [cccd, setCccd] = useState("")
+    const [password, setPassword] = useState('')
+    const [idAccount, setIdAccount] = useState("")
+    const [typeAccount, setTypeAccount] = useState("")
     const dispatch = useDispatch()
 
     const [listTypeEmp, setListTypeEmp] = useState([])
+    const [listTypeAccount, setListTypeAccount] = useState([])
 
     const getType = async () => {
         let r = await getAllTypeEmp()
@@ -36,17 +42,39 @@ const ModalEditEmp = (props) => {
             setListTypeEmp(r)
         }
     }
+    const getTypeAccount = async () => {
+        let r = await getAllType()
+        if (r.status === 400) {
+            message.error("Lấy list loại nhân viên thất bại")
+        }
+        else {
+            setListTypeAccount(r)
+        }
+    }
     const getAccount = async (id) => {
         let res = await getOneById(id)
-        if (res) {
+        console.log(res);
+        if (res.statusCode !== 204) {
             setEmail(res.email)
             setStatus(res.trangThai)
+            setPassword(res.matKhau)
+            setIdAccount(res.idTaiKhoan)
+            setTypeAccount(res.maLoai)
+        }
+        else {
+            setEmail("")
+            setStatus("")
+            setPassword("")
+            setIdAccount("")
+            setTypeAccount("")
         }
     }
 
+
     useEffect(() => {
-        getAccount(state.idNhanVien)
+        getAccount(state.maTaiKhoan && state.maTaiKhoan)
         getType()
+        getTypeAccount()
     }, [state])
 
     useEffect(() => {
@@ -68,6 +96,7 @@ const ModalEditEmp = (props) => {
         setAddress(state.diaChi)
         setDayStart(state.ngayVaoLam)
         setCccd(state.canCuocConDan)
+        console.log(state);
     }, [state])
 
     const handleSubmit = async () => {
@@ -86,14 +115,30 @@ const ModalEditEmp = (props) => {
 
         console.log(gender);
         let r = await putUpdateEmp(bodyEmp)
-        if (r) {
-            message.success("Chỉnh sửa nhân viên thành công")
-            setIsEdit(false)
-            getAllEmployee(dispatch)
-            handleCancel()
+        if (r.status === 400) {
+            message.error("Chỉnh sửa viên thất bại")
         }
         else {
-            message.error("Chỉnh sửa viên thất bại")
+            let bodyy = {
+                "idTaiKhoan": idAccount,
+                "maLoai": typeAccount,
+                "soDienThoai": phone,
+                "email": email,
+                "matKhau": password,
+                "trangThai": Boolean(status),
+                "ngayLap": moment(),
+            }
+            let r = await putUpdateAccount(bodyy)
+            if (r.status === 400) {
+                message.error("Chỉnh sửa tài khoản thất bại")
+            }
+            else {
+                message.success("Chỉnh sửa nhân viên thành công")
+                setIsEdit(false)
+                getAllEmployee(dispatch)
+                handleCancel()
+            }
+
         }
     }
 
@@ -150,6 +195,24 @@ const ModalEditEmp = (props) => {
                         <div className='mb-3'>
                             <label>Email</label>
                             <input disabled={ isEdit ? false : true } type='text' value={ email } className='form-control' onChange={ (e) => setEmail(e.target.value) } />
+                        </div>
+                        <div className='mb-3'>
+                            <label>Mật khẩu</label>
+                            <input disabled={ isEdit ? false : true } type='password' value={ password } className='form-control' onChange={ (e) => setPassword(e.target.value) } />
+                        </div>
+                        <div className='mb-3'>
+                            <label>Loại tài khoản</label>
+                            <select disabled={ isEdit ? false : true } className='form-control' value={ typeAccount } onChange={ (e) => setTypeAccount(e.target.value) }>
+                                {
+                                    listTypeAccount?.map((item, index) => {
+                                        return (
+                                            <>
+                                                <option key={ index } value={ item.idLoaiTaiKhoan }>{ item.tenLoai }</option>
+                                            </>
+                                        )
+                                    })
+                                }
+                            </select>
                         </div>
                         <div className='mb-3'>
                             <label>Trạng thái tài khoản</label>

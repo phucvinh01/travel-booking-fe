@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Select, message } from 'antd';
+import { Button, Modal, Radio, Select, message } from 'antd';
 import { PlusCircleFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from '../../Axios/Axios'
@@ -128,6 +128,11 @@ const ModalCreateFlight = () => {
                 <div className='mb-3'>
                     <label>Tên máy bay</label>
                     <input value={ mayBay } type='text' className='form-control' onChange={ (e) => setMayBay(e.target.value) } />
+                </div>
+                <div className='mb-3'>
+                    <Radio.Group  >
+                        <Radio value={ 1 }>Khứ hồi</Radio>
+                    </Radio.Group>
                 </div>
             </Modal>
         </>

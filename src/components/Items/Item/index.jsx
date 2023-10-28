@@ -27,7 +27,7 @@ const Item = (props) => {
     const [state, setState] = useState({})
 
     useEffect(() => {
-        setImgSrc(data.anhBia)
+        setImgSrc(`..//..//..//src/assets/Images/${data.anhBia}`)
     }, [data])
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -123,7 +123,7 @@ const Item = (props) => {
                         } }>
                         <div class="card_view">
                             <div class="card_image">
-                                <img loading='lazy' alt='example' src={ "..//..//..//src/assets/Images/" + imgSrc } onError={ () => setImgSrc(data.anhBia) } style={ { width: '100%' } } />
+                                <img loading='lazy' alt='example' src={ imgSrc } onError={ () => setImgSrc(data.anhBia) } style={ { width: '100%' } } />
                             </div>
 
                             <div class="card_view_back">

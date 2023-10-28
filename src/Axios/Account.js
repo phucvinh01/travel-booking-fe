@@ -18,7 +18,7 @@ const postRegiser = (body) => {
 }
 
 const putUpdateAccount = (body) => {
-    return Axios.post('/TaiKhoan/update-tai-khoan', body)
+    return Axios.put('/TaiKhoan/update-tai-khoan', body)
 }
 
 const deleteAccount = (id) => {
