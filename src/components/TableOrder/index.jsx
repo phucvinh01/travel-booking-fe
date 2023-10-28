@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Alert, Button, Form, Input, Popconfirm, Spin, Table, message } from 'antd';
+import { Alert, Button, DatePicker, Form, Input, InputNumber, Popconfirm, Spin, Table, message } from 'antd';
 import { ImportOutlined, SendOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { getOneCusTomerByIdAccoutn } from '../../Axios/customer';
@@ -25,6 +25,7 @@ const EditableCell = ({
     children,
     dataIndex,
     record,
+    inputType,
     handleSave,
     ...restProps
 }) => {
@@ -55,6 +56,8 @@ const EditableCell = ({
         }
     };
     let childNode = children;
+    const inputNode = inputType === 'date' ? <input type='date' ref={ inputRef } onPressEnter={ save } onBlur={ save } /> : <Input ref={ inputRef } onPressEnter={ save } onBlur={ save } />;
+
     if (editable) {
         childNode = editing ? (
             <Form.Item
@@ -69,7 +72,7 @@ const EditableCell = ({
                     },
                 ] }
             >
-                <Input ref={ inputRef } onPressEnter={ save } onBlur={ save } />
+                { inputNode }
             </Form.Item>
         ) : (
             <div
@@ -187,6 +190,7 @@ const TableOrder = (props) => {
             ...col,
             onCell: (record) => ({
                 record,
+                inputType: col.dataIndex === 'ngaySinh' ? 'date' : 'text',
                 editable: col.editable,
                 dataIndex: col.dataIndex,
                 title: col.title,
