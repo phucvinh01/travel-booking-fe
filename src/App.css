@@ -69,9 +69,9 @@ a{
 }
 
 .backgound-tour-page{
-  background-image: url('./Images/person/imgbg1.jpg'); /*assets/backgound-tour.png'*/
+  background-image: url('./Images/person/bgslide3.png'); /*assets/backgound-tour.png'*/
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain ;
   height: 350px;
   background-position: center;
   background-attachment: fixed;

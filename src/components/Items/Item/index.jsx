@@ -155,7 +155,8 @@ const Item = (props) => {
                                         location.pathname.includes('admin') ? <><Button icon={ <EditOutlined /> } className='btn-quick' type="primary" onClick={ showModal }>
                                             Chỉnh sửa
                                         </Button></>
-                                            : <Button size='large' onClick={ () => navigate(`/tours/${data?.idTour}`) }
+                                            : <Button size='large' onClick={ () =>{ navigate(`/tours/${data?.idTour}`);
+                                            window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                                                 className='see'
                                             >
                                                 <span className='fw-bolder'>XEM CHI TIẾT</span>

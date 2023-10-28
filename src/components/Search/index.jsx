@@ -66,11 +66,11 @@ const SearchFrom = () => {
     return (
         <div className='search rounded-2' >
             <Space direction='horizontal' >
-                <input className='form-control' type="text" placeholder="Bạn muốn đi đâu?" onChange={(e) => setSearch(e.target.value)} />
-                <Button onClick={() => handleSearch(search)} icon={<SearchOutlined />} size='large'>
+                <input className='form-control fc' type="text" placeholder="Bạn muốn đi đâu?" onChange={(e) => setSearch(e.target.value)} />
+                <Button style={{border: 'solid 1.5px rgb(172, 98, 0)'}} onClick={() => handleSearch(search)} icon={<SearchOutlined />} size='large'>
                     Tìm
                 </Button>
-                <Button onClick={() => handleClear()} icon={<ClearOutlined />} size='large'>
+                <Button  style={{border: 'solid 1.5px rgb(172, 98, 0)'}} onClick={() => handleClear()} icon={<ClearOutlined />} size='large'>
                 </Button></Space>
         </div>
     )

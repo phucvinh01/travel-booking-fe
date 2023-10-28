@@ -89,7 +89,15 @@ const TourDetail = () => {
     const flightName = flight?.find(
         (item) => item.idChuyenBay === data?.maChuyenBay
     );
+    var currentDate_=()=>{
+        var currentDate = new Date();
 
+        var year = currentDate.getFullYear();
+        var month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        var day = String(currentDate.getDate()).padStart(2, '0');
+
+        return year + '-' + month + '-' + day;
+    }
 
     useEffect(() => {
         getData(id.id);
@@ -303,7 +311,8 @@ const TourDetail = () => {
                                     <Space direction='vertical'>
                                         <small>Chọn ngày khởi hành</small>
                                         <input
-                                            type='date'
+                                        
+                                            type='date' defaultValue={currentDate_()}
                                             className='form-control'
                                             onChange={ (e) => setDayOrder(e.target.value) }
                                         />

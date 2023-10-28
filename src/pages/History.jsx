@@ -1,5 +1,5 @@
 import { Breadcrumb, Button, Card, Table } from 'antd'
-import { EyeOutlined } from '@ant-design/icons'
+import { EyeOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -8,6 +8,7 @@ import formatCurrency from '../util/formatCurrency'
 import { getOrderByIdCustomer } from '../Axios/Order'
 import { getOneCusTomerByIdAccoutn } from '../Axios/customer'
 import ModalDetaiOrder from '../components/ModalDetailOrder'
+import { TextUnderline } from 'phosphor-react'
 const Order = () => {
 
     const [orders, setOrders] = useState([])
@@ -134,25 +135,17 @@ const Order = () => {
                                 },
                             ] }
                         />
-                        <h2>Đơn hàng</h2>
-                        <Table size='large' pagination={ true } dataSource={ orders } columns={ columns }></Table>
+                        <h5 style={{textDecoration:'underline'}}><strong>Đơn hàng chờ thanh toán và chưa khởi hành:</strong></h5>
+                        <Table size='large' pagination={ true } dataSource={ orders.filter((item)=>{
+                            return item.trangThai==false||moment(item.ngayDat).isAfter(moment().format('MM/DD/YYYY'));
+                        }) } columns={ columns }></Table>
+
+                        <h5 style={{textDecoration:'underline'}}><strong>Lịch sử đơn hàng:</strong></h5>
+                        <Table size='large' pagination={ true } dataSource={ orders.filter((item)=>{
+                            return item.trangThai==true && !moment(item.ngayDat).isAfter(moment().format('MM/DD/YYYY'));
+                        }) } columns={ columns }></Table>
 
                     </div>
-                    {/* <div className='col-6'>
-                        <Breadcrumb className='mb-3'
-                            items={ [
-                                {
-                                    title: <Link to={ '/' }>Trang chủ</Link>,
-                                },
-                                {
-                                    title: <span>Lịch sử đặt hàng</span>,
-                                },
-                            ] }
-                        />
-                        <h2>Đơn hàng</h2>
-                        <Table size='large' pagination={ true } dataSource={ orders } columns={ columns }></Table>
-
-                    </div> */}
                 </div>
             </div>
 
