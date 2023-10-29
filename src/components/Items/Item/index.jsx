@@ -26,8 +26,13 @@ const Item = (props) => {
 
     const [state, setState] = useState({})
 
+
+    const handleImageError = (event) => {
+        event.target.src = data.anhBia; // Đặt lại nguồn ảnh thành URL từ server khi xảy ra lỗi khi tải ảnh từ folder asset
+    };
+
     useEffect(() => {
-        setImgSrc(data.anhBia)
+        setImgSrc(`..//..//..//src/assets/Images/${data.anhBia}`)
     }, [data])
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -123,7 +128,7 @@ const Item = (props) => {
                         } }>
                         <div class="card_view">
                             <div class="card_image">
-                                <img loading='lazy' alt={ imgSrc } src={ imgSrc } onError={ () => setImgSrc(`..//..//..//src/assets/Images/${data.anhBia}`) } style={ { width: '100%' } } />
+                                <img loading='eager' alt={ imgSrc } src={ imgSrc } onError={ handleImageError } style={ { width: '100%' } } />
                             </div>
 
                             <div class="card_view_back">

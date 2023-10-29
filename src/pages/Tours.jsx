@@ -48,10 +48,9 @@ const Tours = () => {
     }
 
     useEffect(() => {
-        if (valueCate === 0)
-        {
-        //getItems()
-        setCurrentProducts(tours?.slice(0, 0 + 9))
+        if (valueCate === 0) {
+            //getItems()
+            setCurrentProducts(tours?.slice(0, 0 + 9))
 
         }
         else {
@@ -153,7 +152,6 @@ const Tours = () => {
                                         <Item
                                             key={ index }
                                             data={ item }
-
                                         />
                                     </div>)
                             }) : <Empty /> }

@@ -8,12 +8,28 @@ const ModalCreateInfo = (props) => {
 
 
     const { state } = props
-    console.log(state);
+    const [age, setAge] = useState(0);
     const [name, setName] = useState("")
     const [gender, setGender] = useState(true)
     const [address, setAddress] = useState("")
     const [day, setDay] = useState("")
     const [full, setFull] = useState(false)
+
+    const handleDateChange = (event) => {
+        const selectedDate = event.target.value;
+        setDay(selectedDate);
+
+        const today = new Date();
+        const birthDate = new Date(selectedDate);
+        const diffTime = Math.abs(today - birthDate);
+        const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365));
+
+        if (diffYears < 18) {
+            message.error("Yêu cầu lớn hơn 18 tuổi")
+            setDay("")
+            return
+        }
+    };
 
     useEffect(() => {
         if (name && gender, address, day) {
@@ -48,28 +64,28 @@ const ModalCreateInfo = (props) => {
 
     return (
         <>
-            <Modal maskClosable={false} footer={null} closeIcon={null} title="Thông tin của bạn" open={props.isModalOpen} onOk={props.handleOk} onCancel={props.handleCancel}>
+            <Modal maskClosable={ false } footer={ null } closeIcon={ null } title="Thông tin của bạn" open={ props.isModalOpen } onOk={ props.handleOk } onCancel={ props.handleCancel }>
                 <div className='mb-3'>
                     <label>Họ và tên</label>
-                    <input type='text' value={name} className='form-control' onChange={(e) => setName(e.target.value)} />
+                    <input type='text' value={ name } className='form-control' onChange={ (e) => setName(e.target.value) } />
                 </div>
                 <div className='mb-3'>
                     <label>Giới tính</label>
-                    <select value={gender} defaultValue={true} className='form-control' onChange={(e) => setGender(e.target.value)}>
-                        <option value={true}>Nam</option>
-                        <option value={false}>Nữ</option>
+                    <select value={ gender } defaultValue={ true } className='form-control' onChange={ (e) => setGender(e.target.value) }>
+                        <option value={ true }>Nam</option>
+                        <option value={ false }>Nữ</option>
                     </select>
                 </div>
                 <div className='mb-3'>
                     <label>Địa chỉ</label>
-                    <input type='text' value={address} className='form-control' onChange={(e) => setAddress(e.target.value)} />
+                    <input type='text' value={ address } className='form-control' onChange={ (e) => setAddress(e.target.value) } />
                 </div>
                 <div className='mb-3'>
                     <label>Ngày sinh</label>
-                    <input type='date' value={day} className='form-control' onChange={(e) => setDay(e.target.value)} />
+                    <input type='date' value={ day } className='form-control' onChange={ (e) => handleDateChange(e.target.value) } />
                 </div>
                 <div className='d-flex justify-content-end'>
-                    <Button disabled={!full ? true : false} onClick={handleSave}>Lưu</Button>
+                    <Button disabled={ !full ? true : false } onClick={ handleSave }>Lưu</Button>
                 </div>
             </Modal>
         </>
