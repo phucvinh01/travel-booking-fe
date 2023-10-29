@@ -4,6 +4,7 @@ import { getScheduleTour } from '../../Axios/Tour';
 import moment from 'moment';
 import { EditOutlined } from '@ant-design/icons';
 import FormCreateSclude from '../FormCreateSclude';
+import { useSelector } from 'react-redux';
 
 const TabEditCreateScludeTour = (prop) => {
     const [img, setImg] = useState("")
@@ -11,6 +12,18 @@ const TabEditCreateScludeTour = (prop) => {
         getSclude(prop.id)
     }, [prop.id])
     const [state, setState] = useState([])
+    const handleImageError = (event, item) => {
+        event.target.src = item.hinhAnh; // Đặt lại nguồn ảnh thành URL từ server khi xảy ra lỗi khi tải ảnh từ folder asset
+    };
+    const hotel = useSelector((state) => state.hotel.hotel.data);
+
+    function findNameHotelById(arr, id) {
+        const foundObject = arr.find(obj => obj.idKhachSan === id);
+        if (foundObject) {
+            return foundObject.tenKhachSan;
+        }
+        return null; // Trả về null nếu không tìm thấy đối tượng với id tương ứng
+    }
 
     const defaultPanes = state && state.map((item, index) => {
         return {
@@ -19,9 +32,10 @@ const TabEditCreateScludeTour = (prop) => {
                 <div className='d-flex justify-content-end'><Button icon={ <EditOutlined /> }></Button></div>
                 <Space direction='vertical' style={ { minHeight: 300 } }>
                     <h5>{ item.tieuDe }</h5>
-                    <p>Từ { item.diemKhoiHanh } đến { item.diemDen }</p>
-                    <p>Từ { moment(item.thoiGianBatDau).format('HH:mm') } đến { moment(item.thoiGianKetThuc).format('HH:mm') }</p>
-                    { item.hinhAnh === "null" ? "" : <img width={ 200 } onLoadCapture={ () => setImg("..//..//src/assets/Images/" + item.hinhAnh) } src={ img } onError={ () => setImg(item.hinhAnh) } /> }
+                    <p> { item.diemKhoiHanh } đến { item.diemDen }</p>
+                    <p>{ item.buaAn }</p>
+                    <p>{ findNameHotelById(hotel, item.maKhachSan) }</p>
+                    { item.hinhAnh === "null" ? "" : <img width={ 200 } src={ `..//..//src/assets/Images/${item.hinhAnh}` } onError={ (e) => handleImageError(e, item) } /> }
 
                     <p>
                         { item.moTa }

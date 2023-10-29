@@ -23,7 +23,7 @@ const TableCus = (props) => {
             title: 'Tên',
             dataIndex: 'hoTen',
             key: 'hoTen',
-            render: (text) => <a>{text}</a>,
+            render: (text) => <a>{ text }</a>,
         },
         {
             title: 'Năm sinh',
@@ -33,7 +33,7 @@ const TableCus = (props) => {
             sorter: (a, b) => Date.parse(a.ngaySinh) - Date.parse(b.ngaySinh),
             render: (_, { ngaySinh }) => (
                 <>
-                    {<span>{moment(ngaySinh).format('MM/DD/YYYY')}</span>}
+                    { <span>{ moment(ngaySinh).format('MM/DD/YYYY') }</span> }
                 </>
             )
         },
@@ -48,7 +48,7 @@ const TableCus = (props) => {
             key: 'gioiTinh',
             render: (_, { gioiTinh }) => (
                 <>
-                    {<span>{gioiTinh ? "Nam" : "Nữ"}</span>}
+                    { <span>{ gioiTinh ? "Nam" : "Nữ" }</span> }
                 </>
             )
         },
@@ -62,24 +62,15 @@ const TableCus = (props) => {
             dataIndex: 'soDienThoai',
             key: 'soDienThoai',
         },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-                <Space size="middle">
-                    <Button icon={<EyeFilled />} />
-                </Space>
-            ),
-        },
     ];
     const { data } = props
     return (
         <>
-            <Table style={{
+            <Table style={ {
                 width: 1000
-            }} pagination={{
+            } } pagination={ {
                 position: ['bottomCenter']
-            }} columns={columns} dataSource={data} />
+            } } columns={ columns } dataSource={ data } />
 
         </>
     )

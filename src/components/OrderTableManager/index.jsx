@@ -226,9 +226,7 @@ const TableManagerOrder = (props) => {
 
                 </Space>
                 <Space direction='vertical' size={ 'large' } style={ { width: '100%' } }>
-                    <div className='d-flex justify-content-end'>
-                        <Button type='primary' icon={ <ExportOutlined /> }>Xuất danh sách</Button>
-                    </div>
+
                     <div>
                         <Table size='large' style={ {
                             width: 1000
