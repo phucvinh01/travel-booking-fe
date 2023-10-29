@@ -67,21 +67,23 @@ const ReviewBox = (props) => {
                         <Rate
                             className='mb-3'
                             allowHalf defaultValue={ 0 }
-                            onChange={ setRating } value={ rating } />
+                            precision={1}
+                            onChange={ setRating } value={  rating  }
+                             />
                     </div>
                     <div className='d-flex gap-2' >
                         <input
                             value={ comment }
                             className='form-control'
                             disabled={ !user ? true : false }
-                            placeholder={ !user ? "You need login" : "Share you think" }
+                            placeholder={ !user ? "Bạn cần phải đăng nhập" : "Nhận xét của bạn..." }
                             name='comment'
                             onChange={ (e) => setComment(e.target.value) } />
                         <Button
                             size='large'
                             onClick={ handleSubmit }
                             disabled={ !user ? true : false }
-                            className='btn-tour-booking'>Submit</Button>
+                            className='btn-tour-booking'>Nhận xét</Button>
                     </div>
                 </div>
                 <ListComment data={ listComment }></ListComment>

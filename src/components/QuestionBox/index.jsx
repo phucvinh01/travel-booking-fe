@@ -58,14 +58,14 @@ const QuestionBox = (props) => {
                         value={ comment }
                         className='form-control'
                         disabled={ !user ? true : false }
-                        placeholder={ !user ? "You need login" : "Mời bạn đặt câu hỏi" }
+                        placeholder={ !user ? "Bạn cần phải đăng nhập" : "Mời bạn đặt câu hỏi" }
                         name='comment'
                         onChange={ (e) => setComment(e.target.value) } />
                     <Button
                         size='large'
                         disabled={ !user ? true : false }
                         onClick={ handleSubmit }
-                        className='btn-tour-booking'>Submit</Button>
+                        className='btn-tour-booking'>Gửi</Button>
                 </div>
             </div>
             <ListAnswer idTour={ idTour } />

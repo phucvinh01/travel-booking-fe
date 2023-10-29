@@ -38,7 +38,6 @@ const FormCreateSclude = (props) => {
         if (res.statusText === "OK") {
             let body = {
                 "maTour": id,
-                "ngayThu": `Thứ ${day}`,
                 "buaAn": timeBegin,
                 "diemKhoiHanh": begin,
                 "diemDen": end,
@@ -65,10 +64,6 @@ const FormCreateSclude = (props) => {
                 <Button disabled={ !full ? true : false } onClick={ () => handleSubmit() } icon={ <SaveFilled /> }>{ isLoading ? <Spin /> : "Lưu" }</Button>
             </div>
             <Space direction='vertical' style={ { minHeight: 200 } }>
-                <Space size={ 'middle' }>
-                    <label>Ngày thứ </label>
-                    <input onChange={ (e) => setDay(e.target.value) } value={ day } type='number' className='form-control' />
-                </Space>
                 <Space size={ 'middle' }>
                     <label>Tiêu đề </label>
                     <input onChange={ (e) => setTitle(e.target.value) } value={ title } type='text' className='form-control' />
