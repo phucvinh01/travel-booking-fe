@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Modal, message } from 'antd';
 import Axios from '../../Axios/Axios';
-import { BlockOutlined, StopFilled } from '@ant-design/icons';
+import { BlockOutlined, PushpinOutlined, RedoOutlined, StopFilled } from '@ant-design/icons';
 import { getItems, getItemsAdmin } from '../../redux/api';
 import { useDispatch } from 'react-redux';
-const ModalBLockTour = (prop) => {
+const ModalActiveTour = (prop) => {
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,9 +13,9 @@ const ModalBLockTour = (prop) => {
         setIsModalOpen(true);
     };
     const handleOk = async () => {
-        let r = await Axios.delete(`/Tour/delete-one-tour?Id=${prop.record.idTour}`)
+        let r = await Axios.put(`/Tour/kich-hoat-one-tour?IdTour=${prop.record.idTour}`)
         if (r) {
-            message.success("Del thanh cong")
+            message.success("Cập nhập thành công")
             getItemsAdmin(dispatch)
             setIsModalOpen(false)
         }
@@ -27,11 +27,11 @@ const ModalBLockTour = (prop) => {
 
     return (
         <>
-            <Button onClick={ () => showModal() } icon={ <StopFilled /> } title='Ngưng hoạt động' />
-            <Modal title="Ngưng hoạt động" open={ isModalOpen } onOk={ handleOk } okButtonProps={ { style: { backgroundColor: "red" } } } onCancel={ handleCancel }>
-                <p>Bạn có chắc chắn sẽ ngưng hoạt động tour <strong>{ prop.record.tenTour }</strong></p>
+            <Button onClick={ () => showModal() } icon={ <RedoOutlined /> } title='Hoạt động lại tour' />
+            <Modal title="Hoạt động lại tour" open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
+                <p>Cập nhật hoạt động lại tour <strong>{ prop.record.tenTour }</strong></p>
             </Modal>
         </>
     );
 };
-export default ModalBLockTour;
+export default ModalActiveTour;

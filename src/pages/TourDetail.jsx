@@ -128,7 +128,7 @@ const TourDetail = () => {
     const flightName = flight?.find(
         (item) => item.idChuyenBay === data?.maChuyenBay
     );
-    var currentDate_=()=>{
+    var currentDate_ = () => {
         var currentDate = new Date();
 
         var year = currentDate.getFullYear();
@@ -209,8 +209,11 @@ const TourDetail = () => {
                                                                     key={ index }
                                                                     onClick={ () => setImgSrc(`..//..//..//src/assets/Images/${item.fileName}`) }>
                                                                     <img
+                                                                        loading='lazy'
                                                                         width={ 100 }
-                                                                        src={ `..//..//..//src/assets/Images/${item.fileName}` }></img>
+                                                                        onError={ () => setImgg(item.fileName) }
+                                                                        onLoadCapture={ () => setImgg(`..//..//..//src/assets/Images/${item.fileName}`) }
+                                                                        src={ imgg }></img>
                                                                 </div>
                                                             </>
                                                         );
@@ -353,8 +356,8 @@ const TourDetail = () => {
                                     <Space direction='vertical'>
                                         <small>Chọn ngày khởi hành</small>
                                         <input
-                                        
-                                            type='date' defaultValue={currentDate_()}
+
+                                            type='date' defaultValue={ currentDate_() }
                                             className='form-control'
                                             onChange={ (e) => setDayOrder(e.target.value) }
                                         />

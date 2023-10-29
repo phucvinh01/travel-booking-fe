@@ -21,7 +21,7 @@ const TabEditCreateScludeTour = (prop) => {
                     <h5>{ item.tieuDe }</h5>
                     <p>Từ { item.diemKhoiHanh } đến { item.diemDen }</p>
                     <p>Từ { moment(item.thoiGianBatDau).format('HH:mm') } đến { moment(item.thoiGianKetThuc).format('HH:mm') }</p>
-                    { item.hinhAnh === "null" ? "" : <img width={ 200 } src={ "..//..//src/assets/Images/" + item.hinhAnh && item.hinhAnh } /> }
+                    { item.hinhAnh === "null" ? "" : <img width={ 200 } onLoadCapture={ () => setImg("..//..//src/assets/Images/" + item.hinhAnh) } src={ img } onError={ () => setImg(item.hinhAnh) } /> }
 
                     <p>
                         { item.moTa }

@@ -10,6 +10,7 @@ import ModalEditTour from '../ModalEditTour';
 import Axios from '../../Axios/Axios'
 import { useNavigate } from 'react-router-dom';
 import ModalBLockTour from '../ModalBlockTour';
+import ModalActiveTour from '../ModalActiveTour';
 
 const TableTour = (props) => {
     const cate = useSelector((state) => state.cate.category.data);
@@ -89,7 +90,10 @@ const TableTour = (props) => {
                 <Space size="middle">
                     <ModalScludeTour id={ record.idTour } />
                     <Button onClick={ () => showModal(record) } icon={ <EditFilled /> } />
-                    <ModalBLockTour record={ record } />
+                    {
+                        record.trangThai ? <ModalBLockTour record={ record } /> : <ModalActiveTour record={ record } />
+                    }
+
                 </Space>
             ),
         },
