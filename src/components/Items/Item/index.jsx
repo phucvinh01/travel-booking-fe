@@ -123,7 +123,7 @@ const Item = (props) => {
                         } }>
                         <div class="card_view">
                             <div class="card_image">
-                                <img loading='eager' alt={ imgSrc } src={ imgSrc } onError={ () => setImgSrc(data.anhBia) } style={ { width: '100%' } } />
+                                <img loading='lazy' onLoadCapture={ () => setImgSrc(data.anhBia) } alt={ imgSrc } src={ imgSrc } onError={ () => setImgSrc(data.anhBia) } style={ { width: '100%' } } />
                             </div>
 
                             <div class="card_view_back">
