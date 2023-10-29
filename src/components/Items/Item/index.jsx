@@ -28,7 +28,7 @@ const Item = (props) => {
 
     useEffect(() => {
         setImgSrc(`..//..//..//src/assets/Images/${data.anhBia}`)
-    }, [data])
+    })
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -123,7 +123,7 @@ const Item = (props) => {
                         } }>
                         <div class="card_view">
                             <div class="card_image">
-                                <img loading='lazy' alt='example' src={ imgSrc } onError={ () => setImgSrc(data.anhBia) } style={ { width: '100%' } } />
+                                <img loading='eager' alt={ imgSrc } src={ imgSrc } onError={ () => setImgSrc(data.anhBia) } style={ { width: '100%' } } />
                             </div>
 
                             <div class="card_view_back">
@@ -155,8 +155,10 @@ const Item = (props) => {
                                         location.pathname.includes('admin') ? <><Button icon={ <EditOutlined /> } className='btn-quick' type="primary" onClick={ showModal }>
                                             Chỉnh sửa
                                         </Button></>
-                                            : <Button size='large' onClick={ () =>{ navigate(`/tours/${data?.idTour}`);
-                                            window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                                            : <Button size='large' onClick={ () => {
+                                                navigate(`/tours/${data?.idTour}`);
+                                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                            } }
                                                 className='see'
                                             >
                                                 <span className='fw-bolder'>XEM CHI TIẾT</span>
