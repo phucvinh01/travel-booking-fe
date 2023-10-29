@@ -211,9 +211,7 @@ const TourDetail = () => {
                                                                     <img
                                                                         loading='lazy'
                                                                         width={ 100 }
-                                                                        onError={ () => setImgg(item.fileName) }
-                                                                        onLoadCapture={ () => setImgg(`..//..//..//src/assets/Images/${item.fileName}`) }
-                                                                        src={ imgg }></img>
+                                                                        src={ `..//..//..//src/assets/Images/${item.fileName}` }></img>
                                                                 </div>
                                                             </>
                                                         );
