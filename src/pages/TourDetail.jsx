@@ -286,6 +286,7 @@ const TourDetail = () => {
                                                             ) : (
                                                                 <img
                                                                     width={ "100%" }
+                                                                    onError={ (e) => e.target.src = item.hinhAnh }
                                                                     src={
                                                                         '/src/assets/Images/' + item.hinhAnh
                                                                     }></img>

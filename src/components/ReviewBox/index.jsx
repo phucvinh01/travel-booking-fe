@@ -66,10 +66,8 @@ const ReviewBox = (props) => {
                     <div>
                         <Rate
                             className='mb-3'
-                            allowHalf defaultValue={ 0 }
-                            precision={1}
-                            onChange={ setRating } value={  rating  }
-                             />
+                            defaultValue={ 0 }
+                            onChange={ setRating } value={ rating } />
                     </div>
                     <div className='d-flex gap-2' >
                         <input
