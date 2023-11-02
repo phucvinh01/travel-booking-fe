@@ -11,6 +11,7 @@ import Axios from '../../Axios/Axios'
 import { useNavigate } from 'react-router-dom';
 import ModalBLockTour from '../ModalBlockTour';
 import ModalActiveTour from '../ModalActiveTour';
+import ModalListImgTour from '../ModalListImgTour';
 
 const TableTour = (props) => {
     const cate = useSelector((state) => state.cate.category.data);
@@ -93,7 +94,7 @@ const TableTour = (props) => {
                     {
                         record.trangThai ? <ModalBLockTour record={ record } /> : <ModalActiveTour record={ record } />
                     }
-
+                    <ModalListImgTour idTour={ record.idTour } />
                 </Space>
             ),
         },
