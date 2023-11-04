@@ -23,12 +23,13 @@ const ModalCreateInfo = (props) => {
         const birthDate = new Date(selectedDate);
         const diffTime = Math.abs(today - birthDate);
         const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365));
-
+        console.log(diffYears);
         if (diffYears < 18) {
             message.error("Yêu cầu lớn hơn 18 tuổi")
             setDay("")
             return
         }
+        setDay(selectedDate);
     };
 
     useEffect(() => {
@@ -43,7 +44,7 @@ const ModalCreateInfo = (props) => {
     const handleSave = async () => {
         let body = {
             "hoTen": name.trim(),
-            "gioiTinh": gender,
+            "gioiTinh": JSON.parse(gender),
             "diaChi": address.trim(),
             "email": state.email,
             "ngaySinh": day,
@@ -82,7 +83,7 @@ const ModalCreateInfo = (props) => {
                 </div>
                 <div className='mb-3'>
                     <label>Ngày sinh</label>
-                    <input type='date' value={ day } className='form-control' onChange={ (e) => handleDateChange(e.target.value) } />
+                    <input type='date' value={ day } className='form-control' onChange={ (e) => handleDateChange(e) } />
                 </div>
                 <div className='d-flex justify-content-end'>
                     <Button disabled={ !full ? true : false } onClick={ handleSave }>Lưu</Button>

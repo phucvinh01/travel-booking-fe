@@ -9,6 +9,7 @@ import { postLogin } from '../../Axios/Account';
 import { loginFailed, loginStart, loginSuccess } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import ModalForgotPassword from '../ModalForgotPassword';
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -85,7 +86,7 @@ const Login = () => {
     const handleOk = () => {
         setIsModalOpen(false);
     };
-    const handleCancel = () => {
+    const handleCloes = () => {
         setIsModalOpen(false);
     };
     return (
@@ -94,7 +95,7 @@ const Login = () => {
                 <LoginOutlined />
                 <p>Đăng nhập</p>
             </Space>
-            <Modal width={ 400 } footer={ null } open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
+            <Modal width={ 400 } footer={ null } open={ isModalOpen } onOk={ handleOk } onCancel={ handleCloes }>
                 <div className='d-flex justify-content-center'>
                     <img src={ logo } width={ 80 }></img>
                 </div>
@@ -132,7 +133,7 @@ const Login = () => {
                         { isValidPassword && <p style={ { color: 'red' } }>{ isValidPassword }</p> }
 
                         <p className='text-end'>
-                            <a style={ { color: "blue" } }>Forgot your password?</a>
+                            <ModalForgotPassword handleCloes={ handleCloes } />
                         </p>
                         { errors && <span style={ { color: 'red' } }>{ errors }</span> }
 

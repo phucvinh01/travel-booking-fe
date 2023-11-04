@@ -26,4 +26,13 @@ const deleteAccount = (id) => {
 }
 
 
-export { getAccount, getOneById, postLogin, postRegiser, putUpdateAccount, deleteAccount }
+const putChangePassword = (body) => {
+    return Axios.put(`/TaiKhoan/change-password`, body)
+}
+
+const putForgotPassword = (email) => {
+    return Axios.put(`/TaiKhoan/forget-password?email=${email}`)
+}
+
+
+export { putForgotPassword, putChangePassword, getAccount, getOneById, postLogin, postRegiser, putUpdateAccount, deleteAccount }

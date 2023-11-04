@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { EditFilled, SaveFilled } from '@ant-design/icons';
 import moment from 'moment';
 import axios from 'axios';
+import ModalChangePassword from '../components/ModalChangePassword';
 const Profile = () => {
     const user = useSelector((state) => state.auth.login.currentUser);
     const [info, setInfo] = useState({})
@@ -119,12 +120,14 @@ const Profile = () => {
                             </div>
                         </section>
                         <section>
-                            <div className='d-flex justify-content-end'>
+                            <div className='d-flex justify-content-end gap-3'>
+                                <ModalChangePassword />
                                 {
                                     disenable ?
                                         <Button onClick={ () => { setDisenable(!disenable), handleUpdateProfile() } } icon={ <SaveFilled /> }>Lưu</Button>
                                         : <Button onClick={ () => setDisenable(!disenable) } icon={ <EditFilled /> }>Chỉnh sửa</Button>
                                 }
+
                             </div>
                         </section>
                     </div>

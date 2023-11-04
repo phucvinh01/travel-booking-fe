@@ -68,11 +68,23 @@ const ModalListImgTour = (props) => {
         console.log(e);
         message.error('Click on No');
     };
+
+    const handleDeleteAllImg = async () => {
+        let r = await Axios.delete(`/DanhMucHinh/delete-list-danh-muc-hinh-tour?maTour=${idTour}`)
+        if (r) {
+            message.success("Xóa thành công")
+            getImg(idTour)
+        } else {
+            message.error("Xóa thất bại")
+        }
+    }
+
     return (
         <>
             <Button icon={ <Image /> } onClick={ showModal } />
             <Modal footer={ null } title="Danh sách hình ảnh" open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel }>
-                <div className='mb-3 d-flex justify-content-end'>
+                <div className='mb-3 d-flex justify-content-end gap-3'>
+                    <Button danger icon={ <DeleteFilled /> } onClick={ handleDeleteAllImg }>Xóa tất cả hình</Button>
                     <ModalAddImgListTour idTour={ idTour } getImg={ getImg } />
                 </div>
                 <div className='row'>
