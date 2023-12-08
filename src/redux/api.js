@@ -57,7 +57,7 @@ export const getItems = async (dispatch) => {
     dispatch(getToursStart());
     try {
         const res = await getAllActive()
-        if (res.statusCode && res.statusCode === 204) {
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getToursFailed())
         }
         else {
@@ -73,7 +73,8 @@ export const getItemsAdmin = async (dispatch) => {
     dispatch(getToursStart());
     try {
         const res = await getAllTour()
-        if (res.statusCode && res.statusCode === 204) {
+        console.log(res);
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getToursFailed())
         }
         else {
@@ -89,7 +90,7 @@ export const getCategory = async (dispatch) => {
     dispatch(getCateStart());
     try {
         const res = await getAllCategory()
-        if (res.statusCode && res.statusCode === 204) {
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getCateFailed())
         } else {
             dispatch(getCateSuccess(res))
@@ -104,7 +105,7 @@ export const getHotel = async (dispatch) => {
     dispatch(getHotelStart());
     try {
         const res = await getAllHotel()
-        if (res.statusCode && res.statusCode === 204) {
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getHotelFailed())
         } else {
             dispatch(getHotelSuccess(res))
@@ -119,7 +120,7 @@ export const getflight = async (dispatch) => {
     dispatch(getflightStart());
     try {
         const res = await getAllFlight()
-        if (res.statusCode && res.statusCode === 204) {
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getflightFailed())
         } else {
             dispatch(getflightSuccess(res))
@@ -135,7 +136,7 @@ export const getAllEmployee = async (dispatch) => {
 
     try {
         const res = await getAllEmp()
-        if (res.statusCode && res.statusCode === 204) {
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getEmpFailed())
         } else {
             dispatch(getEmpSuccess(res))
@@ -150,7 +151,7 @@ export const getType = async (dispatch) => {
     dispatch(getTypeStart());
     try {
         const res = await getAllType()
-        if (res.statusCode && res.statusCode === 204) {
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getTypeFailed())
         } else {
             dispatch(getTypeSuccess(res))
@@ -165,7 +166,7 @@ export const getAri = async (dispatch) => {
     dispatch(getAirFieldStart());
     try {
         const res = await getAllAir()
-        if (res.statusCode && res.statusCode === 204) {
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getAirFieldFailed())
         } else {
             dispatch(getAirFieldSuccess(res))
@@ -180,7 +181,7 @@ export const getAnswer = async (dispatch, idTour) => {
     dispatch(getAnwserStart());
     try {
         const res = await getAllQuestionInTourById(idTour)
-        if (res.statusCode && res.statusCode === 204) {
+        if (res.statusCode && res.statusCode === 404) {
             dispatch(getAnwserFailed())
         } else {
             dispatch(getAnwserSuccess(res))

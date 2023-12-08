@@ -101,7 +101,7 @@ const Tours = () => {
                             </div>
                         </div>
                     </section>
-                    <SildeTour tours={ tours?.slice(0, 9) } />
+                    <SildeTour tours={ tours && tours.length > 0 && tours?.slice(0, 9) } />
                     <div className='d-flex justify-content-center mt-1'>
                         <Link to={ '/tours' } className='btn btn-outline-light text-dark'>Xem tất cả</Link>
                     </div>

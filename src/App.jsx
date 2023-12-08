@@ -16,7 +16,7 @@ function App() {
 
 
   useEffect(() => {
-    if (user?.maLoai === 'LTK20231013195805327') {
+    if (user?.maLoai === 'LTK20231012215540') {
       navigate('/admin')
     }
   }, [user])

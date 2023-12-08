@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Modal, message } from 'antd';
+import { Button, Modal, Radio, message } from 'antd';
 import { add } from 'lodash';
 import { date } from 'yup';
 import { useEffect } from 'react';
 import { postCreateCustomer } from '../../Axios/customer';
+import { Toast } from 'bootstrap';
 const ModalCreateInfo = (props) => {
 
 
@@ -15,6 +16,9 @@ const ModalCreateInfo = (props) => {
     const [day, setDay] = useState("")
     const [full, setFull] = useState(false)
 
+    const onChange = (e) => {
+        setGender(e.target.value);
+    };
     const handleDateChange = (event) => {
         const selectedDate = event.target.value;
         setDay(selectedDate);
@@ -52,7 +56,6 @@ const ModalCreateInfo = (props) => {
             "maTaiKhoan": state.idTaiKhoan
         }
         let r = await postCreateCustomer(body)
-        console.log(r);
         if (r.status === 400) {
             message.error("Có cái gì đó không đúng?")
             return
@@ -65,28 +68,27 @@ const ModalCreateInfo = (props) => {
 
     return (
         <>
-            <Modal maskClosable={ false } footer={ null } closeIcon={ null } title="Thông tin của bạn" open={ props.isModalOpen } onOk={ props.handleOk } onCancel={ props.handleCancel }>
+            <Modal maskClosable={false} footer={null} closeIcon={null} title="Thông tin của bạn" open={props.isModalOpen} onOk={props.handleOk} onCancel={props.handleCancel}>
                 <div className='mb-3'>
                     <label>Họ và tên</label>
-                    <input type='text' value={ name } className='form-control' onChange={ (e) => setName(e.target.value) } />
+                    <input type='text' value={name} className='form-control' onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className='mb-3'>
-                    <label>Giới tính</label>
-                    <select value={ gender } defaultValue={ true } className='form-control' onChange={ (e) => setGender(e.target.value) }>
-                        <option value={ true }>Nam</option>
-                        <option value={ false }>Nữ</option>
-                    </select>
+                    <Radio.Group onChange={onChange} value={gender}>
+                        <Radio value={true}>Nam</Radio>
+                        <Radio value={false}>Nữ</Radio>
+                    </Radio.Group>
                 </div>
                 <div className='mb-3'>
                     <label>Địa chỉ</label>
-                    <input type='text' value={ address } className='form-control' onChange={ (e) => setAddress(e.target.value) } />
+                    <input type='text' value={address} className='form-control' onChange={(e) => setAddress(e.target.value)} />
                 </div>
                 <div className='mb-3'>
                     <label>Ngày sinh</label>
-                    <input type='date' value={ day } className='form-control' onChange={ (e) => handleDateChange(e) } />
+                    <input type='date' value={day} className='form-control' onChange={(e) => handleDateChange(e)} />
                 </div>
                 <div className='d-flex justify-content-end'>
-                    <Button disabled={ !full ? true : false } onClick={ handleSave }>Lưu</Button>
+                    <Button disabled={!full ? true : false} onClick={handleSave}>Lưu</Button>
                 </div>
             </Modal>
         </>
